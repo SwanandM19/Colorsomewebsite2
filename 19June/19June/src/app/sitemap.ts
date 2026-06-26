@@ -1,6 +1,6 @@
 import { products } from "./products/data";
 
-const BASE_URL = "https://www.colorsomepainting.com";
+const BASE_URL = "www.colorsomepaints.in";
 
 function buildUrl(path: string) {
   return `${BASE_URL}${path}`;

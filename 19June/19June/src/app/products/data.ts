@@ -16,7 +16,7 @@ export interface Product {
     coverage?: string;
     dryingTime?: string;
     finish?: string;
-    application?: string;
+    application?: string; 
   };
 }
 

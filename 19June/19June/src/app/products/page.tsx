@@ -1004,7 +1004,6 @@
 //   );
 // }
 
-
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -1489,7 +1488,10 @@ function ProductCard({
       className="group block rounded-[1.5rem] bg-white border border-[#ece7df] shadow-[0_12px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.09)] transition-all duration-500 relative h-[480px] overflow-hidden"
     >
       {/* Top Accent Color Strip */}
-      <div className="h-1.5 w-full absolute top-0 left-0 right-0 z-30" style={{ background: accent }} />
+      <div
+        className="h-1.5 w-full absolute top-0 left-0 right-0 z-30"
+        style={{ background: accent }}
+      />
 
       {/* Radial Hover Background Ambient Ring */}
       <div
@@ -1500,7 +1502,7 @@ function ProductCard({
       />
 
       {/* ── IMAGE SECTION (Animates upwards and scales down on hover) ── */}
-      <motion.div 
+      <motion.div
         className="absolute inset-x-0 top-0 flex items-center justify-center px-4 z-10 origin-center"
         initial={{ y: 25, scale: 1 }}
         animate={{ y: 25, scale: 1 }}
@@ -1525,7 +1527,6 @@ function ProductCard({
       {/* ── CONTENT PANEL ── */}
       {/* Container wraps both structural state displays cleanly via CSS and translate transforms */}
       <div className="absolute inset-x-0 bottom-0 px-6 pb-6 pt-4 flex flex-col justify-end bg-white z-20 transition-transform duration-500 transform translate-y-[115px] group-hover:translate-y-0">
-        
         {/* Category Pill Tag */}
         <div className="mb-2">
           <span
@@ -1566,10 +1567,10 @@ function ProductCard({
             className="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.14em]"
             style={{ color: accent }}
           >
-            View Product <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-300" />
+            View Product{" "}
+            <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-300" />
           </div>
         </div>
-
       </div>
     </Link>
   );

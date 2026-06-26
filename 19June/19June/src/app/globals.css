@@ -1,8 +1,7 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap'); */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @layer base {
   :root {
@@ -20,125 +19,115 @@
     --navy: #2C3E50;
   }
 
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  body {
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--charcoal);
     background-color: var(--warm-white);
-    line-height: 1.6;
+    line-height: 1.65;
     font-feature-settings: 'kern' 1, 'liga' 1;
-  } */
-   body {
-  font-family: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, sans-serif;
-  color: var(--charcoal);
-  background-color: var(--warm-white);
-  line-height: 1.65;
-  font-feature-settings: 'kern' 1, 'liga' 1;
-}
+  }
 
-  /* h1, h2, h3 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-  } */
 
-  h1, h2, h3 {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.08;
-}
+  /* Cormorant Garamond: brand identifiers, h1 heroes, h2 section breaks */
+  h1, h2 {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
 
-  /* h4, h5, h6 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
+
+  /* Inter: all UI headings (h3 = card/item titles) */
+  h3, h4, h5, h6 {
+    font-family: var(--font-inter), sans-serif;
+    font-weight: 600;
     letter-spacing: -0.01em;
-  } */
+  }
 
-  h4, h5, h6 {
-  font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
 
   ::selection {
     background-color: rgba(201, 168, 88, 0.25);
     color: var(--charcoal);
   }
 
+
   img {
     image-rendering: auto;
   }
 }
 
+
 @layer components {
-  /* Buttons */
-  .btn-primary {
-    @apply inline-flex items-center justify-center font-medium rounded transition-all duration-300;
+  /* ─── Buttons — Inter ─────────────────────────────────────────────────────── */
+  .btn-primary,
+  .btn-secondary,
+  .btn-gold,
+  .btn-outline-gold {
+    @apply inline-flex items-center justify-center rounded transition-all duration-300;
     padding: 14px 32px;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+  }
+
+  .btn-primary {
     background-color: var(--charcoal);
     color: white;
-    font-size: 14px;
-    letter-spacing: 0.04em;
   }
   .btn-primary:hover {
     background-color: var(--charcoal-light);
     box-shadow: 0 8px 30px rgba(26, 26, 26, 0.15);
+    transform: translateY(-1px);
   }
   .btn-primary:active { transform: scale(0.97); }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center font-medium rounded transition-all duration-300;
-    padding: 14px 32px;
     background-color: white;
     color: var(--charcoal);
-    font-size: 14px;
-    letter-spacing: 0.04em;
     border: 1px solid rgba(26, 26, 26, 0.12);
   }
   .btn-secondary:hover {
     border-color: rgba(26, 26, 26, 0.35);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
   }
   .btn-secondary:active { transform: scale(0.97); }
 
   .btn-gold {
-    @apply inline-flex items-center justify-center font-medium rounded transition-all duration-300;
-    padding: 14px 32px;
     background-color: var(--gold);
     color: white;
-    font-size: 14px;
-    letter-spacing: 0.04em;
   }
   .btn-gold:hover {
     background-color: var(--gold-light);
     box-shadow: 0 8px 30px rgba(201, 168, 88, 0.25);
+    transform: translateY(-1px);
   }
   .btn-gold:active { transform: scale(0.97); }
 
-  .btn-primary,
-.btn-secondary,
-.btn-gold,
-.btn-outline-gold {
-  @apply inline-flex items-center justify-center rounded transition-all duration-300;
-  padding: 14px 32px;
-  font-family: var(--font-dm-sans), sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-}
+  .btn-outline-gold {
+    background-color: transparent;
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
+  }
   .btn-outline-gold:hover {
     background-color: var(--gold);
     color: white;
+    transform: translateY(-1px);
   }
+  .btn-outline-gold:active { transform: scale(0.97); }
 
-  /* Cards */
+
+  /* ─── Cards ───────────────────────────────────────────────────────────────── */
   .card {
     @apply bg-white rounded-lg transition-all duration-500;
     border: 1px solid rgba(0, 0, 0, 0.04);
@@ -159,10 +148,12 @@
     transform: translateY(-3px);
   }
 
-  /* Form elements */
+
+  /* ─── Form elements — Inter ───────────────────────────────────────────────── */
   .input-premium {
     @apply w-full rounded text-sm transition-all duration-300;
     padding: 14px 16px;
+    font-family: var(--font-inter), sans-serif;
     background-color: var(--warm-gray-light);
     border: 1.5px solid transparent;
     color: var(--charcoal);
@@ -179,15 +170,19 @@
     box-shadow: 0 0 0 3px rgba(201, 168, 88, 0.08);
   }
 
+  /* Inter: form labels are UI chrome */
   .label-premium {
-    @apply block text-sm font-medium mb-2;
-    color: var(--charcoal-light);
+    @apply block text-sm mb-2;
+    font-family: var(--font-inter), sans-serif;
+    font-weight: 600;
     letter-spacing: 0.01em;
+    color: var(--charcoal-light);
   }
 
   .select-premium {
     @apply w-full rounded text-sm transition-all duration-300 cursor-pointer appearance-none;
     padding: 14px 40px 14px 16px;
+    font-family: var(--font-inter), sans-serif;
     background-color: var(--warm-gray-light);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%237A7A7A'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -204,7 +199,8 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%23C9A858'/%3E%3C/svg%3E");
   }
 
-  /* Layout */
+
+  /* ─── Layout ──────────────────────────────────────────────────────────────── */
   .section-padding {
     @apply py-20 md:py-28 lg:py-36;
   }
@@ -213,7 +209,8 @@
     @apply max-w-7xl mx-auto px-5 sm:px-8 lg:px-12;
   }
 
-  /* Link hover effect */
+
+  /* ─── Link hover ──────────────────────────────────────────────────────────── */
   .link-hover {
     @apply relative inline-block;
   }
@@ -227,7 +224,8 @@
     @apply w-full;
   }
 
-  /* Decorative */
+
+  /* ─── Decorative ──────────────────────────────────────────────────────────── */
   .divider-gold {
     @apply mx-auto;
     width: 48px;
@@ -235,79 +233,62 @@
     background-color: var(--gold);
   }
 
-  /* .section-label {
-    @apply text-xs font-medium uppercase tracking-[0.2em] mb-4;
+
+  /* ─── Section typography — Inter for labels/subtitles ─────────────────────── */
+
+  /* Eyebrow label above headings — Inter (UI chrome) */
+  .section-label {
+    @apply text-xs uppercase mb-4;
+    font-family: var(--font-inter), sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     color: var(--gold);
-  } */
-   .section-label {
-  @apply text-xs uppercase mb-4;
-  font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: var(--gold);
-}
+  }
 
-  /* .section-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    @apply text-4xl md:text-5xl font-medium;
-    color: var(--charcoal);
-    line-height: 1.15;
-  } */
+  /* h2-level section heading — Cormorant (major section break) */
   .section-title {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-size: clamp(2.25rem, 4vw, 4.1rem);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  font-weight: 600;
-  color: var(--charcoal);
-}
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-size: clamp(2.25rem, 4vw, 4.1rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+    color: var(--charcoal);
+  }
+
+  /* Body copy under section headings — Inter */
+  .section-subtitle {
+    @apply text-base max-w-2xl;
+    font-family: var(--font-inter), sans-serif;
+    color: var(--charcoal-muted);
+    line-height: 1.8;
+  }
 }
 
+
+/* ─── Display / hero classes (outside @layer so they have highest specificity) ── */
+
+/* h1 main banner — Cormorant Garamond */
 .hero-title {
   font-family: var(--font-cormorant), Georgia, serif;
-  font-size: clamp(3.4rem, 7vw, 6.5rem);
-  line-height: 0.94;
+  font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+  line-height: 1.05;
   letter-spacing: -0.045em;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--charcoal);
 }
 
+/* h1/h2 on dark/coloured backgrounds — Cormorant Garamond */
 .hero-title-light {
   font-family: var(--font-cormorant), Georgia, serif;
-  font-size: clamp(3rem, 6vw, 5.7rem);
+  /* font-size: clamp(3rem, 6vw, 5.7rem); */
+  font-size: clamp(3rem, 5.5vw, 5.2rem);
   line-height: 0.98;
   letter-spacing: -0.04em;
   font-weight: 600;
   color: white;
 }
 
-.card-title {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-size: 1.3rem;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  font-weight: 600;
-  color: var(--charcoal);
-}
-
-.card-title-light {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-size: 1.3rem;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  font-weight: 600;
-  color: white;
-}
-
-.mini-title {
-  font-family: var(--font-dm-sans), sans-serif;
-  font-size: 1rem;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  font-weight: 600;
-  color: var(--charcoal);
-}
-
+/* Brand logo wordmark — Cormorant Garamond (brand identifier) */
 .brand-wordmark {
   font-family: var(--font-cormorant), Georgia, serif;
   font-size: 1.375rem;
@@ -317,10 +298,34 @@
   font-weight: 600;
 }
 
-  .section-subtitle {
-  @apply text-base max-w-2xl;
-  color: var(--charcoal-muted);
-  line-height: 1.8;
+/* h3 card/item title on light bg — Inter (UI element) */
+.card-title {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+
+/* h3 card/item title on dark bg — Inter (UI element) */
+.card-title-light {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  color: white;
+}
+
+/* Marquee / compact card title — Inter (UI element) */
+.mini-title {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  color: var(--charcoal);
 }
 
 
@@ -349,53 +354,47 @@
   .border-gold { border-color: var(--gold); }
   .border-warm-gray { border-color: var(--warm-gray); }
 
-  /* Animations */
+
+  /* ─── Animations ──────────────────────────────────────────────────────────── */
   .animate-fade-in {
     animation: fadeIn 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
-
   .animate-fade-in-up {
     animation: fadeInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
-
   .animate-fade-in-down {
     animation: fadeInDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
-
   .animate-scale-in {
     animation: scaleIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
-
   .animate-slide-right {
     animation: slideRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
   @keyframes fadeIn {
     from { opacity: 0; }
-    to { opacity: 1; }
+    to   { opacity: 1; }
   }
-
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes fadeInDown {
     from { opacity: 0; transform: translateY(-16px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes scaleIn {
     from { opacity: 0; transform: scale(0.96); }
-    to { opacity: 1; transform: scale(1); }
+    to   { opacity: 1; transform: scale(1); }
   }
-
   @keyframes slideRight {
     from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
+    to   { opacity: 1; transform: translateX(0); }
   }
 
-  /* Scrollbar */
+
+  /* ─── Scrollbar ───────────────────────────────────────────────────────────── */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -404,7 +403,8 @@
     display: none;
   }
 
-  /* Line clamp */
+
+  /* ─── Line clamp ──────────────────────────────────────────────────────────── */
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -418,7 +418,8 @@
     overflow: hidden;
   }
 
-  /* Image overlay gradient */
+
+  /* ─── Image overlay ───────────────────────────────────────────────────────── */
   .img-overlay {
     position: relative;
   }
@@ -430,7 +431,8 @@
     pointer-events: none;
   }
 
-  /* Stagger children animation */
+
+  /* ─── Stagger children ────────────────────────────────────────────────────── */
   .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
   .stagger-children > *:nth-child(2) { animation-delay: 80ms; }
   .stagger-children > *:nth-child(3) { animation-delay: 160ms; }

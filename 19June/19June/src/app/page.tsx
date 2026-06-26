@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   ArrowRight,
@@ -38,7 +39,7 @@ import {
 // import type { Category, Product, Shade, Testimonial } from '../lib/supabase';
 import { ShadeCard } from "../components/ShadeCard";
 import { TestimonialCard } from "../components/TestimonialCard";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import { Footer } from "../components/Footer";
 type Category = {
   id: number;
@@ -72,7 +73,7 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const cormorant = Cormorant_Garamond({
+const cormorant = Playfair_Display({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
   variable: "--font-cormorant",
@@ -739,41 +740,29 @@ function InfiniteMarquee({
 const services = [
   {
     icon: Shield,
-
     title: "Premium Quality",
-
     desc: "Superior formulations for exceptional finish and lasting durability",
-
     color: BRAND.blue,
   },
 
   {
     icon: Droplets,
-
     title: "Rich Colour Depth",
-
     desc: "Vibrant pigments that maintain their beauty for years to come",
-
     color: BRAND.pink,
   },
 
   {
     icon: Award,
-
     title: "Expert Guidance",
-
     desc: "Professional consultation for perfect shade and product selection",
-
     color: BRAND.green,
   },
 
   {
     icon: Sun,
-
     title: "Weather Resistance",
-
     desc: "Advanced protection against sun, rain, and harsh conditions",
-
     color: BRAND.yellow,
   },
 ];
@@ -781,51 +770,36 @@ const services = [
 const processSteps = [
   {
     num: "01",
-
     title: "Consultation",
-
     desc: "Discuss your requirements with our paint experts",
-
     color: BRAND.pink,
   },
 
   {
     num: "02",
-
     title: "Site Evaluation",
-
     desc: "Professional assessment of your space and surfaces",
-
     color: BRAND.blue,
   },
 
   {
     num: "03",
-
     title: "Recommendation",
-
     desc: "Personalized product and shade recommendations",
-
     color: BRAND.green,
   },
 
   {
     num: "04",
-
     title: "Quote",
-
     desc: "Transparent pricing and detailed estimate",
-
     color: BRAND.orange,
   },
 
   {
     num: "05",
-
     title: "Execution",
-
     desc: "Professional application or timely product delivery",
-
     color: BRAND.yellow,
   },
 ];
@@ -833,61 +807,41 @@ const processSteps = [
 const browseByFinish = [
   {
     name: "Matte",
-
     desc: "Velvety, non-reflective elegance",
-
     color: "#E8E4DF",
-
     icon: Layers,
-
     accent: BRAND.pink,
   },
 
   {
     name: "Sheen",
-
     desc: "Subtle glow with depth",
-
     color: "#D4CFC8",
-
     icon: Sparkles,
-
     accent: BRAND.blue,
   },
 
   {
     name: "Gloss",
-
     desc: "Brilliant, mirror-like shine",
-
     color: "#C8C0B4",
-
     icon: Zap,
-
     accent: BRAND.yellow,
   },
 
   {
     name: "Texture",
-
     desc: "Tactile, dimensional artistry",
-
     color: "#B8AFA2",
-
     icon: Paintbrush,
-
     accent: BRAND.green,
   },
 
   {
     name: "Weatherproof",
-
     desc: "Fortified exterior shield",
-
     color: "#8B9E7E",
-
     icon: Shield,
-
     accent: BRAND.orange,
   },
 ];
@@ -895,97 +849,70 @@ const browseByFinish = [
 const browseBySpace = [
   {
     name: "Living Room",
-
     image:
       "https://images.unsplash.com/photo-1494526585095-c41746248156?w=800&q=80",
-
     tag: "Most Popular",
-
     accent: BRAND.pink,
   },
 
   {
     name: "Bedroom",
-
     image:
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=80",
-
     tag: "Top Picks",
-
     accent: BRAND.blue,
   },
 
   {
     name: "Exterior Walls",
-
     image:
       "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80",
-
     tag: "Weather-proof",
-
     accent: BRAND.green,
   },
 
   {
     name: "Kitchen",
-
     image:
       "https://images.unsplash.com/photo-1556911220-bff31c812dba?w=800&q=80",
-
     tag: "Easy Clean",
-
     accent: BRAND.orange,
   },
 ];
 
 const stats = [
-  { value: "50+", label: "Cities Served", color: BRAND.pink },
-
-  { value: "1L+", label: "Happy Homes", color: BRAND.blue },
-
-  { value: "500+", label: "Shade Options", color: BRAND.green },
-
-  { value: "15+", label: "Years Expertise", color: BRAND.yellow },
+  { value: "100%", label: "Indian Owned", color: BRAND.pink },
+  { value: "100%", label: "Premium Quality", color: BRAND.blue },
+  { value: "Top-Tier", label: "Materials Used", color: BRAND.green },
+  { value: "15+", label: "Combined Years of Expertise", color: BRAND.yellow },
 ];
 
 const serviceHighlights = [
   {
     icon: CheckCircle,
-
     title: "Clean Work",
-
     desc: "Meticulous preparation and tidy execution",
-
     color: BRAND.green,
   },
 
   {
     icon: Eye,
-
     title: "Careful Prep",
-
     desc: "Thorough surface preparation for lasting results",
-
     color: BRAND.blue,
   },
 
   {
     icon: Star,
-
     title: "Quality Finish",
-
     desc: "Flawless application with premium materials",
-
     color: BRAND.yellow,
   },
 
   {
     icon: Clock,
-
     title: "Timely Completion",
-
     desc: "Committed timelines and reliable delivery",
-
     color: BRAND.orange,
   },
 ];
@@ -993,72 +920,31 @@ const serviceHighlights = [
 const transformations = [
   {
     label: "Living Room Makeover",
-
     before: "/bimg.png",
-
     product: "Zodiac Emulsion — Warm Ivory",
-
     color: BRAND.pink,
-  },
-
-  {
-    label: "Exterior Transformation",
-
-    before:
-      "https://images.unsplash.com/photo-1505409859467-3a796fd5798e?w=1200&q=80",
-
-    after:
-      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&q=80",
-
-    product: "DuraGuard Exterior — Classic White",
-
-    color: BRAND.blue,
-  },
-
-  {
-    label: "Bedroom Refresh",
-
-    before:
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=80",
-
-    after:
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80",
-
-    product: "Eva Emulsion — Soft Sage",
-
-    color: BRAND.green,
   },
 ];
 
 const dots = [
   { color: BRAND.pink, size: 14, top: "18%", left: "72%", delay: 0 },
-
   { color: BRAND.blue, size: 10, top: "65%", left: "78%", delay: 0.4 },
-
   { color: BRAND.green, size: 18, top: "30%", left: "88%", delay: 0.8 },
-
   { color: BRAND.orange, size: 12, top: "75%", left: "62%", delay: 1.2 },
-
   { color: BRAND.yellow, size: 20, top: "12%", left: "60%", delay: 0.6 },
 ];
 
 function AnimatedStat({
   value,
-
   label,
-
   color,
 }: {
   value: string;
-
   label: string;
-
   color: string;
 }) {
   const ref = useRef(null);
-
   const inView = useInView(ref, { once: true });
-
   return (
     <motion.div
       ref={ref}
@@ -1068,14 +954,9 @@ function AnimatedStat({
       className="text-center"
     >
       {/* <p className="font-serif text-4xl md:text-5xl font-bold mb-1" style={{ color }}>{value}</p> */}
-
-      <p
-        className="font-[var(--font-cormorant)] text-4xl md:text-5xl font-semibold tracking-[-0.03em] mb-1"
-        style={{ color }}
-      >
+      <p className="section-title mb-1" style={{ color }}>
         {value}
       </p>
-
       <p className="text-sm text-white/60">{label}</p>
     </motion.div>
   );
@@ -1144,26 +1025,41 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // --- CINEMATIC BACKGROUND SLIDER LOGIC ---
+  const HERO_IMAGES = [
+    "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80",
+    // "/Aquaproof.png",
+    // "/Decoprime.png",
+    // "/AxisWeatherC.png",
+    "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80",
+  ];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const loopInterval = setInterval(() => {
+      setCurrentImageIndex((prev) => {
+        let nextIdx;
+        do {
+          nextIdx = Math.floor(Math.random() * 6);
+        } while (nextIdx === prev); // Keeps rolling if it picks the active image again
+        return nextIdx;
+      });
+    }, 5000);
+    return () => clearInterval(loopInterval);
+  }, []);
+
   // useEffect(() => {
-
   //   async function fetchData() {
-
   //     try {
-
   //       const [cat, prod, shd, tst] = await Promise.all([
-
   //         getCategories(), getFeaturedProducts(), getFeaturedShades(), getTestimonials(),
-
   //       ]);
-
   //       setCategories(cat); setProducts(prod); setShades(shd); setTestimonials(tst);
-
   //     } catch (err) { console.error(err); } finally { setIsLoading(false); }
-
   //   }
-
   //   fetchData();
-
   // }, []);
 
   const handleCalc = () => {
@@ -1234,31 +1130,24 @@ export default function HomePage() {
 
   const updateSliderPosition = (clientX: number) => {
     if (!sliderRef.current) return;
-
     const rect = sliderRef.current.getBoundingClientRect();
-
     const next = ((clientX - rect.left) / rect.width) * 100;
-
     setSliderPos(Math.max(0, Math.min(100, next)));
   };
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
-
     e.currentTarget.setPointerCapture(e.pointerId);
-
     updateSliderPosition(e.clientX);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging) return;
-
     updateSliderPosition(e.clientX);
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(false);
-
     e.currentTarget.releasePointerCapture(e.pointerId);
   };
 
@@ -1268,13 +1157,10 @@ export default function HomePage() {
 
   useEffect(() => {
     if (hasShownConsultationPopup) return;
-
     const timer = setTimeout(() => {
       setShowConsultationPopup(true);
-
       setHasShownConsultationPopup(true);
     }, 3000);
-
     return () => clearTimeout(timer);
   }, [hasShownConsultationPopup]);
 
@@ -1283,7 +1169,6 @@ export default function HomePage() {
       <div className="min-h-screen flex items-center justify-center bg-warm-white">
         <div className="text-center">
           <Loader className="w-8 h-8 text-gold animate-spin mx-auto mb-4" />
-
           <p className="text-charcoal-muted text-sm">Loading Colorsome...</p>
         </div>
       </div>
@@ -1292,11 +1177,8 @@ export default function HomePage() {
   // ─── Header colours ────────────────────────────────────────────────────────
 
   const onDark = headerDark;
-
   const navText = onDark ? "text-white" : "text-[#2D2D2D]";
-
   const navMuted = onDark ? "text-white/70" : "text-[#6B6B6B]";
-
   const navBg = scrolled
     ? onDark
       ? "bg-[#2D2D2D]/90 backdrop-blur-md shadow-lg border-b border-white/10"
@@ -1312,23 +1194,15 @@ export default function HomePage() {
   // const row2 = products.slice(mid);
 
   const marqueeData = products;
-
   const row1 = marqueeData.slice(0, Math.ceil(marqueeData.length / 2));
-
   const row2 = marqueeData.slice(Math.ceil(marqueeData.length / 2));
-
   return (
     <>
       {/* ════════════════════════════════════════
-
           SELF-CONTAINED HEADER
-
           (replaces any external <Header> component
-
            — make sure your layout.tsx does NOT also render <Header>)
-
       ════════════════════════════════════════ */}
-
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}
       >
@@ -1336,7 +1210,6 @@ export default function HomePage() {
 
         <div className="max-w-[1280px] mx-auto px-8 flex items-center justify-between h-[78px]">
           {/* Logo */}
-
           <Link
             href="/"
             className="flex items-center gap-4 flex-shrink-0 min-w-[260px]"
@@ -1348,28 +1221,19 @@ export default function HomePage() {
                 className="w-full h-full object-contain scale-[1.08]"
               />
             </div>
-
             <div className="flex flex-col justify-center leading-none">
               <div className="flex items-start">
                 <span
                   className={`transition-colors duration-300 ${navText}`}
                   style={{
                     fontFamily: "var(--font-cormorant)",
-
                     fontSize: "2rem",
-
                     lineHeight: "0.82",
-
                     fontWeight: 700,
-
                     letterSpacing: "-0.055em",
-
                     textTransform: "uppercase",
-
                     // color: '#2D2D2D',
-
                     // color: '#6E5336',
-
                     // color: '#A0602B',
                   }}
                 >
@@ -1380,23 +1244,14 @@ export default function HomePage() {
                   className={`transition-colors duration-300 ${navText}`}
                   style={{
                     fontFamily: "var(--font-inter)",
-
                     fontSize: "0.55rem",
-
                     lineHeight: 1,
-
                     fontWeight: 700,
-
                     marginLeft: "0.18rem",
-
                     marginTop: "0.12rem",
-
                     letterSpacing: "0.04em",
-
                     // color: '#2D2D2D',
-
                     // color: '#6E5336',
-
                     // color: '#A0602B',
                   }}
                 >
@@ -1409,34 +1264,23 @@ export default function HomePage() {
     className={`mt-1.5 transition-colors duration-300 ${navMuted}`}
 
     style={{
-
       fontFamily: 'var(--font-inter)',
-
       fontSize: '0.82rem',
-
       lineHeight: 1,
-
       fontWeight: 700,
-
       letterSpacing: '0.34em',
-
       textTransform: 'uppercase',
-
     }}
 
   >
-
     Paints
-
   </span> */}
             </div>
           </Link>
-
           {/* Desktop nav */}
 
           <nav className="hidden md:flex items-center">
             {/* <div className="flex items-center gap-1 rounded-full border border-black/6 bg-white/72 backdrop-blur-md px-2 py-1 shadow-[0_8px_24px_rgba(0,0,0,0.04)]"> */}
-
             <div
               className={`flex items-center gap-1 rounded-full px-2 py-1 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-300 ${
                 onDark
@@ -1446,19 +1290,13 @@ export default function HomePage() {
             >
               {[
                 ["Home", "/"],
-
                 ["Products", "/products"],
-
                 ["Shades", "/shades"],
-
                 ["Assistance", "/assistance"],
-
                 ["About", "/about"],
-
                 ["Contact", "/contact"],
               ].map(([label, href]) => {
                 const isActive = label === "Home";
-
                 return (
                   <Link
                     key={label}
@@ -1472,13 +1310,9 @@ export default function HomePage() {
                     }`}
                     style={{
                       fontFamily: "var(--font-inter)",
-
                       fontSize: "0.92rem",
-
                       fontWeight: isActive ? 600 : 500,
-
                       letterSpacing: "-0.01em",
-
                       lineHeight: 1,
                     }}
                   >
@@ -1488,9 +1322,7 @@ export default function HomePage() {
               })}
             </div>
           </nav>
-
           {/* CTA + mobile burger */}
-
           <div className="flex items-center gap-3">
             <Link
               href="/assistance"
@@ -1498,15 +1330,10 @@ export default function HomePage() {
               style={{
                 background:
                   onDark && !scrolled ? "rgba(255,255,255,0.18)" : "#2D2D2D",
-
                 fontFamily: "var(--font-inter)",
-
                 fontSize: "0.9rem",
-
                 fontWeight: 600,
-
                 letterSpacing: "-0.01em",
-
                 lineHeight: 1,
               }}
             >
@@ -1527,9 +1354,7 @@ export default function HomePage() {
             </button>
           </div>
         </div>
-
         {/* Mobile menu */}
-
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
@@ -1540,15 +1365,10 @@ export default function HomePage() {
             >
               {[
                 ["Home", "/"],
-
                 ["Products", "/products"],
-
                 ["Shades", "/shades"],
-
                 ["Assistance", "/assistance"],
-
                 ["About", "/about"],
-
                 ["Contact", "/contact"],
               ].map(([label, href]) => (
                 <Link
@@ -1556,15 +1376,11 @@ export default function HomePage() {
                   href={href}
                   onClick={() => setMobileMenuOpen(false)}
                   // className="block text-sm font-medium text-charcoal hover:text-gold transition-colors py-2 border-b border-gray-50"
-
                   className="block text-charcoal hover:text-gold transition-colors py-2 border-b border-gray-50"
                   style={{
                     fontFamily: "var(--font-inter)",
-
                     fontSize: "0.95rem",
-
                     fontWeight: 500,
-
                     letterSpacing: "-0.01em",
                   }}
                 >
@@ -1575,20 +1391,14 @@ export default function HomePage() {
           )}
         </AnimatePresence>
       </header>
-
       {/* ════════════════════════════════════════
-
           PAGE CONTENT  (pt-[72px] to clear fixed header)
-
       ════════════════════════════════════════ */}
-
       {/* <div className="bg-warm-white overflow-x-hidden pt-[72px]"> */}
-
       <div
         className={`${inter.variable} ${cormorant.variable} bg-warm-white overflow-x-hidden pt-[72px]`}
       >
         {/* ── HERO ────────────────────────────── */}
-
         <section className="relative min-h-[calc(100vh-72px)] flex items-center overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -1599,39 +1409,29 @@ export default function HomePage() {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F7] via-[#FAF9F7]/93 to-[#FAF9F7]/30" />
           </div>
-
           {dots.map((d, i) => (
             <motion.div
               key={i}
               className="absolute rounded-full hidden lg:block pointer-events-none"
               style={{
                 width: d.size,
-
                 height: d.size,
-
                 top: d.top,
-
                 left: d.left,
-
                 background: d.color,
-
                 opacity: 0.65,
               }}
               animate={{ y: [0, -12, 0], scale: [1, 1.15, 1] }}
               transition={{
                 duration: 3.5 + i * 0.5,
-
                 delay: d.delay,
-
                 repeat: Infinity,
-
                 ease: "easeInOut",
               }}
             />
           ))}
-
           <div className="max-w-[1280px] mx-auto px-6 relative z-10 py-16 w-full">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center">
               <motion.div initial="hidden" animate="show" variants={stagger}>
                 <motion.div
                   variants={fadeUp}
@@ -1646,25 +1446,28 @@ export default function HomePage() {
                       />
                     ))}
                   </span>
-
                   <span className="text-xs font-bold tracking-[0.15em] uppercase text-charcoal">
                     Premium Paint Solutions
                   </span>
                 </motion.div>
-
                 {/* <motion.h1 variants={fadeUp} className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium text-charcoal leading-[1.08] mb-6"> */}
 
-                <motion.h1 variants={fadeUp} className="hero-title mb-6">
+                <motion.h1 variants={fadeUp} className="hero-title mb-4">
+                  {/* <motion.h1 
+                  variants={fadeUp} 
+                  className="hero-title mb-6"
+                  style={{
+                    fontFamily: "serif",        // Forces the base text to use the serif font family
+                    fontWeight: "bold",         // Forces the base text to be bold/thick
+                  }}
+                > */}
                   Transform Your Home
                   <br />
                   <span
                     style={{
                       background: `linear-gradient(135deg, ${BRAND.pink}, ${BRAND.orange}, ${BRAND.yellow})`,
-
                       WebkitBackgroundClip: "text",
-
                       WebkitTextFillColor: "transparent",
-
                       backgroundClip: "text",
                     }}
                   >
@@ -1676,7 +1479,7 @@ export default function HomePage() {
 
                 <motion.p
                   variants={fadeUp}
-                  className="text-lg text-charcoal-muted leading-relaxed mb-10 max-w-lg"
+                  className="text-base text-charcoal-muted leading-relaxed mb-7 max-w-md"
                 >
                   Premium interior and exterior paints with superior finish,
                   lasting durability, and rich colour depth. Expert guidance for
@@ -1701,25 +1504,18 @@ export default function HomePage() {
                   className="mt-10 flex items-center gap-3 flex-wrap"
                 >
                   <span className="text-xs text-charcoal-muted">
-                    500+ shades →
+                    50+ shades →
                   </span>
 
                   <div className="flex gap-1.5">
                     {[
                       "#E91E8C",
-
                       "#2196F3",
-
                       "#4CAF50",
-
                       "#FF5722",
-
                       "#FFC107",
-
                       "#9C27B0",
-
                       "#00BCD4",
-
                       "#FF9800",
                     ].map((c) => (
                       <motion.div
@@ -1734,95 +1530,311 @@ export default function HomePage() {
                 </motion.div>
               </motion.div>
 
-              {/* Hero visual */}
+              {/* ── Hero Visual — Premium Product Showcase ── */}
 
-              <motion.div
-                className="hidden lg:block relative"
-                initial={{ opacity: 0, x: 60 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                  type: "spring",
+              {/* Define showcase products inline */}
+              {(() => {
+                const SHOWCASE = [
+                  {
+                    src: "/AxisWeatherC.png",
+                    name: "Axis Weather Coat",
+                    cat: "Exterior Paint",
+                    feat: ["Weatherproof", "Durable", "Premium"],
+                    accent: BRAND.blue,
+                    bg: "#EFF6FF",
+                  },
+                  {
+                    src: "/AraWeather.png",
+                    name: "Ara Weather Coat",
+                    cat: "Exterior Paint",
+                    feat: ["Rich Finish", "Long Lasting", "Smooth"],
+                    accent: BRAND.green,
+                    bg: "#F0FDF4",
+                  },
+                  {
+                    src: "/Duraguard_Exterior.png",
+                    name: "Duraguard Exterior",
+                    cat: "Exterior Paint",
+                    feat: ["Protection", "Climate-Ready", "Premium"],
+                    accent: BRAND.orange,
+                    bg: "#FFF7ED",
+                  },
+                  {
+                    src: "/Glossmate_Enamel_Paint.png",
+                    name: "Glossmate Enamel",
+                    cat: "Enamel Paint",
+                    feat: ["High Gloss", "Wood & Metal", "Durable"],
+                    accent: BRAND.pink,
+                    bg: "#FCE7F3",
+                  },
+                  {
+                    src: "/Uniprime.png",
+                    name: "Uniprime",
+                    cat: "Interior Paint",
+                    feat: ["Emulsion", "Smooth", "Premium"],
+                    accent: BRAND.yellow,
+                    bg: "#FFFBEB",
+                  },
+                  {
+                    src: "/Tough_Tex.png",
+                    name: "Tough Tex",
+                    cat: "Texture Paint",
+                    feat: ["Textured", "Decorative", "Strong"],
+                    accent: "#9333ea",
+                    bg: "#FAF5FF",
+                  },
+                ];
+                const idx = currentImageIndex % SHOWCASE.length;
+                const active = SHOWCASE[idx];
 
-                  damping: 20,
+                return (
+                  <motion.div
+                    className="hidden lg:block relative"
+                    initial={{ opacity: 0, x: 60 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      type: "spring",
+                      damping: 20,
+                      stiffness: 100,
+                      delay: 0.3,
+                    }}
+                    style={{ width: 460, flexShrink: 0 }}
+                  >
+                    {/* ── Main Card ── */}
+                    <div
+                      className="relative rounded-[2rem] overflow-hidden shadow-2xl"
+                      style={{ height: 480 }}
+                    >
+                      {/* Animated gradient background */}
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={`bg-${idx}`}
+                          className="absolute inset-0"
+                          style={{
+                            background: `radial-gradient(ellipse at 60% 40%, ${active.accent}22 0%, ${active.bg} 65%)`,
+                          }}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.6 }}
+                        />
+                      </AnimatePresence>
 
-                  stiffness: 100,
-
-                  delay: 0.3,
-                }}
-              >
-                <div className="rounded-3xl overflow-hidden shadow-2xl ring-4 ring-white">
-                  <img
-                    src="/Aquaproof.png"
-                    alt="Beautifully painted interior"
-                    className="w-full h-[520px] object-cover"
-                  />
-                </div>
-
-                <div
+                      {/* Subtle grid texture overlay */}
+                      <div
                   className="absolute -inset-3 rounded-3xl -z-10 opacity-40"
                   style={{
                     background: `conic-gradient(from 0deg, ${BRAND.pink}, ${BRAND.orange}, ${BRAND.yellow}, ${BRAND.green}, ${BRAND.blue}, ${BRAND.pink})`,
                   }}
                 />
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20, x: -20 }}
-                  animate={{ opacity: 1, y: 0, x: 0 }}
-                  transition={{ delay: 0.8, type: "spring", damping: 20 }}
-                  className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-5 max-w-[240px]"
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-11 h-11 rounded-xl bg-[#F7F6F2] shadow-sm p-1.5 border border-gray-200 shrink-0">
-                      <img
-                        src="/Ara_Weather_Coat.png"
-                        alt="Colorsome logo"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
+                      {/* Big glowing blob behind product */}
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={`blob-${idx}`}
+                          className="absolute rounded-full blur-3xl"
+                          style={{
+                            width: 260,
+                            height: 260,
+                            top: "50%",
+                            left: "50%",
+                            marginTop: -130,
+                            marginLeft: -130,
+                            background: `radial-gradient(circle, ${active.accent}40 0%, transparent 70%)`,
+                          }}
+                          initial={{ scale: 0.6, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={{ scale: 0.8, opacity: 0 }}
+                          transition={{ duration: 0.5 }}
+                        />
+                      </AnimatePresence>
 
-                    <div>
-                      {/* <p className="card-title text-[1.15rem] leading-none mb-1">Colorsome Luxe</p> */}
+                      {/* Category pill top-left */}
+                      <div
+                        className="absolute top-5 left-5 z-20 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.14em] text-white shadow-md"
+                        style={{ background: active.accent }}
+                      >
+                        {active.cat}
+                      </div>
 
-                      <p className="card-title mb-1">Colorsome Luxe</p>
-
-                      {/* <p className="text-xs text-charcoal-muted font-medium tracking-[0.01em]">Interior Matte</p> */}
-
-                      <p className="text-sm text-charcoal-muted font-medium">
-                        Interior Matte
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2">
-                    {ACCENTS.map((c) => (
+                      {/* 10+ badge top-right */}
                       <motion.div
-                        key={c}
-                        whileHover={{ scale: 1.2 }}
-                        className="w-7 h-7 rounded-full border-2 border-white shadow-sm cursor-pointer"
-                        style={{ backgroundColor: c }}
-                      />
-                    ))}
-                  </div>
-                </motion.div>
+                        initial={{ opacity: 0, scale: 0.7 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 1.0, type: "spring", damping: 15 }}
+                        className="absolute top-5 right-5 z-20 text-white rounded-2xl shadow-lg px-4 py-3 text-center"
+                        style={{
+                          background: `linear-gradient(135deg, ${BRAND.orange}, ${BRAND.yellow}, ${BRAND.green})`,
+                        }}
+                      >
+                        <p
+                          className="text-xl font-bold leading-none"
+                          style={{ fontFamily: "var(--font-cormorant)" }}
+                        >
+                          10+
+                        </p>
+                        <p className="text-[9px] tracking-[0.1em] uppercase mt-0.5">
+                          Yrs Life
+                        </p>
+                      </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.7 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.0, type: "spring", damping: 15 }}
-                  className="absolute -top-4 -right-4 text-white rounded-2xl shadow-lg px-5 py-4 text-center"
-                  style={{
-                    background: `linear-gradient(135deg, ${BRAND.orange}, ${BRAND.yellow})`,
-                  }}
-                >
-                  <p className="font-serif text-2xl font-semibold">10+</p>
+                      {/* Product image — large, centered, floats */}
+                      <div className="absolute inset-0 flex items-center justify-center z-10">
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={`img-${idx}`}
+                            src={active.src}
+                            alt={active.name}
+                            className="object-contain drop-shadow-2xl"
+                            style={{ width: 600, height: 600 }}
+                            // style={{ maxWidth: "85%", maxHeight: "280px", width: "auto", height: "auto" }}
+                            initial={{ opacity: 0, scale: 0.78, y: 24 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.85, y: -20 }}
+                            transition={{
+                              type: "spring",
+                              damping: 20,
+                              stiffness: 160,
+                            }}
+                          />
+                        </AnimatePresence>
+                        {/* Floor shadow */}
+                        <div
+                          className="absolute blur-2xl opacity-20 rounded-full"
+                          style={{
+                            width: 180,
+                            height: 28,
+                            bottom: 80,
+                            background: active.accent,
+                          }}
+                        />
+                      </div>
 
-                  {/* <p className="text-[10px] tracking-wider uppercase">Years Life</p> */}
+                      {/* Bottom info strip */}
+                      <div
+                        className="absolute bottom-0 left-0 right-0 z-20 px-6 pt-5 pb-5"
+                        style={{
+                          background:
+                            "linear-gradient(to top, rgba(255,255,255,0.96) 60%, transparent)",
+                        }}
+                      >
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={`info-${idx}`}
+                            initial={{ opacity: 0, y: 14 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            transition={{
+                              type: "spring",
+                              damping: 22,
+                              stiffness: 180,
+                            }}
+                          >
+                            <p
+                              className="text-xl font-bold text-[#1A1A1A] leading-tight mb-2"
+                              style={{
+                                fontFamily: "var(--font-cormorant)",
+                                letterSpacing: "-0.02em",
+                              }}
+                            >
+                              {active.name}
+                            </p>
+                            <div className="flex gap-1.5 flex-wrap">
+                              {active.feat.map((f) => (
+                                <span
+                                  key={f}
+                                  className="text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wide"
+                                  style={{
+                                    background: `${active.accent}18`,
+                                    color: active.accent,
+                                  }}
+                                >
+                                  {f}
+                                </span>
+                              ))}
+                            </div>
+                          </motion.div>
+                        </AnimatePresence>
+                      </div>
+                    </div>
 
-                  <p className="text-xs tracking-[0.12em] uppercase">
-                    Years Life
-                  </p>
-                </motion.div>
-              </motion.div>
+                    {/* ── Thumbnail rail below card ── */}
+                    {/* <div className="flex gap-2.5 mt-4 justify-center">
+                      {SHOWCASE.map((p, i) => (
+                        <motion.button
+                          key={i}
+                          onClick={() => setCurrentImageIndex(i)}
+                          whileHover={{ scale: 1.12, y: -3 }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{ type: "spring", damping: 16 }}
+                          className="relative rounded-xl overflow-hidden border-2 transition-all duration-200"
+                          style={{
+                            width: 52,
+                            height: 52,
+                            borderColor: i === idx ? p.accent : "transparent",
+                            background: i === idx ? `${p.accent}12` : "#f3f2ef",
+                            boxShadow:
+                              i === idx ? `0 4px 14px ${p.accent}40` : "none",
+                          }}
+                        >
+                          <img
+                            src={p.src}
+                            alt={p.name}
+                            className="w-full h-full object-contain p-1"
+                          />
+                          {i === idx && (
+                            <motion.div
+                              layoutId="thumb-indicator"
+                              className="absolute inset-0 rounded-xl ring-2"
+                              style={{ ringColor: p.accent }}
+                            />
+                          )}
+                        </motion.button>
+                      ))}
+                    </div> */}
+
+                    {/* ── Floating Colorsome Luxe card ── */}
+                    <motion.div
+                      initial={{ opacity: 0, x: -24 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1.0, type: "spring", damping: 20 }}
+                      className="absolute -left-16 top-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-xl p-3.5 z-30"
+                      style={{ minWidth: 172 }}
+                    >
+                      <div className="flex items-center gap-2.5 mb-2.5">
+                        <div className="w-9 h-9 rounded-lg bg-[#F7F6F2] border border-gray-200 p-0.5 shrink-0">
+                          <img
+                            src="/Ara_Weather_Coat.png"
+                            alt="logo"
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <div>
+                          <p
+                            className="text-xs font-bold text-[#1A1A1A]"
+                            style={{ fontFamily: "var(--font-inter)" }}
+                          >
+                            Colorsome Luxe
+                          </p>
+                          <p className="text-[10px] text-gray-400 font-medium">
+                            Interior Matte
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex gap-1.5">
+                        {ACCENTS.map((c) => (
+                          <motion.div
+                            key={c}
+                            whileHover={{ scale: 1.25, y: -2 }}
+                            className="w-5 h-5 rounded-full border-2 border-white shadow cursor-pointer"
+                            style={{ backgroundColor: c }}
+                          />
+                        ))}
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                );
+              })()}
             </div>
           </div>
 
@@ -1834,16 +1846,14 @@ export default function HomePage() {
           >
             {/* <span className="text-[10px] tracking-[0.2em] uppercase text-charcoal-muted">Scroll</span> */}
 
-            <span className="text-xs tracking-[0.14em] uppercase text-charcoal-muted">
+            {/* <span className="text-xs tracking-[0.14em] uppercase text-charcoal-muted">
               Scroll
             </span>
 
-            <ChevronDown className="w-4 h-4 text-charcoal-muted animate-bounce" />
+            <ChevronDown className="w-4 h-4 text-charcoal-muted animate-bounce" /> */}
           </motion.div>
         </section>
-
         {/* ── COLOUR TICKER ───────────────────── */}
-
         <div
           className="overflow-hidden py-4 border-y border-gray-100"
           style={{ background: BRAND.dark }}
@@ -1857,20 +1867,13 @@ export default function HomePage() {
               <div key={rep} className="flex gap-8 items-center">
                 {[
                   "Premium Quality",
-
                   "Rich Colour Depth",
-
                   "Expert Guidance",
-
                   "Weather Resistance",
-
-                  "500+ Shades",
-
+                  "100% Indian Owned",
                   "Trusted Since 2008",
-
                   "Eco-Friendly Formulas",
-
-                  "1 Lakh+ Happy Homes",
+                  "100% Premium Quality",
                 ].map((t, i) => (
                   <span
                     key={t}
@@ -1880,7 +1883,6 @@ export default function HomePage() {
                       className="w-2 h-2 rounded-full flex-shrink-0"
                       style={{ background: ACCENTS[i % 5] }}
                     />
-
                     {t}
                   </span>
                 ))}
@@ -1890,48 +1892,35 @@ export default function HomePage() {
         </div>
 
         {/* ── CATEGORIES ──────────────────────── */}
-
         <section className="section-padding bg-white">
           <div className="container-wide">
             <Section>
               <motion.div variants={fadeUp} className="text-center mb-16">
                 <p className="section-label">Our Range</p>
-
                 <h2 className="section-title mb-4">
                   Premium Product Categories
                 </h2>
-
                 <p className="section-subtitle mx-auto">
                   From luxurious interior finishes to weather-resistant exterior
                   coatings — discover the perfect solution for every surface
                 </p>
               </motion.div>
             </Section>
-
             <Section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
               {categories.map((category, idx) => {
                 const icons = [
                   Droplets,
-
                   Shield,
-
                   Layers,
-
                   Paintbrush,
-
                   Zap,
-
                   Ruler,
-
                   Sparkles,
-
                   Home,
                 ];
 
                 const Icon = icons[idx % icons.length];
-
                 const accent = ACCENTS[idx % ACCENTS.length];
-
                 return (
                   <motion.div key={category.id} variants={scaleIn}>
                     <Link
@@ -1946,9 +1935,7 @@ export default function HomePage() {
                       >
                         <Icon className="w-7 h-7" style={{ color: accent }} />
                       </motion.div>
-
                       {/* <h3 className="font-serif text-lg font-medium text-charcoal mb-2">{category.name}</h3> */}
-
                       <h3 className="card-title mb-2">{category.name}</h3>
 
                       {category.description && (
@@ -1963,9 +1950,7 @@ export default function HomePage() {
             </Section>
           </div>
         </section>
-
         {/* ── WHY COLORSOME ───────────────────── */}
-
         <section
           id="why-colorsome"
           className="section-padding overflow-hidden"
@@ -1985,11 +1970,8 @@ export default function HomePage() {
                     <span
                       style={{
                         background: `linear-gradient(90deg, ${BRAND.pink}, ${BRAND.orange}, ${BRAND.yellow})`,
-
                         WebkitBackgroundClip: "text",
-
                         WebkitTextFillColor: "transparent",
-
                         backgroundClip: "text",
                       }}
                     >
@@ -2093,45 +2075,28 @@ export default function HomePage() {
   <div className="space-y-5">
 
     <InfiniteMarquee
-
       // products={row1.length > 0 ? row1 : products}
-
       products={row1}
-
       speed={32}
-
       reverse={false}
-
     />
 
     {row2.length > 0 && (
-
       <InfiniteMarquee
-
         products={row2}
-
         speed={36}
-
         reverse={true}
-
       />
-
     )}
-
   </div>
-
 ) : (
 
   <div className="text-center py-16 text-charcoal-muted">
-
     <Droplets className="w-10 h-10 mx-auto mb-3 text-gold opacity-50" />
-
     <p className="text-sm">Products loading...</p>
-
   </div>
 
 )} */}
-
           {marqueeData.length > 0 || products.length > 0 ? (
             <div className="space-y-5">
               <InfiniteMarquee
@@ -2143,7 +2108,6 @@ export default function HomePage() {
                 speed={32}
                 reverse={false}
               />
-
               {(row2.length > 0 || products.length > 1) && (
                 <InfiniteMarquee
                   products={
@@ -2159,62 +2123,37 @@ export default function HomePage() {
           ) : (
             <div className="text-center py-16 text-charcoal-muted">
               <Droplets className="w-10 h-10 mx-auto mb-3 text-gold opacity-50" />
-
               <p className="text-sm">Products loading...</p>
             </div>
           )}
-
           {/* Featured 3 pinned cards below marquee */}
-
           {/* {products.length > 0 && (
-
             <div className="container-wide mt-14">
-
               <Section className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
                 {products.slice(0, 3).map((product, i) => (
-
                   <FeaturedProductCard key={product.id} product={product} index={i} />
-
                 ))}
-
               </Section>
-
             </div>
-
           )} */}
         </section>
 
         {/* ── FEATURED SHADES ──────────────────── */}
-
         <section className="section-padding bg-white">
           <div className="container-wide">
             {/* <Section>
-
               <motion.div variants={fadeUp} className="text-center mb-14">
-
                 <p className="section-label">Colour Inspiration</p>
-
                 <h2 className="section-title mb-4">Curated Shade Collections</h2>
-
                 <p className="section-subtitle mx-auto">Explore our handpicked colour palettes designed to elevate any space</p>
-
               </motion.div>
-
             </Section>
-
             <Section className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 lg:gap-5">
-
               {shades.slice(0, 12).map((shade) => (
-
                 <motion.div key={shade.id} variants={scaleIn} whileHover={{ y: -6, scale: 1.05 }} transition={{ type: 'spring', damping: 15 }}>
-
                   <ShadeCard shade={shade} size="lg" showInfo={false} />
-
                 </motion.div>
-
               ))}
-
             </Section> */}
 
             <Section>
@@ -2230,11 +2169,8 @@ export default function HomePage() {
                   <span
                     style={{
                       background: `linear-gradient(135deg, ${BRAND.pink}, ${BRAND.orange}, ${BRAND.yellow})`,
-
                       WebkitBackgroundClip: "text",
-
                       WebkitTextFillColor: "transparent",
-
                       backgroundClip: "text",
                     }}
                   >
@@ -2310,11 +2246,8 @@ export default function HomePage() {
 
                     <div className="p-5">
                       {/* <h3 className="font-serif text-xl font-semibold tracking-[-0.02em] text-charcoal">{f.name}</h3> */}
-
                       <h3 className="card-title">{f.name}</h3>
-
                       {/* <p className="text-xs text-charcoal-muted mt-1">{f.desc}</p> */}
-
                       <p className="text-sm text-charcoal-muted mt-1 leading-relaxed">
                         {f.desc}
                       </p>
@@ -2381,9 +2314,7 @@ export default function HomePage() {
         </section>
 
         {/* ── BEFORE / AFTER ───────────────────── */}
-
         {/* <section id="before-after" className="section-padding overflow-hidden" style={{ background: BRAND.dark }}> */}
-
         <section
           id="before-after"
           className="py-20 md:py-24 lg:py-28 overflow-hidden relative"
@@ -2412,21 +2343,13 @@ export default function HomePage() {
             </Section>
 
             {/* <div className="flex justify-center gap-3 mb-8 flex-wrap">
-
               {transformations.map((t, i) => (
-
                 <motion.button key={i} onClick={() => setActiveTransform(i)} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
-
                   className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${activeTransform === i ? 'text-white shadow-lg' : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white'}`}
-
                   style={activeTransform === i ? { background: t.color } : {}}>
-
                   {t.label}
-
                 </motion.button>
-
               ))}
-
             </div> */}
 
             <div className="flex justify-center gap-3 mb-8 md:mb-10 flex-wrap">
@@ -2475,97 +2398,54 @@ export default function HomePage() {
                 {/* <div className="grid md:grid-cols-2 gap-6 lg:gap-8 relative">
 
       <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-[0_24px_60px_rgba(0,0,0,0.28)]">
-
         <img
-
         src="/beforeimg.png"
-
         alt="Before transformation"
-
         className="w-full h-[340px] md:h-[520px] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-
         draggable={false}
-
       />
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
-
         <div className="absolute top-5 left-5 z-10 bg-black/45 backdrop-blur-sm text-white text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-1.5">
-
           <span className="w-2 h-2 rounded-full bg-white/60" />
-
           Before
-
         </div>
 
         <div className="absolute bottom-5 left-5 right-5 z-10">
-
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/35 backdrop-blur-md px-4 py-2 text-white/85 text-xs font-medium">
-
             Existing mood
-
           </div>
-
         </div>
-
       </div>
-
-
 
       <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-[0_24px_60px_rgba(0,0,0,0.28)]">
-
         <img
-
           src={transformations[activeTransform].after}
-
           alt="After transformation by Colorsome"
-
           className="w-full h-[340px] md:h-[520px] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-
           draggable={false}
-
         />
-
         <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-
         <div
-
           className="absolute top-5 right-5 z-10 text-white text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-1.5"
-
           style={{
-
             background: `${transformations[activeTransform].color}CC`,
-
             backdropFilter: 'blur(6px)',
-
           }}
-
         >
-
           <BadgeCheck className="w-3.5 h-3.5" />
-
           After Colorsome
-
         </div>
 
         <div className="absolute bottom-5 left-5 right-5 z-10">
-
           <div
-
             className="inline-flex items-center gap-2 rounded-full border border-white/10 backdrop-blur-md px-4 py-2 text-xs font-semibold text-white"
-
             style={{ background: `${transformations[activeTransform].color}22` }}
-
           >
-
             Complete makeover
-
           </div>
-
         </div>
-
       </div>
-
     </div> */}
 
                 <div
@@ -2578,35 +2458,22 @@ export default function HomePage() {
                 >
                   <img
                     // src={transformations[activeTransform].after}
-
                     src="https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=1200&q=80"
                     alt="After Colorsome"
                     className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                     draggable={false}
                   />
-
                   {/* <div
-
     className="absolute inset-y-0 left-0 overflow-hidden pointer-events-none"
-
     style={{ width: `${sliderPos}%` }}
-
   >
-
     <img
-
       src={transformations[activeTransform].before}
-
       alt="Before transformation"
-
       className="absolute inset-0 w-full h-full object-cover"
-
       draggable={false}
-
     />
-
   </div> */}
-
                   <img
                     src={transformations[activeTransform].before}
                     alt="Before transformation"
@@ -2614,9 +2481,7 @@ export default function HomePage() {
                     style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
                     draggable={false}
                   />
-
                   <div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-black/6 pointer-events-none" />
-
                   <div
                     className="absolute inset-y-0 z-20 pointer-events-none"
                     style={{ left: `${sliderPos}%` }}
@@ -2625,7 +2490,6 @@ export default function HomePage() {
                       className="absolute inset-y-0 left-0 w-[2px] -translate-x-1/2"
                       style={{
                         background: `linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.98), rgba(255,255,255,0.15))`,
-
                         boxShadow: `0 0 0 1px rgba(255,255,255,0.08), 0 0 24px ${transformations[activeTransform].color}44`,
                       }}
                     />
@@ -2640,7 +2504,6 @@ export default function HomePage() {
                     <motion.div
                       animate={{
                         scale: isDragging ? 1.08 : 1,
-
                         boxShadow: isDragging
                           ? `0 18px 45px rgba(0,0,0,0.30), 0 0 0 8px ${transformations[activeTransform].color}22`
                           : `0 16px 38px rgba(0,0,0,0.24), 0 0 0 6px rgba(255,255,255,0.06)`,
@@ -2660,10 +2523,8 @@ export default function HomePage() {
                             background: `linear-gradient(145deg, white, ${transformations[activeTransform].color}10)`,
                           }}
                         />
-
                         <div className="relative z-10 flex items-center justify-center gap-1 text-charcoal">
                           <ChevronLeft className="w-4 h-4" />
-
                           <ChevronRight className="w-4 h-4" />
                         </div>
                       </div>
@@ -2674,19 +2535,16 @@ export default function HomePage() {
                     <span className="w-2 h-2 rounded-full bg-white/60" />
                     Before
                   </div>
-
                   <div
                     className="absolute top-5 right-5 z-10 text-white text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-1.5 pointer-events-none border border-white/10"
                     style={{
                       background: `linear-gradient(135deg, ${transformations[activeTransform].color}, ${transformations[activeTransform].color}DD)`,
-
                       boxShadow: `0 8px 24px ${transformations[activeTransform].color}35`,
                     }}
                   >
                     <BadgeCheck className="w-3.5 h-3.5" />
                     After Colorsome
                   </div>
-
                   <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
                     <div className="flex items-center gap-2 rounded-full border border-white/10 bg-black/35 backdrop-blur-md px-4 py-2 text-xs text-white/85 shadow-[0_8px_24px_rgba(0,0,0,0.18)]">
                       <MoveHorizontal className="w-3.5 h-3.5" />
@@ -2698,17 +2556,11 @@ export default function HomePage() {
             </AnimatePresence>
 
             {/* <div className="text-center mt-6">
-
               <span className="inline-flex items-center gap-2 text-sm">
-
                 <Droplets className="w-4 h-4" style={{ color: BRAND.yellow }} />
-
                 <span className="text-white/50">Used:</span>
-
                 <span className="font-medium" style={{ color: transformations[activeTransform].color }}>{transformations[activeTransform].product}</span>
-
               </span>
-
             </div> */}
 
             <div className="text-center mt-8 md:mt-10">
@@ -2724,32 +2576,20 @@ export default function HomePage() {
                     style={{ color: transformations[activeTransform].color }}
                   />
                 </div>
-
                 <div className="text-left">
                   {/* <p className="text-[11px] uppercase tracking-[0.18em] text-white/45 font-semibold"> */}
-
                   {/* <p className="text-xs uppercase tracking-[0.14em] text-white/45 font-semibold">
-
         Featured makeover palette
-
       </p>
-
       <p
-
         className="text-sm font-semibold"
-
         style={{ color: transformations[activeTransform].color }}
-
       >
-
         {transformations[activeTransform].product}
-
       </p> */}
-
                   <p className="text-xs uppercase tracking-[0.14em] text-white/45 font-semibold">
                     Featured makeover palette
                   </p>
-
                   <p
                     className="text-sm font-semibold"
                     style={{ color: transformations[activeTransform].color }}
@@ -3133,7 +2973,7 @@ export default function HomePage() {
                               Estimated Cost
                             </p>
                             <p
-                              className="font-serif text-2xl font-bold"
+                              className="card-title text-2xl"
                               style={{ color: BRAND.orange }}
                             >
                               {calcAdvancedResult.cost}
@@ -3144,7 +2984,7 @@ export default function HomePage() {
                               Paintable Area
                             </p>
                             <p
-                              className="font-serif text-2xl font-bold"
+                              className="card-title text-2xl"
                               style={{ color: BRAND.blue }}
                             >
                               {calcAdvancedResult.area}
@@ -3155,7 +2995,7 @@ export default function HomePage() {
                               Paint Tier
                             </p>
                             <p
-                              className="font-serif text-2xl font-bold capitalize"
+                              className="card-title text-2xl capitalize"
                               style={{ color: BRAND.green }}
                             >
                               {calcAdvancedResult.tier}
@@ -3565,7 +3405,7 @@ export default function HomePage() {
                   <p className="text-white/60 text-xs uppercase tracking-widest font-semibold mb-2 relative z-10">
                     Get An Accurate Quote
                   </p>
-                  <h4 className="font-serif text-2xl font-semibold mb-3 relative z-10">
+                  <h4 className="card-title-light mb-3 relative z-10">
                     Skip the Math — Talk to an Expert
                   </h4>
                   <p className="text-white/70 text-sm mb-6 max-w-md mx-auto relative z-10">
@@ -3628,7 +3468,7 @@ export default function HomePage() {
                       {/* <span className="font-serif text-3xl font-semibold tracking-[-0.03em]" style={{ color: step.color }}>{step.num}</span> */}
 
                       <span
-                        className="font-[var(--font-cormorant)] text-3xl font-semibold tracking-[-0.03em]"
+                        className="mini-title text-3xl"
                         style={{ color: step.color }}
                       >
                         {step.num}
@@ -3711,7 +3551,7 @@ export default function HomePage() {
                   </div>
                   <span className="font-bold text-charcoal text-lg">4.9</span>
                   <span className="text-charcoal-muted text-sm">
-                    · 1,200+ verified reviews
+                    · Top-Rated by Homeowners
                   </span>
                 </div>
               </motion.div>
@@ -4048,7 +3888,7 @@ export default function HomePage() {
 
                   <div className="flex items-center justify-center tracking-tight leading-none">
                     <span
-                      className="font-serif text-2xl font-bold uppercase text-[#1A1A1A] tracking-[-0.03em]"
+                      className="brand-wordmark text-[#1A1A1A]"
                       style={{ fontFamily: "var(--font-cormorant)" }}
                     >
                       COLORSOME
@@ -4065,7 +3905,7 @@ export default function HomePage() {
                 </p>
 
                 <h2
-                  className="font-serif text-3xl sm:text-4xl font-bold text-charcoal tracking-tight mb-4 max-w-md mx-auto leading-tight relative z-10"
+                  className="section-title mb-4 max-w-md mx-auto relative z-10"
                   style={{ fontFamily: "var(--font-inter)" }}
                 >
                   Ready to Transform Your Space?

@@ -94,6 +94,7 @@
 // in src/app/layout.tsx
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { ChatBot } from '@/src/components/ChatBot';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -114,6 +115,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${playfair.variable}`}>
         {children}
+        {/* <ChatBot /> */}
       </body>
     </html>
   );

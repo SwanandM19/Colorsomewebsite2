@@ -45,5 +45,7 @@ export const products: Product[] = [
   { id: "22", name: "DuraGuard Interior", description: "Durable interior paint for high-traffic areas.", fullDescription: "DuraGuard Interior offers exceptional durability for high-traffic interior areas while maintaining an elegant finish.", status: "Active", image: "/DuraGuard_Interior.png", category: "Interior Paints", features: ["Scrub Resistant", "Stain Resistant", "Easy Cleaning", "Durable Finish"], applications: ["Hallways", "Corridors", "Kitchens", "High-traffic Areas"], slug: "duraguard-interior" },
   { id: "23", name: "Eva Emulsion", description: "Smooth emulsion with excellent coverage properties.", fullDescription: "Eva Emulsion delivers smooth, even coverage with excellent hiding power and an elegant matte finish.", status: "Active", image: "/Eva_Emulsion.png", category: "Emulsion Paints", features: ["Excellent Coverage", "Smooth Finish", "Matte Appearance", "Good Hiding Power"], applications: ["Interior Walls", "Ceilings", "Bedrooms", "Living Areas"], slug: "eva-emulsion" },
   { id: "24", name: "Zodiac Emulsion", description: "Premium emulsion for luxurious interior finishes.", fullDescription: "Zodiac Emulsion provides a luxurious, premium finish for discerning interior design projects requiring exceptional quality.", status: "Active", image: "/Zodiac_Emulsion.png", category: "Emulsion Paints", features: ["Luxurious Finish", "Premium Quality", "Excellent Durability", "Rich Colors"], applications: ["Luxury Homes", "Premium Offices", "Hotels", "Showrooms"], slug: "zodiac-emulsion" },
+  
+
 ];
 

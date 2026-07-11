@@ -4,11 +4,7 @@
 // import { Footer } from '../components/Footer';
 // import './globals.css';
 
-// export const metadata: Metadata = {
-//   title: 'Colorsome Paints — Premium Quality Paints for Beautiful Homes',
-//   description:
-//     'Premium interior and exterior paints with superior finish, lasting durability, and rich colour depth. Expert guidance for perfect results.',
-// };
+
 
 // export default function RootLayout({
 //   children,
@@ -94,7 +90,14 @@
 // in src/app/layout.tsx
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import type { Metadata } from "next";
 import { ChatBot } from '@/src/components/ChatBot';
+
+export const metadata: Metadata = {
+  title: 'Colorsome Paints ',
+  description:
+    'Premium interior and exterior paints with superior finish, lasting durability, and rich colour depth. Expert guidance for perfect results.',
+};
 
 const inter = Inter({
   subsets: ["latin"],

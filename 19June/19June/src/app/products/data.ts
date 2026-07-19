@@ -153,6 +153,9 @@ export interface Product {
   features: string[];
   applications: string[];
   slug: string;
+  packSizes?: string[];
+  finish?: string;
+  howToApply?: { step: string; title: string; desc: string }[];
   technicalSpecs?: {
     coverage?: string;
     dryingTime?: string;

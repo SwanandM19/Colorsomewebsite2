@@ -812,6 +812,7 @@ import Link from 'next/link';
 import { Award, Shield, Users, Target, Leaf, Droplets, CheckCircle, Phone, Menu, X, Sparkles, Zap, MapPin, Building } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Footer } from '@/src/components/Footer';
+import { Header } from '@/src/components/Header';
 
 const BRAND = {
   pink: '#E91E63',
@@ -859,28 +860,12 @@ const commitments = [
 ];
 
 export default function AboutPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled]             = useState(false);
-
   const timelineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: timelineRef,
     offset: ['start end', 'end center'],
   });
   const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const navMuted = 'text-[#6B6B6B]';
-  const navText  = 'text-[#2D2D2D]';
-  const navBg    = scrolled
-    ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-[#EDE6DA]/40'
-    : 'bg-white/80 backdrop-blur-md border-b border-[#EDE6DA]/30';
 
   return (
     <div className="bg-[#FDFBF7] min-h-screen pt-[72px] text-charcoal overflow-x-hidden font-sans relative selection:bg-[#F3E7C9]">
@@ -892,81 +877,22 @@ export default function AboutPage() {
         <div className="absolute bottom-[20%] left-[5%] w-[60vw] h-[60vw] sm:w-[40vw] sm:h-[40vw] rounded-full blur-[100px]" style={{ background: `radial-gradient(circle, ${BRAND.pink} 0%, transparent 70%)` }} />
       </div>
 
-      {/* ── HEADER ── */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}>
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 flex items-center justify-between h-[72px]">
-
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
-            <div className="w-[44px] h-[44px] sm:w-[52px] sm:h-[52px] rounded-xl sm:rounded-2xl flex items-center justify-center bg-white shadow border border-[#EDE6DA] p-1.5 shrink-0">
-              <Image src="/Ara_Weather_Coat.png" alt="Colorsome logo" width={52} height={52} className="w-full h-full object-contain" />
-            </div>
-            <div className="flex flex-col justify-center leading-none">
-              <div className="flex items-start">
-                <span className={`transition-colors duration-300 ${navText}`}
-                  style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(1.15rem, 3.5vw, 1.9rem)', lineHeight: '0.85', fontWeight: 700, letterSpacing: '-0.055em', textTransform: 'uppercase' }}>
-                  COLORSOME
-                </span>
-                <span className={`transition-colors duration-300 ${navText}`}
-                  style={{ fontFamily: 'var(--font-inter)', fontSize: '0.5rem', lineHeight: 1, fontWeight: 700, marginLeft: '0.1rem', marginTop: '0.05rem' }}>
-                  ®
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center">
-            <div className="flex items-center gap-1 rounded-full border border-[#EDE6DA]/50 bg-white/60 backdrop-blur-md px-2 py-1 shadow-[0_8px_24px_rgba(0,0,0,0.03)]">
-              {[['Home','/'],['Products','/products'],['Shades','/shades'],['Assistance','/assistance'],['About','/about'],['Contact','/contact']].map(([label,href]) => {
-                const isActive = label === 'About';
-                return (
-                  <Link key={label} href={href}
-                    className={`relative rounded-full px-4 py-2.5 transition-all duration-200 ${isActive ? 'text-[#2D2D2D] bg-[#F3E7C9] font-semibold' : `${navMuted} hover:text-[#2D2D2D] hover:bg-black/[0.03] font-medium`}`}
-                    style={{ fontFamily: 'var(--font-inter)', fontSize: '0.92rem', letterSpacing: '-0.01em', lineHeight: 1 }}>
-                    {label}
-                  </Link>
-                );
-              })}
-            </div>
-          </nav>
-
-          {/* Right controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Link href="/assistance" className="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs uppercase tracking-widest font-black text-white bg-[#2D2D2D] shadow hover:shadow-lg transition-all">
-              <Phone className="w-3.5 h-3.5" /> Book Assistance
-            </Link>
-            <button className={`p-2 rounded-lg md:hidden transition-colors ${navText}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Menu">
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-              className="absolute left-0 right-0 top-[72px] bg-white/95 backdrop-blur-md border-t border-[#EDE6DA]/40 shadow-xl px-5 py-4 space-y-1">
-              {[['Home','/'],['Products','/products'],['Shades','/shades'],['Assistance','/assistance'],['About','/about'],['Contact','/contact']].map(([label,href]) => (
-                <Link key={label} href={href} onClick={() => setMobileMenuOpen(false)}
-                  className="block text-sm font-semibold text-charcoal hover:text-orange-500 transition-colors py-2.5 border-b border-gray-50 last:border-0 font-inter">
-                  {label}
-                </Link>
-              ))}
-              <div className="pt-3">
-                <Link href="/assistance" onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-xs uppercase tracking-widest font-black text-white bg-[#2D2D2D] shadow">
-                  <Phone className="w-3.5 h-3.5" /> Book Assistance
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+      <Header />
 
       {/* ── HERO / STORY ── */}
       <section className="py-10 sm:py-16 md:py-24 bg-white/40 backdrop-blur-sm border-b border-[#EDE6DA]/50 relative overflow-hidden">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+        {/* Subtle CSS Micro-Grid Architectural Canvas Blueprint Layer */}
+        <div
+          className="absolute inset-0 opacity-[0.45] pointer-events-none"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #EDE6DA 1px, transparent 1px),
+              linear-gradient(to bottom, #EDE6DA 1px, transparent 1px)
+            `,
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
           <div className="grid lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-16 items-center">
 
             {/* Left: text */}

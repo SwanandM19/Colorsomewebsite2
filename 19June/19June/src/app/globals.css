@@ -17,6 +17,13 @@
     --terracotta: #C4704B;
     --sage: #8B9E7E;
     --navy: #2C3E50;
+
+    /* Inter is now the site-wide typeface. --font-cormorant is aliased to
+       Inter so every existing serif reference resolves to Inter without
+       touching each call site. */
+    --font-cormorant: var(--font-inter);
+
+    --ease-premium: cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
 
@@ -36,12 +43,12 @@
   }
 
 
-  /* Cormorant Garamond: brand identifiers, h1 heroes, h2 section breaks */
+  /* h1 heroes, h2 section breaks — Inter, medium weight, tight tracking */
   h1, h2 {
-    font-family: var(--font-cormorant), Georgia, serif;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.08;
+    font-family: var(--font-inter), sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
   }
 
 
@@ -129,23 +136,25 @@
 
   /* ─── Cards ───────────────────────────────────────────────────────────────── */
   .card {
-    @apply bg-white rounded-lg transition-all duration-500;
+    @apply bg-white rounded-lg;
     border: 1px solid rgba(0, 0, 0, 0.04);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: transform 300ms var(--ease-premium), box-shadow 300ms var(--ease-premium), border-color 300ms var(--ease-premium);
   }
   .card:hover {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
+    transform: translateY(-4px);
     border-color: rgba(201, 168, 88, 0.15);
   }
 
   .card-premium {
-    @apply bg-white rounded-lg transition-all duration-500;
+    @apply bg-white rounded-lg;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 8px 30px rgba(0, 0, 0, 0.03);
+    transition: transform 300ms var(--ease-premium), box-shadow 300ms var(--ease-premium);
   }
   .card-premium:hover {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-    transform: translateY(-3px);
+    transform: translateY(-4px);
   }
 
 
@@ -210,18 +219,33 @@
   }
 
 
-  /* ─── Link hover ──────────────────────────────────────────────────────────── */
-  .link-hover {
+  /* ─── Link hover / animated underline ────────────────────────────────────── */
+  .link-hover,
+  .nav-underline {
     @apply relative inline-block;
   }
-  .link-hover::after {
+  .link-hover::after,
+  .nav-underline::after {
     content: '';
-    @apply absolute left-0 bottom-0 w-0 transition-all duration-300;
+    @apply absolute left-0 right-0 bottom-0;
     height: 1px;
     background-color: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 300ms var(--ease-premium);
   }
-  .link-hover:hover::after {
-    @apply w-full;
+  .link-hover:hover::after,
+  .nav-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* ─── Arrow icons ─────────────────────────────────────────────────────────── */
+  .arrow-hover {
+    transition: transform 300ms var(--ease-premium);
+  }
+  .group:hover .arrow-hover {
+    transform: translateX(4px);
   }
 
 
@@ -245,13 +269,13 @@
     color: var(--gold);
   }
 
-  /* h2-level section heading — Cormorant (major section break) */
+  /* h2-level section heading — Inter (major section break) */
   .section-title {
-    font-family: var(--font-cormorant), Georgia, serif;
+    font-family: var(--font-inter), sans-serif;
     font-size: clamp(2.25rem, 4vw, 4.1rem);
-    line-height: 1.02;
-    letter-spacing: -0.035em;
-    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    font-weight: 500;
     color: var(--charcoal);
   }
 
@@ -267,34 +291,32 @@
 
 /* ─── Display / hero classes (outside @layer so they have highest specificity) ── */
 
-/* h1 main banner — Cormorant Garamond */
+/* h1 main banner — Inter */
 .hero-title {
-  font-family: var(--font-cormorant), Georgia, serif;
+  font-family: var(--font-inter), sans-serif;
   font-size: clamp(2.2rem, 4.5vw, 4.2rem);
-  line-height: 1.05;
-  letter-spacing: -0.045em;
-  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  font-weight: 500;
   color: var(--charcoal);
 }
 
-/* h1/h2 on dark/coloured backgrounds — Cormorant Garamond */
+/* h1/h2 on dark/coloured backgrounds — Inter */
 .hero-title-light {
-  font-family: var(--font-cormorant), Georgia, serif;
-  /* font-size: clamp(3rem, 6vw, 5.7rem); */
+  font-family: var(--font-inter), sans-serif;
   font-size: clamp(3rem, 5.5vw, 5.2rem);
-  line-height: 0.98;
-  letter-spacing: -0.04em;
-  font-weight: 600;
+  line-height: 0.93;
+  letter-spacing: -0.03em;
+  font-weight: 500;
   color: white;
 }
 
-/* Brand logo wordmark — Cormorant Garamond (brand identifier) */
+/* Brand logo wordmark — Inter (brand identifier) */
 .brand-wordmark {
-  font-family: var(--font-cormorant), Georgia, serif;
+  font-family: var(--font-inter), sans-serif;
   font-size: 1.375rem;
   line-height: 1;
   letter-spacing: 0.01em;
-  font-style: italic;
   font-weight: 600;
 }
 
@@ -357,19 +379,19 @@
 
   /* ─── Animations ──────────────────────────────────────────────────────────── */
   .animate-fade-in {
-    animation: fadeIn 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: fadeIn 0.56s var(--ease-premium) forwards;
   }
   .animate-fade-in-up {
-    animation: fadeInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: fadeInUp 0.56s var(--ease-premium) forwards;
   }
   .animate-fade-in-down {
-    animation: fadeInDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: fadeInDown 0.56s var(--ease-premium) forwards;
   }
   .animate-scale-in {
-    animation: scaleIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: scaleIn 0.5s var(--ease-premium) forwards;
   }
   .animate-slide-right {
-    animation: slideRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: slideRight 0.56s var(--ease-premium) forwards;
   }
 
   @keyframes fadeIn {
@@ -377,7 +399,7 @@
     to   { opacity: 1; }
   }
   @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(24px); }
+    from { opacity: 0; transform: translateY(22px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   @keyframes fadeInDown {
@@ -391,6 +413,97 @@
   @keyframes slideRight {
     from { opacity: 0; transform: translateX(-20px); }
     to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ─── Scroll reveal (IntersectionObserver-driven, see ScrollReveal.tsx) ───── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 560ms var(--ease-premium), transform 560ms var(--ease-premium);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Hero entrance: fade + rise + blur, staggered 105ms apart, 120ms initial delay */
+  .reveal-hero {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(4px);
+    transition: opacity 760ms var(--ease-premium), transform 760ms var(--ease-premium), filter 760ms var(--ease-premium);
+    transition-delay: 120ms;
+  }
+  .reveal-hero.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  .reveal-hero-group > .reveal-hero:nth-child(1) { transition-delay: 120ms; }
+  .reveal-hero-group > .reveal-hero:nth-child(2) { transition-delay: 225ms; }
+  .reveal-hero-group > .reveal-hero:nth-child(3) { transition-delay: 330ms; }
+  .reveal-hero-group > .reveal-hero:nth-child(4) { transition-delay: 435ms; }
+  .reveal-hero-group > .reveal-hero:nth-child(5) { transition-delay: 540ms; }
+  .reveal-hero-group > .reveal-hero:nth-child(6) { transition-delay: 645ms; }
+
+  /* Manual stagger — for hand-placed siblings that aren't direct children
+     of .reveal-hero-group (e.g. reveal + reveal-hero mixed in one block) */
+  .reveal-d1, .reveal-hero-d1 { transition-delay: 225ms; }
+  .reveal-d2, .reveal-hero-d2 { transition-delay: 330ms; }
+  .reveal-d3, .reveal-hero-d3 { transition-delay: 435ms; }
+  .reveal-d4, .reveal-hero-d4 { transition-delay: 540ms; }
+
+  /* ─── Image hover zoom ────────────────────────────────────────────────────── */
+  .img-hover-zoom {
+    transition: transform 600ms ease-out;
+  }
+  .img-hover-zoom:hover,
+  .group:hover .img-hover-zoom {
+    transform: scale(1.03);
+  }
+
+  /* ─── Grayscale → colour hover (journal / editorial imagery) ────────────────── */
+  .grayscale-hover {
+    filter: grayscale(1);
+    transform: scale(1);
+    transition: filter 550ms var(--ease-premium), transform 550ms var(--ease-premium);
+  }
+  .grayscale-hover:hover,
+  .group:hover .grayscale-hover {
+    filter: grayscale(0);
+    transform: scale(1.03);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto !important;
+    }
+    .reveal,
+    .reveal-hero,
+    .animate-fade-in,
+    .animate-fade-in-up,
+    .animate-fade-in-down,
+    .animate-scale-in,
+    .animate-slide-right {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+    .card,
+    .card-premium,
+    .img-hover-zoom,
+    .grayscale-hover,
+    .arrow-hover,
+    .link-hover::after,
+    .nav-underline::after {
+      transition: none !important;
+    }
+    .card:hover,
+    .card-premium:hover {
+      transform: none !important;
+    }
   }
 
 

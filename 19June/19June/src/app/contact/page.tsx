@@ -580,6 +580,7 @@ import Link from 'next/link';
 import { MapPin, Phone, Mail, Clock, ArrowRight, Menu, X, Sparkles, Building2, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Footer } from '@/src/components/Footer';
+import { Header } from '@/src/components/Header';
 
 const BRAND = {
   pink: '#E91E63',
@@ -615,22 +616,6 @@ const offices = [
 ];
 
 export default function ContactPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const navText = 'text-[#2D2D2D]';
-  const navMuted = 'text-[#6B6B6B]';
-  const navBg = scrolled
-    ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-[#EDE6DA]/40'
-    : 'bg-white/80 backdrop-blur-md border-b border-[#EDE6DA]/30';
-
   return (
     <div className="bg-[#FDFBF7] min-h-screen pt-[72px] text-[#2D2D2D] overflow-x-hidden font-sans relative selection:bg-[#F3E7C9]">
 
@@ -650,127 +635,22 @@ export default function ContactPage() {
         <div className="absolute bottom-[10%] left-[5%] w-[50vw] h-[50vw] md:w-[40vw] md:h-[40vw] rounded-full blur-[100px] opacity-25" style={{ background: `radial-gradient(circle, ${BRAND.pink} 0%, transparent 70%)` }} />
       </div>
 
-      {/* ── HEADER ── */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}>
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 flex items-center justify-between h-[72px]">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-            <div className="w-[44px] h-[44px] sm:w-[52px] sm:h-[52px] rounded-xl sm:rounded-2xl flex items-center justify-center bg-white shadow-[0_10px_30px_rgba(0,0,0,0.06)] border border-[#EDE6DA] p-1.5 sm:p-2 shrink-0">
-              <Image
-                src="/Ara_Weather_Coat.png"
-                alt="Colorsome logo"
-                width={52}
-                height={52}
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div className="flex flex-col justify-center leading-none">
-              <div className="flex items-start">
-                <span
-                  className={`transition-colors duration-300 ${navText}`}
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(1.35rem, 4vw, 2rem)',
-                    lineHeight: '0.82',
-                    fontWeight: 700,
-                    letterSpacing: '-0.05em',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  COLORSOME
-                </span>
-                <span
-                  className={`transition-colors duration-300 ${navText}`}
-                  style={{
-                    fontFamily: 'var(--font-inter)',
-                    fontSize: '0.48rem',
-                    lineHeight: 1,
-                    fontWeight: 700,
-                    marginLeft: '0.15rem',
-                    marginTop: '0.1rem',
-                    letterSpacing: '0.04em',
-                  }}
-                >
-                  R
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center">
-            <div className="flex items-center gap-1 rounded-full border border-[#EDE6DA]/50 bg-white/60 backdrop-blur-md px-2 py-1 shadow-[0_8px_24px_rgba(0,0,0,0.03)]">
-              {[['Home', '/'], ['Products', '/products'], ['Shades', '/shades'], ['Assistance', '/assistance'], ['About', '/about'], ['Contact', '/contact']].map(([label, href]) => {
-                const isActive = label === 'Contact';
-                return (
-                  <Link
-                    key={label}
-                    href={href}
-                    className={`relative rounded-full px-3 lg:px-4 py-2.5 transition-all duration-200 ${
-                      isActive
-                        ? 'text-[#2D2D2D] bg-[#F3E7C9] font-semibold'
-                        : `${navMuted} hover:text-[#2D2D2D] hover:bg-black/[0.03] font-medium`
-                    }`}
-                    style={{
-                      fontFamily: 'var(--font-inter)',
-                      fontSize: '0.88rem',
-                      letterSpacing: '-0.01em',
-                      lineHeight: 1,
-                    }}
-                  >
-                    {label}
-                  </Link>
-                );
-              })}
-            </div>
-          </nav>
-
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Link href="/assistance" className="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs uppercase tracking-widest font-black transition-all duration-300 text-white shadow-md hover:shadow-lg bg-[#2D2D2D]">
-              <Phone className="w-3.5 h-3.5" /> Book Assistance
-            </Link>
-            <button className="md:hidden p-2 rounded-lg text-[#2D2D2D]" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Menu">
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              className="md:hidden bg-white/95 backdrop-blur-md border-t border-[#EDE6DA]/40 shadow-xl px-6 py-4 space-y-1"
-            >
-              {[['Home', '/'], ['Products', '/products'], ['Shades', '/shades'], ['Assistance', '/assistance'], ['About', '/about'], ['Contact', '/contact']].map(([label, href]) => (
-                <Link
-                  key={label}
-                  href={href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block text-sm font-semibold text-[#2D2D2D] hover:text-orange-500 transition-colors py-2.5 border-b border-gray-100 last:border-0"
-                  style={{ fontFamily: 'var(--font-inter)' }}
-                >
-                  {label}
-                </Link>
-              ))}
-              <div className="pt-3">
-                <Link
-                  href="/assistance"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-xs uppercase tracking-widest font-black text-white bg-[#2D2D2D]"
-                >
-                  <Phone className="w-3.5 h-3.5" /> Book Assistance
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+      <Header />
 
       {/* ── HERO ── */}
       <section className="pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 relative overflow-hidden">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+        {/* Subtle CSS Micro-Grid Architectural Canvas Blueprint Layer */}
+        <div
+          className="absolute inset-0 opacity-[0.45] pointer-events-none"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #EDE6DA 1px, transparent 1px),
+              linear-gradient(to bottom, #EDE6DA 1px, transparent 1px)
+            `,
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
           <motion.div className="max-w-3xl" initial="hidden" animate="visible" variants={fadeInUp}>
             <div className="inline-flex items-center gap-2 bg-[#F3E7C9] text-[#2D2D2D] font-black text-[10px] tracking-wider uppercase px-3 py-1 rounded-full mb-4 sm:mb-5" style={{ fontFamily: 'var(--font-inter)' }}>
               <Sparkles className="w-3.5 h-3.5 text-orange-500" /> We're Responsive

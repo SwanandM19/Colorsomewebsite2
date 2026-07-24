@@ -1,4 +1,6 @@
 
+
+
 "use client";
 
 import Link from "next/link";
@@ -18,43 +20,9 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[#121212] text-white border-t border-white/[0.03] font-sans relative overflow-hidden">
+    <footer className="bg-[#121212] text-white border-t border-white/[0.03] font-sans relative overflow-hidden pt-12">
       {/* Decorative background element */}
       <div className="absolute top-0 right-1/4 w-[350px] h-[350px] bg-gradient-to-bl from-gold/5 via-transparent to-transparent rounded-full blur-[100px] pointer-events-none -z-10" />
-
-      {/* 1. UPPER NEWSLETTER SECTION */}
-      <div className="max-w-[1280px] mx-auto px-6 pt-16 pb-12">
-        <div className="bg-gradient-to-r from-white/[0.02] to-transparent border border-white/[0.04] rounded-[2rem] p-8 md:p-12 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-32 h-32 bg-gold/5 rounded-full blur-2xl pointer-events-none" />
-
-          <div>
-            <div className="inline-flex items-center gap-1.5 bg-gold/10 text-[#F3E7C9] text-[9px] font-bold uppercase tracking-[0.2em] px-3 py-1 rounded-full mb-4 border border-[#F3E7C9]/20">
-              <Sparkles className="w-3 h-3 text-gold" /> Style Letters
-            </div>
-            <h3 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-white mb-2">
-              Stay{" "}
-              <span className="font-medium italic text-[#F3E7C9]">
-                Inspired
-              </span>
-            </h3>
-            <p className="text-sm text-gray-400 font-light max-w-md leading-relaxed">
-              Curated design perspectives, lighting science tips, and premium
-              finish reveals delivered straight to your portal.
-            </p>
-          </div>
-
-          <div className="w-full lg:w-auto flex items-center max-w-md bg-white/[0.03] border border-white/[0.08] rounded-xl p-1.5 focus-within:border-gold/40 focus-within:bg-white/[0.05] transition-all duration-300">
-            <input
-              type="email"
-              placeholder="Enter email address"
-              className="bg-transparent pl-4 pr-2 py-2 text-sm text-white placeholder-white/20 outline-none flex-1 min-w-[200px] font-light"
-            />
-            <button className="px-6 py-2.5 bg-[#F3E7C9] hover:bg-white text-[#121212] font-semibold text-xs uppercase tracking-wider rounded-lg transition-all duration-300 transform hover:scale-[1.02]">
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </div>
 
       {/* 2. MAIN DIRECTORY CANVAS */}
       <div className="max-w-[1280px] mx-auto px-6 pb-16 pt-4">
@@ -196,7 +164,6 @@ export function Footer() {
       </div>
 
       {/* 3. BASELINE BOTTOM FLOOR */}
-      {/* 3. BASELINE BOTTOM FLOOR */}
       <div className="bg-[#0D0D0D] py-6 border-t border-white/[0.01]">
         <div className="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-light">
           <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-4 text-center sm:text-left">
@@ -204,7 +171,6 @@ export function Footer() {
             <span className="hidden sm:inline text-white/[0.08]">|</span>
             <p className="text-gray-400 font-light tracking-wide flex items-center gap-1.5 flex-wrap justify-center sm:justify-start">
               Designed & Developed by 
-              {/* <span className="text-white/[0.15] text-[10px]">&amp;</span> */}
               <a 
                 href="https://www.servexai.in" 
                 target="_blank" 

@@ -15,13 +15,13 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
   };
 
   return (
-    <div className="card-premium overflow-hidden group">
+    <div className="card-premium overflow-hidden group reveal">
       <div className="relative h-56 bg-gradient-to-br from-warm-gray to-warm-gray-light overflow-hidden">
         {product.image_url ? (
           <img
             src={product.image_url}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            className="w-full h-full object-cover img-hover-zoom"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">

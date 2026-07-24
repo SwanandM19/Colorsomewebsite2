@@ -599,6 +599,7 @@ import {
 } from 'lucide-react';
 import { submitConsultation } from '../../lib/supabase';
 import { Footer } from '@/src/components/Footer';
+import { Header } from '@/src/components/Header';
 
 const BRAND = {
   pink: '#E91E63',
@@ -645,8 +646,6 @@ export default function AssistancePage() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
   // Smooth scroll controller
   const scrollToForm = (e?: React.MouseEvent) => {
@@ -692,22 +691,10 @@ export default function AssistancePage() {
     }
   };
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const navText = 'text-[#2D2D2D]';
-  const navMuted = 'text-[#6B6B6B]';
-  const navBg = scrolled
-    ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-[#EDE6DA]/40'
-    : 'bg-white/80 backdrop-blur-md border-b border-[#EDE6DA]/30';
-
   if (isSuccess) {
     return (
       <div className="bg-[#FDFBF7] min-h-screen pt-[120px] flex items-center relative overflow-hidden">
+        <Header />
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none opacity-20">
           <div className="absolute top-[20%] left-[20%] w-[50%] h-[50%] rounded-full blur-[120px]" style={{ background: `radial-gradient(circle, ${BRAND.pink} 0%, transparent 70%)` }} />
         </div>
@@ -749,133 +736,22 @@ export default function AssistancePage() {
         <div className="absolute bottom-[10%] left-[5%] w-[40vw] h-[40vw] rounded-full blur-[100px]" style={{ background: `radial-gradient(circle, ${BRAND.pink} 0%, transparent 70%)` }} />
       </div>
 
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}>
-        <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-[72px]">
-          <Link href="/" className="flex items-center gap-4 flex-shrink-0 min-w-[260px]">
-            <div className="w-[62px] h-[62px] rounded-2xl flex items-center justify-center bg-white shadow-[0_10px_30px_rgba(0,0,0,0.06)] border border-[#EDE6DA] p-2 shrink-0">
-              <Image
-                src="/Ara_Weather_Coat.png"
-                alt="Colorsome logo"
-                width={62}
-                height={62}
-                className="w-full h-full object-contain scale-[1.08]"
-              />
-            </div>
-
-            <div className="flex flex-col justify-center leading-none">
-              <div className="flex items-start">
-                <span
-                  className={`transition-colors duration-300 ${navText}`}
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: '2rem',
-                    lineHeight: '0.82',
-                    fontWeight: 700,
-                    letterSpacing: '-0.055em',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  COLORSOME
-                </span>
-
-                <span
-                  className={`transition-colors duration-300 ${navText}`}
-                  style={{
-                    fontFamily: 'var(--font-inter)',
-                    fontSize: '0.55rem',
-                    lineHeight: 1,
-                    fontWeight: 700,
-                    marginLeft: '0.18rem',
-                    marginTop: '0.12rem',
-                    letterSpacing: '0.04em',
-                  }}
-                >
-                  R
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          <nav className="hidden md:flex items-center">
-            <div className="flex items-center gap-1 rounded-full border border-[#EDE6DA]/50 bg-white/60 backdrop-blur-md px-2 py-1 shadow-[0_8px_24px_rgba(0,0,0,0.03)]">
-              {[['Home', '/'], ['Products', '/products'], ['Shades', '/shades'], ['Assistance', '/assistance'], ['About', '/about'], ['Contact', '/contact']].map(([label, href]) => {
-                const isActive = label === 'Assistance';
-
-                return (
-                  <Link
-                    key={label}
-                    href={href}
-                    className={`relative rounded-full px-4 py-2.5 transition-all duration-200 ${
-                      isActive
-                        ? 'text-[#2D2D2D] bg-[#F3E7C9] font-semibold'
-                        : `${navMuted} hover:text-[#2D2D2D] hover:bg-black/[0.03] font-medium`
-                    }`}
-                    style={{
-                      fontFamily: 'var(--font-inter)',
-                      fontSize: '0.92rem',
-                      letterSpacing: '-0.01em',
-                      lineHeight: 1,
-                    }}
-                  >
-                    {label}
-                  </Link>
-                );
-              })}
-            </div>
-          </nav>
-
-          <div className="flex items-center gap-3 font-inter">
-            {/* Added onClick execution here to focus on form immediately */}
-            <button
-              onClick={() => scrollToForm()}
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs uppercase tracking-widest font-black transition-all duration-300 text-white shadow-md hover:shadow-lg bg-[#2D2D2D]"
-            >
-              <Phone className="w-3.5 h-3.5" /> Book Assistance
-            </button>
-
-            <button
-              className={`md:hidden p-2 rounded-lg transition-colors ${navText}`}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              className="md:hidden bg-white/95 backdrop-blur-md border-t border-[#EDE6DA]/40 shadow-xl px-6 py-4 space-y-3"
-            >
-              {[
-                ['Home', '/'],
-                ['Products', '/products'],
-                ['Shades', '/shades'],
-                ['Assistance', '/assistance'],
-                ['About', '/about'],
-                ['Contact', '/contact'],
-              ].map(([label, href]) => (
-                <Link
-                  key={label}
-                  href={href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block text-sm font-semibold text-charcoal hover:text-orange-500 transition-colors py-2 border-b border-gray-50 font-inter"
-                >
-                  {label}
-                </Link>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+      <Header />
 
       {/* HERO SECTION */}
       <section className="py-20 bg-white/40 backdrop-blur-sm border-b border-[#EDE6DA]/50 relative overflow-hidden">
-        <div className="max-w-[1280px] mx-auto px-6">
+        {/* Subtle CSS Micro-Grid Architectural Canvas Blueprint Layer */}
+        <div
+          className="absolute inset-0 opacity-[0.45] pointer-events-none"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #EDE6DA 1px, transparent 1px),
+              linear-gradient(to bottom, #EDE6DA 1px, transparent 1px)
+            `,
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="max-w-[1280px] mx-auto px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <p className="inline-block px-3 py-1 mb-4 rounded-full bg-[#F3E7C9] text-charcoal text-[10px] uppercase tracking-[0.2em] font-black font-inter">
@@ -1162,7 +1038,7 @@ export default function AssistancePage() {
                     <span className="font-bold text-base text-charcoal tracking-wide transition-colors group-hover:text-orange-500">
                       {faq.q}
                     </span>
-                    <ChevronDown className={`w-4 h-4 text-charcoal-muted shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-orange-500' : ''}`} />
+                    <PlusMinus open={isOpen} className={`shrink-0 ${isOpen ? 'text-orange-500' : 'text-charcoal-muted'}`} />
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (
@@ -1170,11 +1046,17 @@ export default function AssistancePage() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        transition={{ duration: 0.21, ease: [0.22, 0.61, 0.36, 1] }}
                       >
-                        <div className="px-8 pb-6 pt-2 text-charcoal/80 text-sm sm:text-[15px] leading-relaxed border-t border-gray-100 bg-[#FDFBF7]/50">
+                        <motion.div
+                          initial={{ y: -8, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          exit={{ y: -8, opacity: 0 }}
+                          transition={{ duration: 0.21, ease: 'easeOut' }}
+                          className="px-8 pb-6 pt-2 text-charcoal/80 text-sm sm:text-[15px] leading-relaxed border-t border-gray-100 bg-[#FDFBF7]/50"
+                        >
                           {faq.a}
-                        </div>
+                        </motion.div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -1195,5 +1077,17 @@ function ChevronDown({ className }: { className?: string }) {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
       <path d="m6 9 6 6 6-6"/>
     </svg>
+  );
+}
+
+function PlusMinus({ open, className }: { open: boolean; className?: string }) {
+  return (
+    <span className={`relative w-4 h-4 ${className || ''}`}>
+      <span className="absolute left-0 top-1/2 w-full h-[2px] -translate-y-1/2 bg-current rounded-full" />
+      <span
+        className="absolute left-1/2 top-0 h-full w-[2px] -translate-x-1/2 bg-current rounded-full transition-transform duration-300"
+        style={{ transform: `translateX(-50%) scaleY(${open ? 0 : 1})` }}
+      />
+    </span>
   );
 }

@@ -16,9 +16,9 @@ export function ShadeCard({ shade, size = 'md', showInfo = true }: ShadeCardProp
   };
 
   return (
-    <div className="group cursor-pointer">
+    <div className="group cursor-pointer reveal">
       <div
-        className={`${sizeClasses[size]} rounded-xl flex items-center justify-center transition-all duration-400 group-hover:scale-[1.03] group-hover:shadow-xl relative overflow-hidden`}
+        className={`${sizeClasses[size]} rounded-xl flex items-center justify-center transition-all duration-500 ease-out group-hover:scale-[1.03] group-hover:shadow-xl relative overflow-hidden`}
         style={{ backgroundColor: shade.hex_code }}
       >
         {/* Hover overlay */}

@@ -1014,6 +1014,7 @@ import Link from "next/link";
 import { products } from "./data";
 import type { Product } from "./data";
 import { Footer } from "@/src/components/Footer";
+import { Header } from "@/src/components/Header";
 
 const ALL_CATEGORIES = [
   "All",
@@ -1035,15 +1036,9 @@ const ALL_CATEGORIES = [
 export default function ProductsPage() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const filtered = products.filter((p) => {
@@ -1064,152 +1059,9 @@ export default function ProductsPage() {
     {},
   );
 
-  const navText = "text-[#2D2D2D]";
-  const navMuted = "text-[#6B6B6B]";
-  const navBg = scrolled
-    ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-[#F0EAE1]"
-    : "bg-white/95 backdrop-blur-md border-b border-[#F0EAE1]";
-
   return (
     <div className="bg-[#FAF8F5] min-h-screen pt-[72px]">
-      {/* Page Header */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}
-      >
-        <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-[72px]">
-          <Link
-            href="/"
-            className="flex items-center gap-4 flex-shrink-0 min-w-[260px]"
-          >
-            <div className="w-[62px] h-[62px] rounded-2xl flex items-center justify-center bg-white shadow-[0_10px_30px_rgba(0,0,0,0.06)] border border-[#E8E2D8] p-2 shrink-0">
-              <Image
-                src="/Ara_Weather_Coat.png"
-                alt="Colorsome logo"
-                width={62}
-                height={62}
-                className="w-full h-full object-contain scale-[1.08]"
-              />
-            </div>
-            <div className="flex flex-col justify-center leading-none">
-              <div className="flex items-start">
-                <span
-                  className={`transition-colors duration-300 ${navText}`}
-                  style={{
-                    fontFamily: "var(--font-cormorant)",
-                    fontSize: "2rem",
-                    lineHeight: "0.82",
-                    fontWeight: 700,
-                    letterSpacing: "-0.055em",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  COLORSOME
-                </span>
-                <span
-                  className={`transition-colors duration-300 ${navText}`}
-                  style={{
-                    fontFamily: "var(--font-inter)",
-                    fontSize: "0.55rem",
-                    lineHeight: 1,
-                    fontWeight: 700,
-                    marginLeft: "0.18rem",
-                    marginTop: "0.12rem",
-                    letterSpacing: "0.04em",
-                  }}
-                >
-                  ®
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          <nav className="hidden md:flex items-center">
-            <div className="flex items-center gap-1 rounded-full border border-black/[0.06] bg-white/80 backdrop-blur-md px-2 py-1 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              {[
-                ["Home", "/"],
-                ["Products", "/products"],
-                ["Shades", "/shades"],
-                ["Assistance", "/assistance"],
-                ["About", "/about"],
-                ["Contact", "/contact"],
-              ].map(([label, href]) => {
-                const isActive = label === "Products";
-                return (
-                  <Link
-                    key={label}
-                    href={href}
-                    className={`relative rounded-full px-4 py-2.5 transition-all duration-200 ${
-                      isActive
-                        ? "text-[#2D2D2D] bg-[#F3E7C9]"
-                        : `${navMuted} hover:text-[#2D2D2D] hover:bg-black/[0.04]`
-                    }`}
-                    style={{
-                      fontFamily: "var(--font-inter)",
-                      fontSize: "0.92rem",
-                      fontWeight: isActive ? 600 : 500,
-                      letterSpacing: "-0.01em",
-                      lineHeight: 1,
-                    }}
-                  >
-                    {label}
-                  </Link>
-                );
-              })}
-            </div>
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/assistance"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 text-white flex-shrink-0"
-              style={{ background: "#2D2D2D" }}
-            >
-              <Phone className="w-4 h-4" /> Book Assistance
-            </Link>
-
-            <button
-              className={`md:hidden p-2 rounded-lg transition-colors ${navText}`}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Menu"
-            >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              className="md:hidden bg-white border-t border-gray-100 shadow-xl px-6 py-4 space-y-3"
-            >
-              {[
-                ["Home", "/"],
-                ["Products", "/products"],
-                ["Shades", "/shades"],
-                ["Assistance", "/assistance"],
-                ["About", "/about"],
-                ["Contact", "/contact"],
-              ].map(([label, href]) => (
-                <Link
-                  key={label}
-                  href={href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block text-sm font-medium text-charcoal hover:text-gold transition-colors py-2 border-b border-gray-50"
-                >
-                  {label}
-                </Link>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+      <Header />
 
       {/* Structured Hero Section - Premium Textured Architectural Blueprint Coating */}
       <section className="py-16 md:py-24 bg-[#FDFBF7] border-b border-[#EDE6DA] relative overflow-hidden">

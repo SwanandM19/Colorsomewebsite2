@@ -61,7 +61,7 @@
 //     <Link href="/" className="flex items-center gap-4 flex-shrink-0 min-w-[260px]">
 //       <div className="w-[62px] h-[62px] rounded-2xl flex items-center justify-center bg-white shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-[#E8E2D8] p-2 shrink-0">
 //         <Image
-//           src="/Ara_Weather_Coat.png"
+//           src="/AraWeather.png"
 //           alt="Colorsome logo"
 //           width={62}
 //           height={62}
@@ -369,7 +369,7 @@
 // import { useEffect, useState, useRef } from 'react';
 // import Image from 'next/image';
 // import Link from 'next/link';
-// import { Award, Shield, Users, Target, Leaf, Droplets, CheckCircle, Phone, Menu, X, Sparkles, Zap, MapPin, Building } from 'lucide-react';
+// import { Award, Shield, Users, Target, Leaf, Droplets, CheckCircle, Phone, Menu, X, Sparkles, Zap, MapPin, Building, Quote, ArrowRight } from 'lucide-react';
 // import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'framer-motion';
 // import { Footer } from '@/src/components/Footer';
 
@@ -451,7 +451,7 @@
 //           <Link href="/" className="flex items-center gap-4 flex-shrink-0 min-w-[260px]">
 //             <div className="w-[62px] h-[62px] rounded-2xl flex items-center justify-center bg-white shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-[#E8E2D8] p-2 shrink-0">
 //               <Image
-//                 src="/Ara_Weather_Coat.png"
+//                 src="/AraWeather.png"
 //                 alt="Colorsome logo"
 //                 width={62}
 //                 height={62}
@@ -809,14 +809,15 @@
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Award, Shield, Users, Target, Leaf, Droplets, CheckCircle, Phone, Menu, X, Sparkles, Zap, MapPin, Building } from 'lucide-react';
+import { Award, Shield, Users, Target, Leaf, Droplets, CheckCircle, Phone, Menu, X, Sparkles, Zap, MapPin, Building, Quote, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Footer } from '@/src/components/Footer';
 import { Header } from '@/src/components/Header';
 
+// Restrained luxury palette — see src/lib/palette.ts for the shared source.
 const BRAND = {
-  pink: '#E91E63',
-  orange: '#FF5722',
+  pink: '#8C6478', // plum
+  orange: '#C4704B', // terracotta
 };
 
 const fadeInUp = {
@@ -833,12 +834,12 @@ const staggerContainer = {
 };
 
 const values = [
-  { icon: Award,    title: 'Quality First',       desc: 'Every product undergoes rigorous testing for finish, durability, and colour consistency.' },
-  { icon: Shield,   title: 'Trust & Transparency', desc: 'Clear pricing, honest recommendations, and genuine products every time.' },
-  { icon: Users,    title: 'Customer Focus',       desc: 'Your satisfaction guides everything we do, from formulation to service.' },
-  { icon: Target,   title: 'Innovation',           desc: 'Continuous research for better finishes and eco-friendly formulations.' },
-  { icon: Droplets, title: 'Craftsmanship',        desc: 'Respect for the painting craft and the professionals who bring colour to life.' },
-  { icon: Leaf,     title: 'Sustainability',       desc: 'Committed to environmentally responsible products and practices.' },
+  { icon: Award,    title: 'Quality First',       desc: 'Every product undergoes rigorous testing for finish, durability, and colour consistency.', color: '#C9A858' },
+  { icon: Shield,   title: 'Trust & Transparency', desc: 'Clear pricing, honest recommendations, and genuine products every time.', color: '#C4704B' },
+  { icon: Users,    title: 'Customer Focus',       desc: 'Your satisfaction guides everything we do, from formulation to service.', color: '#8B9E7E' },
+  { icon: Target,   title: 'Innovation',           desc: 'Continuous research for better finishes and eco-friendly formulations.', color: '#2C3E50' },
+  { icon: Droplets, title: 'Craftsmanship',        desc: 'Respect for the painting craft and the professionals who bring colour to life.', color: '#8C6478' },
+  { icon: Leaf,     title: 'Sustainability',       desc: 'Committed to environmentally responsible products and practices.', color: '#C9A858' },
 ];
 
 const milestones = [
@@ -860,12 +861,23 @@ const commitments = [
 ];
 
 export default function AboutPage() {
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: timelineRef,
+  // Separate refs per breakpoint variant — a single ref shared between the
+  // mobile and desktop timeline markup gets silently overwritten by whichever
+  // one renders last, so scroll progress was being measured against the
+  // desktop node even when it was display:none on mobile.
+  const timelineRefMobile = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: scrollYProgressMobile } = useScroll({
+    target: timelineRefMobile,
     offset: ['start end', 'end center'],
   });
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const lineHeightMobile = useTransform(scrollYProgressMobile, [0, 1], ['0%', '100%']);
+
+  const timelineRefDesktop = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: scrollYProgressDesktop } = useScroll({
+    target: timelineRefDesktop,
+    offset: ['start end', 'end center'],
+  });
+  const lineHeight = useTransform(scrollYProgressDesktop, [0, 1], ['0%', '100%']);
 
   return (
     <div className="bg-[#FDFBF7] min-h-screen pt-[72px] text-charcoal overflow-x-hidden font-sans relative selection:bg-[#F3E7C9]">
@@ -899,12 +911,12 @@ export default function AboutPage() {
             <motion.div className="lg:col-span-7 order-2 lg:order-1"
               initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
               <div className="inline-flex items-center gap-2 bg-[#F3E7C9] text-charcoal font-black text-[10px] tracking-wider uppercase px-3 py-1.5 rounded-full mb-5 font-inter">
-                <Sparkles className="w-3 h-3 text-orange-500" /> Established 2010
+                <Sparkles className="w-3 h-3 text-[#C4704B]" /> Established 2010
               </div>
               <p className="text-[10px] uppercase tracking-widest font-black text-gray-400 mb-2 font-inter">Heritage &amp; Vision</p>
               <h1 className="font-serif text-[clamp(2rem,6vw,4.5rem)] font-bold tracking-tight text-charcoal mb-5 leading-[1.08]">
                 Crafting Colours That{' '}
-                <span className="bg-gradient-to-r from-pink-600 to-orange-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#8C6478] to-[#C4704B] bg-clip-text text-transparent">
                   Transform Spaces
                 </span>
               </h1>
@@ -914,25 +926,40 @@ export default function AboutPage() {
             </motion.div>
 
             {/* Right: image */}
-            <motion.div className="lg:col-span-5 order-1 lg:order-2 relative"
+            <motion.div className="lg:col-span-5 order-1 lg:order-2 relative pb-8 sm:pb-10"
               initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.15 }}>
-              <div className="relative rounded-2xl sm:rounded-3xl shadow-2xl border border-white/60 overflow-hidden aspect-square group max-w-[340px] mx-auto lg:max-w-none">
+              {/* No forced aspect ratio / object-contain here — the image renders at its own
+                  natural proportions so there's never letterboxing or cropped edges. */}
+              <div className="relative rounded-2xl sm:rounded-3xl shadow-[0_20px_50px_rgba(45,45,45,0.1)] border border-white/60 overflow-hidden group max-w-[420px] mx-auto lg:max-w-none">
                 <Image
-                  src="https://images.pexels.com/photos/7174391/pexels-photo-7174391.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="/Abt.png"
                   alt="Premium textured paint application"
-                  fill className="object-cover transition-transform duration-700 group-hover:scale-105" unoptimized
+                  width={1536}
+                  height={1024}
+                  sizes="(max-width: 1024px) 420px, 560px"
+                  className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.02]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
               </div>
-              {/* Floating stat card */}
-              <div className="absolute -bottom-3 left-3 sm:-bottom-5 sm:-left-4 bg-white/90 backdrop-blur-md rounded-xl sm:rounded-2xl border border-[#EDE6DA] shadow-xl p-3 sm:p-4 font-inter">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center shadow mb-2">
-                  <Droplets className="w-3.5 h-3.5 text-white"/>
+              {/* Badge hangs off the image's bottom-left corner (in the page's own
+                  whitespace) so it never overlaps the caption row baked into the image itself */}
+              <motion.div
+                initial={{ opacity: 0, y: 12, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute -bottom-6 -left-2 sm:-bottom-7 sm:-left-6 flex items-center gap-4 bg-white rounded-2xl border border-[#EDE6DA] shadow-[0_20px_45px_rgba(45,45,45,0.14)] px-4 sm:px-5 py-3.5 sm:py-4 font-inter z-10 max-w-[calc(100%-1rem)]"
+              >
+                <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-[#8C6478] to-[#C4704B] flex items-center justify-center shadow-[0_8px_18px_rgba(196,112,75,0.35)] shrink-0">
+                  <Droplets className="w-5 h-5 text-white" />
+                  <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-[#C9A858] border-2 border-white" />
                 </div>
-                <p className="font-serif text-xl sm:text-2xl font-bold text-charcoal leading-none">100k+</p>
-                <p className="text-[9px] tracking-wider uppercase font-black text-charcoal-muted mt-1">Onsite Projects</p>
-              </div>
+                <div>
+                  <p className="font-serif text-2xl font-bold text-charcoal leading-none" style={{ fontFamily: 'var(--font-display), serif' }}>10+</p>
+                  <p className="text-[9px] tracking-[0.15em] uppercase font-black text-charcoal-muted mt-1.5">Onsite Projects</p>
+                </div>
+              </motion.div>
             </motion.div>
 
           </div>
@@ -941,21 +968,84 @@ export default function AboutPage() {
 
       {/* ── MISSION ── */}
       <motion.section
-        className="py-14 sm:py-20 md:py-28 bg-[#1A1A1A] text-white relative overflow-hidden"
+        className="relative py-14 sm:py-20 md:py-28 text-white overflow-hidden"
+        style={{ background: `linear-gradient(165deg, #241D16 0%, #1A1A1A 55%, #150F0B 100%)` }}
         initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-        <div className="absolute inset-0 -z-0 opacity-20 pointer-events-none">
-          <div className="absolute top-1/2 left-1/4 w-[200px] sm:w-[380px] h-[200px] sm:h-[380px] rounded-full blur-[100px]" style={{ background: BRAND.pink }} />
-          <div className="absolute top-1/3 right-1/4 w-[200px] sm:w-[380px] h-[200px] sm:h-[380px] rounded-full blur-[100px]" style={{ background: BRAND.orange }} />
-        </div>
+        {/* Fine film-grain texture instead of a graph-paper grid — softer, more editorial */}
+        <div
+          className="absolute inset-0 opacity-[0.05] pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
+            backgroundSize: '128px 128px',
+          }}
+        />
+        {/* Soft radial vignette drawing focus to the quote */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.35) 100%)' }}
+        />
+        {/* Ambient colour blooms — larger, brighter, gently breathing */}
+        <motion.div
+          className="absolute top-1/2 left-1/4 w-[260px] sm:w-[460px] h-[260px] sm:h-[460px] rounded-full blur-[110px] pointer-events-none -translate-y-1/2"
+          style={{ background: BRAND.pink }}
+          animate={{ opacity: [0.25, 0.4, 0.25] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute top-1/3 right-1/4 w-[260px] sm:w-[460px] h-[260px] sm:h-[460px] rounded-full blur-[110px] pointer-events-none"
+          style={{ background: BRAND.orange }}
+          animate={{ opacity: [0.3, 0.45, 0.3] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        />
+        <motion.div
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[320px] sm:w-[560px] h-[200px] sm:h-[320px] rounded-full blur-[120px] pointer-events-none"
+          style={{ background: '#C9A858' }}
+          animate={{ opacity: [0.12, 0.22, 0.12] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
+        />
+        {/* Oversized ghost quote mark watermark, behind everything */}
+        <Quote
+          aria-hidden
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] sm:w-[420px] sm:h-[420px] text-white/[0.025] pointer-events-none"
+          fill="currentColor"
+        />
+        {/* Floating accent sparks */}
+        {[
+          { color: '#C9A858', size: 8, top: '18%', left: '12%', delay: 0 },
+          { color: '#C4704B', size: 6, top: '72%', left: '18%', delay: 0.6 },
+          { color: '#8B9E7E', size: 10, top: '24%', left: '86%', delay: 1.1 },
+          { color: '#8C6478', size: 7, top: '68%', left: '82%', delay: 1.7 },
+        ].map((d, i) => (
+          <motion.span
+            key={i}
+            className="absolute rounded-full hidden sm:block pointer-events-none"
+            style={{ width: d.size, height: d.size, top: d.top, left: d.left, background: d.color, opacity: 0.6 }}
+            animate={{ y: [0, -14, 0], opacity: [0.35, 0.75, 0.35] }}
+            transition={{ duration: 4 + i * 0.4, repeat: Infinity, ease: 'easeInOut', delay: d.delay }}
+          />
+        ))}
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-orange-400 font-black font-inter mb-3">Our Core Philosophy</p>
-            <h2 className="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold mb-6 sm:mb-8 leading-tight">Why We Exist</h2>
-            <motion.p
-              className="font-serif text-[clamp(1rem,2.5vw,1.5rem)] text-white/85 leading-relaxed font-light px-4 sm:px-8 border-l-2 border-orange-500/40 text-left sm:text-center"
+            <div className="inline-flex items-center gap-2 mb-4">
+              <span className="w-3 h-[1.5px]" style={{ background: '#C9A858' }} />
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#C9A858] font-black font-inter">Our Core Philosophy</p>
+              <span className="w-3 h-[1.5px]" style={{ background: '#C9A858' }} />
+            </div>
+            <h2 className="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold mb-8 sm:mb-10 leading-tight">Why We Exist</h2>
+            <motion.div
+              className="relative"
               initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.4 }} variants={fadeInUp}>
-              "To be the most trusted paint partner for Indian homeowners, delivering exceptional quality, vibrant palettes, and seamless expert guidance that makes every space a true reflection of its owner."
-            </motion.p>
+              <Quote className="w-10 h-10 sm:w-14 sm:h-14 mx-auto mb-4 text-[#C4704B]/30" fill="currentColor" />
+              <p className="font-serif text-[clamp(1.15rem,2.8vw,1.7rem)] text-white/90 leading-relaxed font-light px-2 sm:px-8">
+                To be the most trusted paint partner for Indian homeowners, delivering exceptional quality, vibrant palettes, and seamless expert guidance that makes every space a true reflection of its owner.
+              </p>
+              <div className="flex items-center justify-center gap-3 mt-8">
+                <span className="w-8 h-px bg-white/20" />
+                <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-inter font-bold">Colorsome Paints</span>
+                <span className="w-8 h-px bg-white/20" />
+              </div>
+            </motion.div>
           </div>
         </div>
       </motion.section>
@@ -963,21 +1053,41 @@ export default function AboutPage() {
       {/* ── VALUES ── */}
       <section className="py-14 sm:py-20 md:py-28 relative">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-16">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-pink-600 font-black font-inter mb-2">Our Pillars</p>
+          <motion.div
+            className="text-center mb-10 sm:mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[#8C6478] font-black font-inter mb-2">Our Pillars</p>
             <h2 className="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-charcoal">What We Stand For</h2>
-          </div>
+          </motion.div>
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }} variants={staggerContainer}>
-            {values.map((v) => (
-              <motion.div key={v.title} variants={fadeInUp} whileHover={{ y: -4 }}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-[#EDE6DA]/60 shadow-sm hover:shadow-xl hover:bg-white hover:border-orange-200 transition-all duration-300 group">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-[#FDFBF7] border border-[#EDE6DA] flex items-center justify-center mb-5 sm:mb-6 shadow-inner group-hover:scale-110 transition-transform duration-300 text-orange-500">
+            {values.map((v, i) => (
+              <motion.div key={v.title} variants={fadeInUp} whileHover={{ y: -6 }}
+                className="group relative bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_50px_rgba(45,45,45,0.1)] hover:bg-white transition-all duration-300 overflow-hidden"
+                style={{ borderColor: `${v.color}25` }}
+              >
+                {/* Oversized ghost index number */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none select-none absolute -bottom-3 -right-2 leading-none opacity-[0.06]"
+                  style={{ color: v.color, fontFamily: 'var(--font-display), serif', fontSize: '5rem', fontWeight: 600 }}
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div
+                  className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center mb-5 sm:mb-6 transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: `linear-gradient(135deg, ${v.color}30, ${v.color}10)`, color: v.color, boxShadow: `0 8px 20px ${v.color}1A` }}
+                >
                   <v.icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <h3 className="font-serif text-lg sm:text-xl font-bold text-charcoal mb-2 tracking-tight">{v.title}</h3>
-                <p className="text-charcoal-muted leading-relaxed text-xs sm:text-sm font-inter">{v.desc}</p>
+                <h3 className="relative z-10 font-serif text-lg sm:text-xl font-bold text-charcoal mb-2 tracking-tight">{v.title}</h3>
+                <p className="relative z-10 text-charcoal-muted leading-relaxed text-xs sm:text-sm font-inter">{v.desc}</p>
+                <div className="relative z-10 h-[2px] w-6 group-hover:w-full transition-all duration-500 rounded-full mt-4" style={{ background: v.color }} />
               </motion.div>
             ))}
           </motion.div>
@@ -992,27 +1102,52 @@ export default function AboutPage() {
             {/* Left */}
             <motion.div className="lg:col-span-6 lg:py-4"
               initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-orange-500 font-black font-inter mb-2">The Colorsome Guarantee</p>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#C4704B] font-black font-inter mb-2">The Colorsome Guarantee</p>
               <h2 className="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-charcoal mb-5 leading-tight">What We Promise</h2>
               <p className="text-sm sm:text-base text-charcoal/75 leading-relaxed mb-6 font-inter">
-                From structural product testing to final execution walkthroughs, we hold ourselves to absolute standards. Our commitment isn't just wordplay — it's the foundation of every client partnership.
+                From structural product testing to final execution walkthroughs, we hold ourselves to absolute standards. Our commitment isn't just wordplay it's the foundation of every client partnership.
               </p>
-              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] shadow-2xl border border-white/60 group">
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] shadow-[0_20px_50px_rgba(45,45,45,0.1)] border border-white/60 group">
                 <Image src="/aboutpage.png" alt="Paint mixing facility" fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105" unoptimized />
+                  sizes="(max-width: 1024px) 100vw, 600px"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
             </motion.div>
 
-            {/* Right: commitment cards */}
-            <motion.div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:pt-20"
+            {/* Right: commitment list */}
+            <motion.div className="lg:col-span-6 flex flex-col"
               initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
-              {commitments.map((c) => (
-                <motion.div key={c} variants={fadeInUp} whileHover={{ y: -2 }}
-                  className="flex items-start gap-3 bg-white/80 backdrop-blur-sm p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-[#EDE6DA]/60 shadow-sm hover:shadow-md hover:bg-white transition-all duration-200">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500 shrink-0 mt-0.5" />
-                  <p className="text-xs sm:text-sm font-bold text-charcoal tracking-wide font-inter leading-relaxed">{c}</p>
-                </motion.div>
-              ))}
+              {commitments.map((c, i) => {
+                const color = ['#C9A858', '#C4704B', '#8B9E7E', '#2C3E50', '#8C6478', '#C9A858'][i % 6];
+                return (
+                  <motion.div key={c} variants={fadeInUp} whileHover={{ x: 4 }}
+                    className="flex items-center gap-4 sm:gap-5 py-4 sm:py-5 border-b border-[#EDE6DA]/70 last:border-0">
+                    <span
+                      className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-serif text-sm font-bold"
+                      style={{ background: `${color}14`, color, fontFamily: 'var(--font-display), serif' }}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-sm sm:text-base font-bold text-charcoal tracking-wide font-inter leading-relaxed">{c}</p>
+                  </motion.div>
+                );
+              })}
+
+              {/* Closing CTA — pinned to the bottom of the column so it lines up with the image's bottom edge */}
+              <motion.div variants={fadeInUp} className="mt-6 sm:mt-8">
+                <Link
+                  href="/assistance"
+                  className="group relative overflow-hidden flex items-center justify-between gap-4 rounded-2xl p-5 sm:p-6 text-white transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]"
+                  style={{ background: 'linear-gradient(135deg, #8C6478, #C4704B)' }}
+                >
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" style={{ background: 'linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%)' }} />
+                  <div className="relative">
+                    <p className="font-serif text-base sm:text-lg font-bold leading-tight">See These Promises in Action</p>
+                    <p className="text-xs text-white/70 mt-1">Book a free expert consultation</p>
+                  </div>
+                  <ArrowRight className="w-5 h-5 shrink-0 relative transition-transform group-hover:translate-x-1" />
+                </Link>
+              </motion.div>
             </motion.div>
 
           </div>
@@ -1022,37 +1157,43 @@ export default function AboutPage() {
       {/* ── MILESTONES / TIMELINE ── */}
       <section className="py-14 sm:py-20 md:py-28 relative">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12 sm:mb-16">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-pink-600 font-black font-inter mb-2">Chronology</p>
+          <motion.div
+            className="text-center mb-12 sm:mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[#8C6478] font-black font-inter mb-2">Chronology</p>
             <h2 className="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-charcoal">Our Journey</h2>
-          </div>
+          </motion.div>
 
           {/* ── MOBILE: vertical stacked cards (no absolute positioning) ── */}
-          <div className="md:hidden flex flex-col gap-0 relative pl-10" ref={timelineRef}>
+          <div className="md:hidden flex flex-col gap-0 relative pl-10" ref={timelineRefMobile}>
             <div className="absolute left-4 top-0 bottom-0 w-px bg-[#EDE6DA]" />
-            <motion.div style={{ height: lineHeight }}
-              className="absolute left-4 top-0 w-px bg-gradient-to-b from-pink-500 to-orange-500 origin-top" />
+            <motion.div style={{ height: lineHeightMobile }}
+              className="absolute left-4 top-0 w-px bg-gradient-to-b from-[#8C6478] to-[#C4704B] origin-top" />
             {milestones.map((m, i) => (
               <motion.div key={m.year} className="relative mb-8 last:mb-0 flex items-start gap-4"
                 initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.6 }} variants={fadeInUp}>
                 {/* dot */}
-                <div className="absolute -left-10 top-3 w-8 h-8 rounded-full bg-white border-2 border-orange-400 shadow flex items-center justify-center shrink-0 z-10">
-                  <m.icon className="w-3.5 h-3.5 text-orange-500" />
+                <div className="absolute -left-10 top-3 w-8 h-8 rounded-full bg-white border-2 border-[#C4704B] shadow-[0_8px_18px_rgba(196,112,75,0.25)] flex items-center justify-center shrink-0 z-10">
+                  <m.icon className="w-3.5 h-3.5 text-[#C4704B]" />
                 </div>
                 {/* card */}
                 <div className="bg-white/90 rounded-2xl p-4 border border-[#EDE6DA]/70 shadow-sm w-full">
-                  <span className="font-serif text-xl font-bold bg-gradient-to-r from-pink-600 to-orange-500 bg-clip-text text-transparent block mb-1">{m.year}</span>
-                  <p className="text-xs font-bold tracking-wide font-inter text-charcoal leading-relaxed">{m.event}</p>
+                  <span className="font-serif text-xl font-bold bg-gradient-to-r from-[#8C6478] to-[#C4704B] bg-clip-text text-transparent block mb-1">{m.year}</span>
+                  <p className="text-[13px] sm:text-xs font-bold tracking-wide font-inter text-charcoal leading-relaxed">{m.event}</p>
                 </div>
               </motion.div>
             ))}
           </div>
 
           {/* ── DESKTOP: alternating timeline ── */}
-          <div className="hidden md:block max-w-3xl mx-auto relative" ref={timelineRef}>
+          <div className="hidden md:block max-w-3xl mx-auto relative" ref={timelineRefDesktop}>
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-[#EDE6DA] -translate-x-1/2" />
             <motion.div style={{ height: lineHeight }}
-              className="absolute left-1/2 top-0 w-px bg-gradient-to-b from-pink-500 to-orange-500 -translate-x-1/2 origin-top" />
+              className="absolute left-1/2 top-0 w-px bg-gradient-to-b from-[#8C6478] to-[#C4704B] -translate-x-1/2 origin-top" />
             {milestones.map((m, i) => {
               const isEven = i % 2 === 0;
               return (
@@ -1062,14 +1203,14 @@ export default function AboutPage() {
                   {/* dot */}
                   <div className="absolute left-1/2 -translate-x-1/2 z-10">
                     <motion.div whileHover={{ scale: 1.1 }}
-                      className="w-12 h-12 rounded-full bg-white border-4 border-[#FDFBF7] shadow-xl ring-2 ring-orange-400/50 flex items-center justify-center">
-                      <m.icon className="w-4 h-4 text-orange-500" />
+                      className="w-12 h-12 rounded-full bg-white border-4 border-[#FDFBF7] shadow-[0_12px_30px_rgba(0,0,0,0.15)] ring-2 ring-[#C4704B]/50 flex items-center justify-center">
+                      <m.icon className="w-4 h-4 text-[#C4704B]" />
                     </motion.div>
                   </div>
                   {/* card */}
                   <motion.div whileHover={{ y: -4 }}
-                    className={`bg-white/90 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-[#EDE6DA]/70 shadow-sm w-[44%] hover:shadow-xl hover:border-orange-200/60 transition-all duration-300 ${isEven ? 'mr-auto' : 'ml-auto'}`}>
-                    <span className="font-serif text-2xl font-bold bg-gradient-to-r from-pink-600 to-orange-500 bg-clip-text text-transparent block mb-2">{m.year}</span>
+                    className={`bg-white/90 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-[#EDE6DA]/70 shadow-sm w-[44%] hover:shadow-xl hover:border-[#C4704B]/30 transition-all duration-300 ${isEven ? 'mr-auto' : 'ml-auto'}`}>
+                    <span className="font-serif text-2xl font-bold bg-gradient-to-r from-[#8C6478] to-[#C4704B] bg-clip-text text-transparent block mb-2">{m.year}</span>
                     <p className="text-xs sm:text-sm font-bold tracking-wide font-inter text-charcoal leading-relaxed">{m.event}</p>
                   </motion.div>
                 </motion.div>
@@ -1081,37 +1222,40 @@ export default function AboutPage() {
       </section>
 
       {/* ── TEAM ── */}
-      <section className="py-14 sm:py-20 md:py-28 bg-white/40 backdrop-blur-sm border-t border-b border-[#EDE6DA]/50 relative">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-16 items-center">
+      <section className="py-14 sm:py-20 md:py-28 bg-white/40 backdrop-blur-sm border-t border-b border-[#EDE6DA]/50 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[120px] opacity-[0.07] pointer-events-none" style={{ background: BRAND.pink }} />
+        <div className="max-w-[1000px] mx-auto px-4 sm:px-6 relative z-10">
+          <motion.div className="text-center mb-8 sm:mb-10"
+            initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeInUp}>
+            <div className="inline-flex items-center gap-2 mb-3">
+              <span className="w-3 h-[1.5px]" style={{ background: '#8C6478' }} />
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#8C6478] font-black font-inter">The Colorsome People</p>
+              <span className="w-3 h-[1.5px]" style={{ background: '#8C6478' }} />
+            </div>
+            <h2 className="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-charcoal leading-tight">
+              Vibrant Minds Behind the Paint
+            </h2>
+          </motion.div>
 
-            {/* Image */}
-            <motion.div className="lg:col-span-6 relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[5/4] shadow-2xl border border-white/60 group max-w-[400px] mx-auto lg:max-w-none w-full"
-              initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.7 }}>
-              <Image
-                src="https://images.pexels.com/photos/6438762/pexels-photo-6438762.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Colour consultant with swatch books" fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105" unoptimized />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-            </motion.div>
+          {/* Image — shown whole, no forced crop, framed like a showcase piece */}
+          <motion.div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(45,45,45,0.1)] border border-white/60 group"
+            initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.7 }}>
+            <Image
+              src="/About3.png"
+              alt="The Colorsome team — chemists, colour experts, and service professionals"
+              width={1628}
+              height={966}
+              sizes="(max-width: 1280px) 100vw, 1200px"
+              className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.02]"
+            />
+          </motion.div>
 
-            {/* Text */}
-            <motion.div className="lg:col-span-6"
-              initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeInUp}>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-pink-600 font-black font-inter mb-2">The Colorsome People</p>
-              <h2 className="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-charcoal mb-5 leading-tight">
-                Vibrant Minds Behind the Paint
-              </h2>
-              <p className="text-sm sm:text-base text-charcoal/75 leading-relaxed mb-5 font-inter">
-                Colorsome is powered by passionate chemists, aesthetic colour experts, logistics masters, and dedicated service professionals. We understand that painting isn't just maintenance — it's a high-stakes transformation of your sanctuary.
-              </p>
-              <p className="text-xs sm:text-sm text-charcoal-muted leading-relaxed font-inter border-l-2 border-[#EDE6DA] pl-4 sm:pl-5">
-                Our consultants bring years of experience, guiding you beyond shade selection to visualizing textures in Indian lighting conditions. Our formulations are relentlessly stress-tested across diverse climates.
-              </p>
-            </motion.div>
-
-          </div>
+          <motion.p
+            className="text-center text-sm sm:text-base text-charcoal-muted leading-relaxed font-inter mt-6 sm:mt-8 max-w-2xl mx-auto"
+            initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.4 }} variants={fadeInUp}>
+            Every consultant is trained on Indian lighting conditions and climate stress-testing so the shade you pick is the shade that shows up on your wall.
+          </motion.p>
         </div>
       </section>
 
@@ -1119,14 +1263,39 @@ export default function AboutPage() {
       <section className="py-14 sm:py-20 md:py-24 relative">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
           <motion.div
-            className="max-w-[960px] mx-auto text-center bg-[#2D2D2D] rounded-2xl sm:rounded-3xl p-8 sm:p-12 md:p-16 shadow-2xl relative overflow-hidden"
+            className="max-w-[960px] mx-auto text-center rounded-2xl sm:rounded-3xl p-8 sm:p-12 md:p-16 shadow-[0_30px_80px_rgba(0,0,0,0.35)] relative overflow-hidden"
+            style={{ background: `linear-gradient(165deg, #241D16 0%, #1A1A1A 55%, #150F0B 100%)` }}
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <div className="absolute inset-0 -z-0 opacity-10 pointer-events-none">
-              <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full blur-[80px]" style={{ background: BRAND.pink }} />
-              <div className="absolute -bottom-[20%] -right-[10%] w-[50%] h-[50%] rounded-full blur-[80px]" style={{ background: BRAND.orange }} />
+            {/* Grain texture, consistent with the site's other dark sections */}
+            <div
+              className="absolute inset-0 opacity-[0.06] pointer-events-none"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                backgroundRepeat: 'repeat',
+                backgroundSize: '128px 128px',
+              }}
+            />
+            <motion.div
+              className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full blur-[90px] pointer-events-none"
+              style={{ background: BRAND.pink }}
+              animate={{ opacity: [0.15, 0.28, 0.15] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className="absolute -bottom-[20%] -right-[10%] w-[50%] h-[50%] rounded-full blur-[90px] pointer-events-none"
+              style={{ background: BRAND.orange }}
+              animate={{ opacity: [0.18, 0.3, 0.18] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            />
+            {/* Thin gold ring frame, just inside the border */}
+            <div className="absolute inset-3 sm:inset-4 rounded-xl sm:rounded-2xl border border-[#C9A858]/15 pointer-events-none" />
+
+            <div className="inline-flex items-center gap-2 mb-3 relative z-10">
+              <span className="w-3 h-[1.5px]" style={{ background: '#C4704B' }} />
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#C4704B] font-black font-inter">Get Started</p>
+              <span className="w-3 h-[1.5px]" style={{ background: '#C4704B' }} />
             </div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-orange-400 font-black font-inter mb-3 relative z-10">Get Started</p>
             <h2 className="font-serif text-[clamp(1.6rem,5vw,3rem)] font-bold text-white mb-5 leading-tight max-w-2xl mx-auto relative z-10">
               Ready to Experience the Colorsome Difference?
             </h2>
@@ -1135,11 +1304,12 @@ export default function AboutPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center font-inter relative z-10 max-w-xs sm:max-w-none mx-auto">
               <Link href="/products"
-                className="px-6 sm:px-8 py-3.5 bg-[#F3E7C9] text-[#2D2D2D] rounded-xl text-xs uppercase tracking-widest font-black shadow hover:shadow-xl hover:bg-[#ebdcb4] transition-all text-center">
-                Explore Master Palettes
+                className="group relative overflow-hidden px-6 sm:px-8 py-4 sm:py-3.5 bg-[#F3E7C9] text-[#2D2D2D] rounded-xl text-xs uppercase tracking-widest font-black shadow-[0_10px_30px_rgba(0,0,0,0.2)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.3)] hover:bg-[#ebdcb4] hover:scale-[1.02] active:scale-[0.98] transition-all text-center">
+                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" style={{ background: 'linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%)' }} />
+                <span className="relative">Explore Master Palettes</span>
               </Link>
               <Link href="/assistance"
-                className="px-6 sm:px-8 py-3.5 bg-transparent text-white border-2 border-white/20 rounded-xl text-xs uppercase tracking-widest font-black hover:border-orange-500 hover:text-orange-400 hover:bg-orange-500/5 transition-all text-center">
+                className="px-6 sm:px-8 py-4 sm:py-3.5 bg-transparent text-white border-2 border-white/20 rounded-xl text-xs uppercase tracking-widest font-black hover:border-[#C4704B] hover:text-[#C4704B] hover:bg-[#C4704B]/5 hover:scale-[1.02] active:scale-[0.98] transition-all text-center">
                 Request Art Direction
               </Link>
             </div>

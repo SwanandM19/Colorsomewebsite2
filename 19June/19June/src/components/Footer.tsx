@@ -7,9 +7,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { usePalette } from "../lib/palette";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
+};
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { accents } = usePalette();
+  const accent = accents[0];
 
   // Condensed high-level ranges that link directly to product categories
   const macroRanges = [
@@ -20,19 +28,28 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[#121212] text-white border-t border-white/[0.03] font-sans relative overflow-hidden pt-12">
-      {/* Decorative background element */}
-      <div className="absolute top-0 right-1/4 w-[350px] h-[350px] bg-gradient-to-bl from-gold/5 via-transparent to-transparent rounded-full blur-[100px] pointer-events-none -z-10" />
+    <footer className="bg-[#121212] text-white border-t border-white/[0.03] font-sans relative overflow-hidden pt-20">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 right-1/4 w-[350px] h-[350px] rounded-full blur-[100px] pointer-events-none -z-10" style={{ background: `radial-gradient(circle, ${accent}12, transparent 70%)` }} />
+      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full blur-[110px] pointer-events-none -z-10" style={{ background: `radial-gradient(circle, ${accents[3]}0E, transparent 70%)` }} />
+      {/* Top accent hairline */}
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${accent}50, transparent)` }} />
 
       {/* 2. MAIN DIRECTORY CANVAS */}
-      <div className="max-w-[1280px] mx-auto px-6 pb-16 pt-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08 } } }}
+        className="max-w-[1280px] mx-auto px-6 pb-20 pt-4"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-14 lg:gap-8 items-start">
           {/* Brand Intro Identity */}
-          <div className="lg:col-span-4 space-y-6">
+          <motion.div variants={fadeUp} className="lg:col-span-4 space-y-7">
             <Link href="/" className="inline-flex items-center gap-3 group">
               <div className="w-11 h-12 rounded-xl flex items-center justify-center bg-white p-1.5 shadow-sm border border-white/10 shrink-0 transition-transform duration-500 group-hover:rotate-6">
                 <Image
-                  src="/Ara_Weather_Coat.png"
+                  src="/Logo.png"
                   alt="Colorsome logo"
                   width={44}
                   height={48}
@@ -40,25 +57,30 @@ export function Footer() {
                 />
               </div>
               <div className="flex flex-col justify-center leading-none tracking-tight">
-                <span className="font-serif text-xl font-bold tracking-tight text-white uppercase">
+                <span className="text-xl font-bold tracking-tight text-white uppercase" style={{ fontFamily: 'var(--font-display), serif' }}>
                   COLORSOME
                 </span>
-                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mt-1">
+                <span className="text-[9px] font-bold text-white/40 uppercase tracking-widest mt-1">
                   Paints
                 </span>
               </div>
             </Link>
 
-            <p className="text-sm text-gray-400 leading-relaxed font-light max-w-sm">
+            <p className="text-sm text-white/55 leading-relaxed font-light max-w-sm">
               Architectural surface media formulated for structural luxury.
               Merging relentless chemical defense with an advanced understanding
               of color aesthetics.
             </p>
 
-            <div className="space-y-4 pt-4 text-xs md:text-sm text-gray-400 font-light max-w-sm border-t border-white/[0.04]">
-              <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-gold shrink-0 mt-0.5 opacity-80" />
-                <span className="leading-relaxed font-light">
+            <div className="space-y-4 pt-5 text-xs md:text-sm text-white/55 font-light max-w-sm border-t border-white/[0.06]">
+              <div className="flex items-start gap-3 group">
+                <span
+                  className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110"
+                  style={{ background: `${accent}15` }}
+                >
+                  <MapPin className="w-3.5 h-3.5" style={{ color: accent }} />
+                </span>
+                <span className="leading-relaxed font-light pt-1.5">
                   C-403, Akshay Villa, Ram Nagari, Behind D-Mart, Mumbai-Pune
                   Bypass Road, Ambegaon Budruk, Katraj, Pune 411046
                 </span>
@@ -67,7 +89,12 @@ export function Footer() {
                 href="tel:+917502000079"
                 className="flex items-center gap-3 hover:text-white transition-colors w-fit group"
               >
-                <Phone className="w-4 h-4 text-gold shrink-0 opacity-80" />
+                <span
+                  className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110"
+                  style={{ background: `${accent}15` }}
+                >
+                  <Phone className="w-3.5 h-3.5" style={{ color: accent }} />
+                </span>
                 <span className="font-mono tracking-wide group-hover:translate-x-0.5 transition-transform">
                   +91-7502-0000-79
                 </span>
@@ -76,24 +103,28 @@ export function Footer() {
                 href="mailto:info@colorsomepaints.com"
                 className="flex items-center gap-3 hover:text-white transition-colors w-fit group"
               >
-                <Mail className="w-4 h-4 text-gold shrink-0 opacity-80" />
+                <span
+                  className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110"
+                  style={{ background: `${accent}15` }}
+                >
+                  <Mail className="w-3.5 h-3.5" style={{ color: accent }} />
+                </span>
                 <span className="group-hover:translate-x-0.5 transition-transform font-light">
                   info@colorsomepaints.com
                 </span>
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Condensed System Catalog (Clean Single Column Footprint) */}
-          <div className="col-span-2 lg:col-span-3 lg:ml-auto">
-            <h4 className="text-[10px] uppercase tracking-[0.25em] font-bold text-gray-500 mb-6 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-gold" /> System
+          <motion.div variants={fadeUp} className="col-span-2 lg:col-span-3 lg:ml-auto">
+            <h4 className="text-[10px] uppercase tracking-[0.25em] font-bold text-white/40 mb-6 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: accent }} /> System
               Catalog
             </h4>
-            <ul className="space-y-3.5 text-sm text-gray-400 font-light">
+            <ul className="space-y-3.5 text-sm text-white/55 font-light">
               {macroRanges.map((range) => (
                 <li key={range.name}>
-                  {/* Optional query parsing can update your active filter state on the products page */}
                   <Link
                     href={`/products?category=${encodeURIComponent(range.slug)}`}
                     className="hover:text-[#F3E7C9] hover:translate-x-0.5 inline-block transition-all duration-200"
@@ -103,14 +134,14 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Navigation Matrix */}
-          <div className="col-span-1 lg:col-span-2">
-            <h4 className="text-[10px] uppercase tracking-[0.25em] font-bold text-gray-500 mb-6">
+          <motion.div variants={fadeUp} className="col-span-1 lg:col-span-2">
+            <h4 className="text-[10px] uppercase tracking-[0.25em] font-bold text-white/40 mb-6">
               Explore
             </h4>
-            <ul className="space-y-3 text-sm text-gray-400 font-light">
+            <ul className="space-y-3 text-sm text-white/55 font-light">
               {[
                 "Home Consultation",
                 "Color Selection",
@@ -127,25 +158,28 @@ export function Footer() {
                           ? "/contact"
                           : "/assistance"
                     }
-                    className="hover:text-white transition-colors block"
+                    className="hover:text-white block hover:translate-x-0.5 duration-200 transition-all"
                   >
                     {item}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Directives Section */}
-          <div className="col-span-2 md:col-span-1 lg:col-span-2">
-            <h4 className="font-serif text-base font-medium mb-5">
+          <motion.div variants={fadeUp} className="col-span-2 md:col-span-1 lg:col-span-2">
+            <h4 className="text-base font-medium mb-5" style={{ fontFamily: 'var(--font-display), serif' }}>
               Get Started
             </h4>
 
             <div className="flex flex-col gap-4">
               <Link
                 href="/assistance"
-                className="inline-flex items-center justify-center w-full min-h-[56px] rounded-xl px-6 py-3.5 text-sm font-semibold border border-gold text-gold hover:bg-gold hover:text-white transition-all duration-300"
+                className="inline-flex items-center justify-center w-full min-h-[56px] rounded-xl px-6 py-3.5 text-sm font-semibold border transition-all duration-300 hover:text-white"
+                style={{ borderColor: accent, color: accent }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = accent)}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
               >
                 Book Consultation
                 <ArrowRight className="w-4 h-4 ml-2 shrink-0" />
@@ -158,18 +192,22 @@ export function Footer() {
                 Browse Products
                 <ArrowRight className="w-4 h-4 ml-2 shrink-0" />
               </Link>
+              <p className="flex items-center gap-1.5 text-[11px] text-white/40 font-light pt-1">
+                <Sparkles className="w-3 h-3 shrink-0" style={{ color: accent }} />
+                Avg. 12hr response time on consultation requests
+              </p>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* 3. BASELINE BOTTOM FLOOR */}
       <div className="bg-[#0D0D0D] py-6 border-t border-white/[0.01]">
-        <div className="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-light">
+        <div className="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/40 font-light">
           <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-4 text-center sm:text-left">
             <p>&copy; {currentYear} Colorsome Paints Pvt. Ltd. All rights reserved.</p>
             <span className="hidden sm:inline text-white/[0.08]">|</span>
-            <p className="text-gray-400 font-light tracking-wide flex items-center gap-1.5 flex-wrap justify-center sm:justify-start">
+            <p className="text-white/55 font-light tracking-wide flex items-center gap-1.5 flex-wrap justify-center sm:justify-start">
               Designed & Developed by 
               <a 
                 href="https://www.servexai.in" 

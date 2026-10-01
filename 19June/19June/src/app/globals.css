@@ -17,13 +17,33 @@
     --terracotta: #C4704B;
     --sage: #8B9E7E;
     --navy: #2C3E50;
+    --plum: #8C6478;
 
-    /* Inter is now the site-wide typeface. --font-cormorant is aliased to
-       Inter so every existing serif reference resolves to Inter without
-       touching each call site. */
-    --font-cormorant: var(--font-inter);
+    /* Fraunces (loaded in layout.tsx as --font-display) is the premium
+       serif used for headlines. --font-cormorant is kept as an alias so
+       every existing call site referencing it upgrades automatically. */
+    --font-cormorant: var(--font-display), Georgia, serif;
 
     --ease-premium: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+    /* ─── Accent palette (5 slots) ───────────────────────────────────────────
+       "Restrained" (default): muted, paint-inspired luxury tones.
+       Toggle to "Vivid" via [data-palette="vivid"] on <html> — see
+       src/lib/palette.ts / PaletteToggle.tsx for the live A/B switch used
+       during design review. */
+    --accent-1: var(--gold);
+    --accent-2: var(--terracotta);
+    --accent-3: var(--sage);
+    --accent-4: var(--navy);
+    --accent-5: var(--plum);
+  }
+
+  [data-palette="vivid"] {
+    --accent-1: #E91E8C;
+    --accent-2: #2196F3;
+    --accent-3: #4CAF50;
+    --accent-4: #FF5722;
+    --accent-5: #FFC107;
   }
 
 
@@ -43,11 +63,11 @@
   }
 
 
-  /* h1 heroes, h2 section breaks — Inter, medium weight, tight tracking */
+  /* h1 heroes, h2 section breaks — Fraunces display serif, tight tracking */
   h1, h2 {
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-display), Georgia, serif;
     font-weight: 500;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
     line-height: 1.05;
   }
 
@@ -269,12 +289,12 @@
     color: var(--gold);
   }
 
-  /* h2-level section heading — Inter (major section break) */
+  /* h2-level section heading — Fraunces display serif (major section break) */
   .section-title {
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-display), Georgia, serif;
     font-size: clamp(2.25rem, 4vw, 4.1rem);
     line-height: 0.95;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     font-weight: 500;
     color: var(--charcoal);
   }
@@ -291,22 +311,40 @@
 
 /* ─── Display / hero classes (outside @layer so they have highest specificity) ── */
 
-/* h1 main banner — Inter */
+/* h1 main banner — Fraunces display serif */
 .hero-title {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-display), Georgia, serif;
   font-size: clamp(2.2rem, 4.5vw, 4.2rem);
   line-height: 0.94;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   font-weight: 500;
   color: var(--charcoal);
 }
 
-/* h1/h2 on dark/coloured backgrounds — Inter */
+/* Slightly smaller floor on the narrowest phones only (320-374px) so a
+   forced <br/> line break inside the heading doesn't wrap a second time;
+   640px+ (sm and up, including desktop) is untouched. */
+@media (max-width: 374px) {
+  .hero-title {
+    font-size: clamp(1.85rem, 8vw, 4.2rem);
+  }
+}
+
+/* Same idea for .section-title (h2-level headings) — lower the mobile floor
+   only below 480px; 480px+ (including all tablet/desktop widths) keeps the
+   original clamp exactly as-is. */
+@media (max-width: 480px) {
+  .section-title {
+    font-size: clamp(1.85rem, 7vw, 4.1rem);
+  }
+}
+
+/* h1/h2 on dark/coloured backgrounds — Fraunces display serif */
 .hero-title-light {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-display), Georgia, serif;
   font-size: clamp(3rem, 5.5vw, 5.2rem);
   line-height: 0.93;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   font-weight: 500;
   color: white;
 }
@@ -413,6 +451,26 @@
   @keyframes slideRight {
     from { opacity: 0; transform: translateX(-20px); }
     to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ─── Infinite product marquee — CSS-driven (not Framer Motion) so
+     pause-on-hover/touch is a native animation-play-state toggle: it
+     resumes exactly where it stopped, with no restart jump. ───────────── */
+  @keyframes marqueeForward {
+    from { transform: translateX(0%); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes marqueeReverse {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0%); }
+  }
+
+  /* Hero showcase auto-advance progress fill — animation-play-state lets
+     hover/touch freeze it mid-fill instead of resetting, same technique as
+     the marquee pause above. */
+  @keyframes heroProgressFill {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
   }
 
   /* ─── Scroll reveal (IntersectionObserver-driven, see ScrollReveal.tsx) ───── */

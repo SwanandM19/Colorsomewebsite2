@@ -47,7 +47,7 @@
 //     <Link href="/" className="flex items-center gap-4 flex-shrink-0 min-w-[260px]">
 //       <div className="w-[62px] h-[62px] rounded-2xl flex items-center justify-center bg-white shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-[#E8E2D8] p-2 shrink-0">
 //         <Image
-//           src="/Ara_Weather_Coat.png"
+//           src="/AraWeather.png"
 //           alt="Colorsome logo"
 //           width={62}
 //           height={62}
@@ -288,7 +288,7 @@
 // import { useEffect, useState } from 'react';
 // import Image from 'next/image';
 // import Link from 'next/link';
-// import { MapPin, Phone, Mail, Clock, ArrowRight, Menu, X, Sparkles, Building2, ExternalLink } from 'lucide-react';
+// import { MapPin, Phone, Mail, Clock, ArrowRight, Menu, X, Sparkles, Building2, ExternalLink, Package, Palette, Eye, MessageCircle } from 'lucide-react';
 // import { motion, AnimatePresence } from 'framer-motion';
 // import { Footer } from '@/src/components/Footer';
 
@@ -347,7 +347,7 @@
 //           <Link href="/" className="flex items-center gap-4 flex-shrink-0 min-w-[260px]">
 //             <div className="w-[62px] h-[62px] rounded-2xl flex items-center justify-center bg-white shadow-sm border border-[#E8E2D8] p-2 shrink-0">
 //               <Image
-//                 src="/Ara_Weather_Coat.png"
+//                 src="/AraWeather.png"
 //                 alt="Colorsome logo"
 //                 width={62}
 //                 height={62}
@@ -577,14 +577,15 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MapPin, Phone, Mail, Clock, ArrowRight, Menu, X, Sparkles, Building2, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight, Menu, X, Sparkles, Building2, ExternalLink, Package, Palette, Eye, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Footer } from '@/src/components/Footer';
 import { Header } from '@/src/components/Header';
 
+// Restrained luxury palette — see src/lib/palette.ts for the shared source.
 const BRAND = {
-  pink: '#E91E63',
-  orange: '#FF5722',
+  pink: '#8C6478', // plum
+  orange: '#C4704B', // terracotta
 };
 
 const fadeInUp = {
@@ -601,9 +602,9 @@ const staggerContainer = {
 };
 
 const contactInfo = [
-  { icon: Phone, label: 'Phone Desk', value: '+91-7502-0000-79', sub: 'Mon — Sat, 9 AM — 7 PM', href: 'tel:+917502000079' },
-  { icon: Mail, label: 'Email Channels', value: 'info@colorsomepaints.com', sub: 'Response within 12 hours', href: 'mailto:info@colorsomepaints.com' },
-  { icon: Clock, label: 'Headquarters Hours', value: '09:00 AM — 07:00 PM', sub: 'Sunday: Closed desk', href: null },
+  { icon: Phone, label: 'Phone Desk', value: '+91-75020-00079', sub: 'Mon — Sat, 9 AM — 7 PM', href: 'tel:+917502000079', color: '#C4704B' },
+  { icon: Mail, label: 'Email Channels', value: 'info@colorsomepaints.com', sub: 'Response within 12 hours', href: 'mailto:info@colorsomepaints.com', color: '#2C3E50' },
+  { icon: Clock, label: 'Headquarters Hours', value: '09:00 AM — 07:00 PM', sub: 'Sunday: Closed desk', href: null, color: '#C9A858' },
 ];
 
 const offices = [
@@ -651,29 +652,74 @@ export default function ContactPage() {
           }}
         />
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
-          <motion.div className="max-w-3xl" initial="hidden" animate="visible" variants={fadeInUp}>
-            <div className="inline-flex items-center gap-2 bg-[#F3E7C9] text-[#2D2D2D] font-black text-[10px] tracking-wider uppercase px-3 py-1 rounded-full mb-4 sm:mb-5" style={{ fontFamily: 'var(--font-inter)' }}>
-              <Sparkles className="w-3.5 h-3.5 text-orange-500" /> We're Responsive
-            </div>
-            <span className="block text-[10px] uppercase tracking-widest font-black text-gray-400 mb-2" style={{ fontFamily: 'var(--font-inter)' }}>Connect & Synchronize</span>
-            <h1
-              className="font-serif font-bold tracking-tight text-[#2D2D2D] mb-4 sm:mb-6 leading-none"
-              style={{ fontSize: 'clamp(2.2rem, 7vw, 4.5rem)' }}
+          <div className="grid lg:grid-cols-12 gap-8 items-center">
+            <motion.div className="lg:col-span-8" initial="hidden" animate="visible" variants={fadeInUp}>
+              <div className="inline-flex items-center gap-2 bg-[#F3E7C9] text-[#2D2D2D] font-black text-[10px] tracking-wider uppercase px-3 py-1 rounded-full mb-4 sm:mb-5" style={{ fontFamily: 'var(--font-inter)' }}>
+                <Sparkles className="w-3.5 h-3.5 text-[#C4704B]" /> We're Responsive
+              </div>
+              <span className="block text-[10px] uppercase tracking-widest font-black text-gray-400 mb-2" style={{ fontFamily: 'var(--font-inter)' }}>Connect & Synchronize</span>
+              <h1
+                className="font-serif font-bold tracking-tight text-[#2D2D2D] mb-4 sm:mb-6 leading-none"
+                style={{ fontSize: 'clamp(2.2rem, 7vw, 4.5rem)' }}
+              >
+                Let's Bring Your <br />
+                <span className="bg-gradient-to-r from-[#8C6478] to-[#C4704B] bg-clip-text text-transparent">
+                  Palettes to Life
+                </span>
+              </h1>
+              <p className="text-sm sm:text-base md:text-lg text-[#2D2D2D]/70 leading-relaxed max-w-2xl mb-8" style={{ fontFamily: 'var(--font-inter)' }}>
+                Have architectural questions or need bespoke deployment coordination? Reach out directly to our central assistance desks below.
+              </p>
+              <div className="flex flex-wrap gap-6 sm:gap-10">
+                {[
+                  { value: '12hr', label: 'Avg. Response Time' },
+                  { value: '6 Days', label: 'Desk Availability' },
+                  { value: 'Pan-India', label: 'Service Coverage' },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <p className="font-serif text-2xl sm:text-3xl font-bold text-[#2D2D2D]">{s.value}</p>
+                    <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mt-1" style={{ fontFamily: 'var(--font-inter)' }}>{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Decorative visual, fills the empty right column on wide screens */}
+            <motion.div
+              className="hidden lg:flex lg:col-span-4 items-center justify-center relative h-[320px]"
+              initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.2 }}
             >
-              Let's Bring Your <br />
-              <span className="bg-gradient-to-r from-pink-600 to-orange-500 bg-clip-text text-transparent">
-                Palettes to Life
-              </span>
-            </h1>
-            <p className="text-sm sm:text-base md:text-lg text-[#2D2D2D]/70 leading-relaxed max-w-2xl" style={{ fontFamily: 'var(--font-inter)' }}>
-              Have architectural questions or need bespoke deployment coordination? Reach out directly to our central assistance desks below.
-            </p>
-          </motion.div>
+              <motion.div
+                className="absolute w-56 h-56 rounded-full blur-[70px]"
+                style={{ background: `radial-gradient(circle, ${BRAND.orange}30 0%, transparent 70%)` }}
+                animate={{ opacity: [0.5, 0.9, 0.5] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              />
+              <div className="relative w-44 h-44 rounded-full bg-white border border-[#EDE6DA] shadow-[0_20px_50px_rgba(45,45,45,0.1)] flex items-center justify-center">
+                <Phone className="w-14 h-14 text-[#C4704B]/25" />
+              </div>
+              {[
+                { Icon: Mail, top: '4%', left: '58%', color: '#2C3E50' },
+                { Icon: Clock, top: '68%', left: '62%', color: '#C9A858' },
+                { Icon: MapPin, top: '60%', left: '4%', color: '#8B9E7E' },
+              ].map(({ Icon, top, left, color }, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-12 h-12 rounded-2xl bg-white border shadow-[0_12px_30px_rgba(0,0,0,0.1)] flex items-center justify-center"
+                  style={{ top, left, borderColor: `${color}30` }}
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 3.5 + i * 0.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.5 }}
+                >
+                  <Icon className="w-5 h-5" style={{ color }} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ── CONTACT INFO CARDS ── */}
-      <section className="py-6 sm:py-12 md:py-16 relative">
+      <section className="py-12 sm:py-16 md:py-20 relative">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
@@ -687,66 +733,119 @@ export default function ContactPage() {
                 key={c.label}
                 variants={fadeInUp}
                 whileHover={{ y: -4, scale: 1.01 }}
-                className="bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-[#EDE6DA]/60 shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:shadow-xl hover:bg-white hover:border-orange-200 group"
+                className="relative bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:shadow-[0_20px_50px_rgba(45,45,45,0.1)] hover:bg-white overflow-hidden group"
+                style={{ borderColor: `${c.color}20` }}
               >
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-[#FDFBF7] border border-[#EDE6DA] flex items-center justify-center mb-4 sm:mb-6 shadow-inner group-hover:scale-105 transition-transform duration-300 text-orange-500">
+                <div
+                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 transition-transform duration-300 group-hover:scale-105"
+                  style={{ background: `linear-gradient(135deg, ${c.color}30, ${c.color}10)`, color: c.color, boxShadow: `0 8px 20px ${c.color}1A` }}
+                >
                   <c.icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block mb-2" style={{ fontFamily: 'var(--font-inter)' }}>{c.label}</span>
                 {c.href ? (
-                  <a href={c.href} className="font-serif text-lg sm:text-xl font-bold text-[#2D2D2D] hover:text-orange-500 transition-colors inline-flex items-start gap-1.5 break-all">
-                    <span className="break-all">{c.value}</span>
+                  <a href={c.href} className="font-serif text-lg sm:text-xl font-bold text-[#2D2D2D] transition-colors inline-flex items-start gap-1.5 break-all py-1.5 -my-1.5">
+                    <span className="break-all group-hover:opacity-80 transition-opacity">{c.value}</span>
                     <ExternalLink className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity shrink-0 mt-1" />
                   </a>
                 ) : (
                   <p className="font-serif text-lg sm:text-xl font-bold text-[#2D2D2D]">{c.value}</p>
                 )}
                 <p className="text-xs text-[#6B6B6B] mt-2 leading-relaxed" style={{ fontFamily: 'var(--font-inter)' }}>{c.sub}</p>
+                <div className="h-[2px] w-6 group-hover:w-full transition-all duration-500 rounded-full mt-4" style={{ background: c.color }} />
               </motion.div>
             ))}
+          </motion.div>
+
+          {/* ── CONSULTATION FORM CTA — this page previously offered no path
+              to an actual inquiry other than a phone call or email address;
+              a visitor who preferred filling out a form had nowhere to go.
+              This drives straight to the real lead-capture form on
+              /assistance, deep-linked (via the section id added there) so
+              it lands directly on the form instead of the top of the page. ── */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="relative overflow-hidden rounded-2xl sm:rounded-3xl mt-4 sm:mt-6 px-6 sm:px-10 py-8 sm:py-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_20px_50px_rgba(45,45,45,0.14)]"
+            style={{ background: `linear-gradient(135deg, ${BRAND.pink} 0%, ${BRAND.orange} 100%)` }}
+          >
+            <div
+              className="absolute inset-0 opacity-[0.08] pointer-events-none"
+              style={{
+                backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(to right, #fff 1px, transparent 1px)`,
+                backgroundSize: '28px 28px',
+              }}
+            />
+            <div className="relative z-10 text-center md:text-left">
+              <div className="inline-flex items-center gap-2 bg-white/15 text-white font-black text-[10px] tracking-wider uppercase px-3 py-1 rounded-full mb-3" style={{ fontFamily: 'var(--font-inter)' }}>
+                <MessageCircle className="w-3.5 h-3.5" /> Prefer Not To Call?
+              </div>
+              <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+                Tell Us About Your Project Instead
+              </h3>
+              <p className="text-white/85 text-sm sm:text-base max-w-lg" style={{ fontFamily: 'var(--font-inter)' }}>
+                Share a few details and our experts will get back to you within 24 hours - no phone call needed.
+              </p>
+            </div>
+            <Link
+              href="/assistance#consultation-form"
+              className="group relative overflow-hidden shrink-0 inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-wide text-[#2D2D2D] bg-white shadow-[0_10px_25px_rgba(0,0,0,0.15)] transition-transform active:scale-[0.98]"
+              style={{ fontFamily: 'var(--font-inter)' }}
+            >
+              <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[1100ms] ease-out" style={{ background: 'linear-gradient(115deg, transparent 30%, rgba(0,0,0,0.08) 50%, transparent 70%)' }} />
+              <span className="relative">Get Free Consultation</span>
+              <ArrowRight className="w-4 h-4 relative transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
           </motion.div>
         </div>
       </section>
 
       {/* ── NEW CONSOLIDATED EXPERIENCE CENTER MAP SECTION ── */}
-      <section className="py-12 sm:py-20 md:py-24 relative">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-          
+      <section className="py-12 sm:py-20 md:py-24 relative overflow-hidden">
+        {/* Ambient glow, consistent with the rest of the site's section treatment */}
+        <div className="absolute top-1/4 -right-24 w-[420px] h-[420px] rounded-full blur-[110px] pointer-events-none opacity-30" style={{ background: `radial-gradient(circle, ${BRAND.orange} 0%, transparent 70%)` }} />
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
+
           {/* Section Heading */}
-          <div className="mb-8 md:mb-12">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-orange-500 font-black block mb-2" style={{ fontFamily: 'var(--font-inter)' }}>Our Presence</span>
+          <motion.div className="mb-8 md:mb-12" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.4 }} variants={fadeInUp}>
+            <div className="inline-flex items-center gap-2 mb-2">
+              <span className="w-3 h-[1.5px]" style={{ background: '#C4704B' }} />
+              <span className="text-[10px] uppercase tracking-[0.25em] text-[#C4704B] font-black" style={{ fontFamily: 'var(--font-inter)' }}>Our Presence</span>
+            </div>
             <h2 className="font-serif font-bold text-[#2D2D2D] tracking-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
               Visit Our Flagship Experience Center
             </h2>
-          </div>
+          </motion.div>
 
           {/* Clean Unified Layout Matrix */}
           {offices.map((o) => (
-            <div key={o.city} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              
-              {/* Left Column: Image Card Card (With Embeded Mobile Info) */}
-              <div className="lg:col-span-7 w-full">
-                <div className="bg-white rounded-3xl overflow-hidden shadow-[0_15px_45px_rgba(0,0,0,0.05)] border border-[#EDE6DA]/70 group">
+            <motion.div key={o.city} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+              initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer}>
+
+              {/* Left Column: Image card (with embedded mobile info) */}
+              <motion.div variants={fadeInUp} whileHover={{ y: -4 }} className="lg:col-span-7 w-full transition-transform">
+                <div className="bg-white rounded-3xl overflow-hidden shadow-[0_15px_45px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_60px_rgba(0,0,0,0.09)] border border-[#EDE6DA]/70 transition-shadow duration-400 group">
                   
                   {/* The visual photo segment */}
                   <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden">
                     <Image
-                      src="aboutpage.png"
+                      src="/aboutpage.png"
                       alt="Colorsome HQ Office Building"
                       fill
-                      priority
-                      className="object-cover transition-transform duration-700 group-hover:scale-103"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                       unoptimized
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                     
                     {/* Corner Map Indicator */}
                     <div className="absolute bottom-4 left-4 right-4 text-white flex items-center justify-between z-10" style={{ fontFamily: 'var(--font-inter)' }}>
-                      <div>
-                        <p className="text-[11px] text-gray-300 font-medium tracking-wide">Ambegaon Budruk</p>
-                        <p className="font-serif text-sm sm:text-base font-bold mt-0.5">Right Behind D-Mart Exit</p>
+                      <div className="min-w-0 flex-1 mr-3">
+                        <p className="text-[11px] text-gray-300 font-medium tracking-wide truncate">Ambegaon Budruk</p>
+                        <p className="font-serif text-sm sm:text-base font-bold mt-0.5 truncate">Right Behind D-Mart Exit</p>
                       </div>
-                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center shadow-md">
+                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#8C6478] to-[#C4704B] flex items-center justify-center shadow-[0_4px_14px_rgba(0,0,0,0.35)]">
                         <MapPin className="w-4 h-4 text-white" />
                       </div>
                     </div>
@@ -754,31 +853,37 @@ export default function ContactPage() {
 
                   {/* MOBILE & TABLET ONLY DIRECT ADDRESS AREA (Cleans up stacking duplicate loops) */}
                   <div className="p-6 block lg:hidden bg-white" style={{ fontFamily: 'var(--font-inter)' }}>
-                    <div className="inline-flex items-center gap-1.5 bg-[#F3E7C9] text-[#2D2D2D] font-bold text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-md mb-3">
+                    <div className="inline-flex items-center gap-1.5 bg-[#F3E7C9] text-[#2D2D2D] font-bold text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">
                       {o.city}
                     </div>
                     <h3 className="font-serif font-black text-xl text-[#2D2D2D] mb-2">{o.tagline}</h3>
                     <p className="text-sm text-[#6B6B6B] leading-relaxed mb-5">{o.address}</p>
-                    
+
                     <div className="pt-4 border-t border-[#EDE6DA]/60 flex flex-col gap-3">
-                      <a href={`tel:${o.phone}`} className="inline-flex items-center gap-2.5 text-sm font-bold text-[#2D2D2D]">
-                        <Phone className="w-4 h-4 text-orange-500" /> {o.phone}
+                      <a href={`tel:${o.phone}`} className="inline-flex items-center gap-2.5 text-sm font-bold text-[#2D2D2D] py-2">
+                        <Phone className="w-4 h-4 text-[#C4704B]" /> {o.phone}
                       </a>
-                      <a href="https://maps.google.com/?q=C-403+Akshay+Villa+Ram+Nagari+Ambegaon+Budruk+Katraj+Pune" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 py-3 rounded-xl text-xs uppercase font-black tracking-wider text-white bg-gradient-to-r from-orange-500 to-pink-600 shadow-md">
-                        Get Navigation Routes <ArrowRight className="w-4 h-4" />
+                      <a href={`https://maps.google.com/?q=${encodeURIComponent(o.address)}`} target="_blank" rel="noopener noreferrer" className="group relative overflow-hidden w-full inline-flex items-center justify-center gap-1.5 py-3.5 rounded-xl text-xs uppercase font-black tracking-wider text-white bg-gradient-to-r from-[#C4704B] to-[#8C6478] shadow-[0_10px_25px_rgba(196,112,75,0.2)] hover:shadow-[0_14px_32px_rgba(196,112,75,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all">
+                        <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" style={{ background: 'linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%)' }} />
+                        <span className="relative">Get Navigation Routes</span> <ArrowRight className="w-4 h-4 relative" />
                       </a>
                     </div>
                   </div>
 
                 </div>
-              </div>
+              </motion.div>
 
               {/* Right Column: Sleek Dedicated Desktop Card Display */}
-              <div className="hidden lg:flex lg:col-span-5 h-full flex-col justify-between">
-                <div className="bg-white/90 backdrop-blur-sm border border-[#EDE6DA]/80 rounded-3xl p-8 xl:p-10 shadow-[0_10px_35px_rgba(0,0,0,0.02)] h-full flex flex-col justify-between">
+              <motion.div variants={fadeInUp} whileHover={{ y: -4 }} className="hidden lg:flex lg:col-span-5 h-full flex-col justify-between transition-transform">
+                <div className="relative bg-white/90 backdrop-blur-sm border border-[#EDE6DA]/80 rounded-3xl p-8 xl:p-10 shadow-[0_10px_35px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.07)] transition-shadow duration-400 h-full flex flex-col justify-between overflow-hidden">
+                  <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: `linear-gradient(90deg, #C4704B, #8C6478)` }} />
                   <div>
-                    <div className="inline-flex items-center gap-1.5 bg-[#F3E7C9] text-[#2D2D2D] font-bold text-[10px] tracking-wider uppercase px-3 py-1 rounded-full mb-4" style={{ fontFamily: 'var(--font-inter)' }}>
-                      <Building2 className="w-3.5 h-3.5 text-orange-500" /> Flagship HQ Location
+                    <div className="inline-flex items-center gap-2 bg-[#F3E7C9] text-[#2D2D2D] font-bold text-[10px] tracking-wider uppercase px-3 py-1 rounded-full mb-4" style={{ fontFamily: 'var(--font-inter)' }}>
+                      <span className="relative flex w-1.5 h-1.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C4704B] opacity-75" />
+                        <span className="relative inline-flex rounded-full w-1.5 h-1.5 bg-[#C4704B]" />
+                      </span>
+                      <Building2 className="w-3.5 h-3.5 text-[#C4704B]" /> Flagship HQ Location
                     </div>
                     <h3 className="font-serif font-bold text-2xl xl:text-3xl text-[#2D2D2D] leading-tight mb-4">
                       {o.tagline}
@@ -789,21 +894,21 @@ export default function ContactPage() {
                   </div>
 
                   <div className="pt-6 border-t border-[#EDE6DA]/60 flex flex-col gap-4" style={{ fontFamily: 'var(--font-inter)' }}>
-                    <a href={`tel:${o.phone}`} className="inline-flex items-center gap-3 text-sm font-bold text-[#2D2D2D] hover:text-orange-500 transition-colors">
+                    <a href={`tel:${o.phone}`} className="inline-flex items-center gap-3 text-sm font-bold text-[#2D2D2D] hover:text-[#C4704B] transition-colors">
                       <div className="w-8 h-8 rounded-lg bg-[#FDFBF7] border border-[#EDE6DA] flex items-center justify-center shadow-sm">
-                        <Phone className="w-4 h-4 text-orange-500" />
+                        <Phone className="w-4 h-4 text-[#C4704B]" />
                       </div>
                       {o.phone}
                     </a>
-                    <a href="https://maps.google.com/?q=C-403+Akshay+Villa+Ram+Nagari+Ambegaon+Budruk+Katraj+Pune" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-between p-4 rounded-2xl border border-orange-200 text-sm font-bold text-orange-600 bg-orange-50/30 hover:bg-orange-50 transition-colors group">
+                    <a href={`https://maps.google.com/?q=${encodeURIComponent(o.address)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-between p-4 rounded-2xl border border-[#C4704B]/30 text-sm font-bold text-[#C4704B] bg-[#C4704B]/[0.04] hover:bg-[#C4704B]/[0.08] hover:scale-[1.01] active:scale-[0.99] transition-all group">
                       <span>Launch Google Map Directions</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </a>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-            </div>
+            </motion.div>
           ))}
 
         </div>
@@ -825,35 +930,55 @@ export default function ContactPage() {
                 desc: 'Browse our complete catalog or ask our design lab for personalized suggestions.',
                 link: '/products',
                 label: 'View Master Catalog',
+                icon: Package,
+                color: '#C4704B',
               },
               {
                 title: 'Need Direct Art Direction?',
                 desc: 'Secure a premium, fully customized timeline walkthrough consultation blueprint.',
                 link: '/assistance',
                 label: 'Book Free Consultation',
+                icon: Palette,
+                color: '#8C6478',
               },
               {
                 title: 'Looking for Inspiration?',
                 desc: 'Explore highly curated tone architectures inside our modern shade books.',
                 link: '/shades',
                 label: 'Browse Color Shades',
+                icon: Eye,
+                color: '#C9A858',
               },
             ].map((item) => (
               <motion.div
                 key={item.title}
                 variants={fadeInUp}
-                whileHover={{ y: -4 }}
-                className="text-left bg-white/90 backdrop-blur-sm border border-[#EDE6DA]/60 rounded-2xl p-6 sm:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] hover:shadow-xl hover:bg-white hover:border-orange-200/50 transition-all duration-300"
+                whileHover={{ y: -6 }}
+                className="group relative text-left bg-white/90 backdrop-blur-sm border rounded-2xl p-6 sm:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] hover:shadow-[0_20px_50px_rgba(45,45,45,0.1)] hover:bg-white transition-all duration-300 overflow-hidden"
+                style={{ borderColor: `${item.color}20` }}
               >
-                <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2D2D2D] mb-2 sm:mb-3 tracking-tight">{item.title}</h3>
-                <p className="text-[#6B6B6B] text-sm mb-5 sm:mb-6 leading-relaxed" style={{ fontFamily: 'var(--font-inter)' }}>{item.desc}</p>
+                <item.icon
+                  aria-hidden
+                  className="pointer-events-none select-none absolute -bottom-4 -right-4 w-24 h-24 opacity-[0.06]"
+                  style={{ color: item.color }}
+                  strokeWidth={1.2}
+                />
+                <div
+                  className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-5 transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: `linear-gradient(135deg, ${item.color}30, ${item.color}10)`, color: item.color, boxShadow: `0 8px 20px ${item.color}1A` }}
+                >
+                  <item.icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                </div>
+                <h3 className="relative z-10 font-serif text-lg sm:text-xl font-bold text-[#2D2D2D] mb-2 sm:mb-3 tracking-tight">{item.title}</h3>
+                <p className="relative z-10 text-[#6B6B6B] text-sm mb-5 sm:mb-6 leading-relaxed" style={{ fontFamily: 'var(--font-inter)' }}>{item.desc}</p>
                 <Link
                   href={item.link}
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-black text-[#2D2D2D] hover:text-orange-500 transition-colors group"
+                  className="relative z-10 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-black text-[#2D2D2D] transition-colors group/link"
                   style={{ fontFamily: 'var(--font-inter)' }}
                 >
-                  {item.label} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  {item.label} <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" style={{ color: item.color }} />
                 </Link>
+                <div className="relative z-10 h-[2px] w-6 group-hover:w-full transition-all duration-500 rounded-full mt-4" style={{ background: item.color }} />
               </motion.div>
             ))}
           </motion.div>

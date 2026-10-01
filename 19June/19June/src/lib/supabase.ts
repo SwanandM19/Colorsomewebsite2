@@ -202,16 +202,13 @@ export async function submitConsultation(
     notes: consultation.notes || null,
   };
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from('consultations')
-    .insert([payload]);
+    .insert([payload])
+    .select()
+    .single();
 
   if (error) throw error;
 
-  return {
-    id: '',
-    created_at: '',
-    status: 'new',
-    ...payload,
-  } as Consultation;
+  return data as Consultation;
 }

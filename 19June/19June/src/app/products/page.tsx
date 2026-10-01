@@ -55,7 +55,7 @@
 //       description: "Advanced reactive armor system designed for durability and performance.",
 //       fullDescription: "Ara Weather Coat features advanced reactive technology that adapts to environmental conditions, providing superior protection against corrosion and wear.",
 //       status: "Active",
-//       image: "/Ara_Weather_Coat.png",
+//       image: "/AraWeather.png",
 //       category: "Protective Coatings",
 //       features: ["Self-healing Properties", "Anti-corrosion", "Temperature Resistant", "Flexible Application"],
 //       applications: ["Automotive", "Aerospace", "Heavy Machinery", "Infrastructure"],
@@ -526,7 +526,7 @@
 //           >
 //             <div className="w-[62px] h-[62px] rounded-2xl flex items-center justify-center bg-white shadow-[0_10px_30px_rgba(0,0,0,0.06)] border border-[#E8E2D8] p-2 shrink-0">
 //               <Image
-//                 src="/Ara_Weather_Coat.png"
+//                 src="/AraWeather.png"
 //                 alt="Colorsome logo"
 //                 width={62}
 //                 height={62}
@@ -1006,43 +1006,126 @@
 
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { ArrowRight, Search, Phone, Menu, X, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { products } from "./data";
 import type { Product } from "./data";
 import { Footer } from "@/src/components/Footer";
 import { Header } from "@/src/components/Header";
+import { CATEGORY_TAXONOMY, SLUG_TO_CATEGORIES, checkTaxonomyCoverage } from "./categoryTaxonomy";
 
-const ALL_CATEGORIES = [
-  "All",
-  "Protective Coatings",
-  "Wall Finishes",
-  "Construction Materials",
-  "Decorative Paints",
-  "Primers",
-  "Emulsion Paints",
-  "Industrial Coatings",
-  "Oil Paints",
-  "Distempers",
-  "Waterproofing",
-  "Exterior Paints",
-  "Interior Paints",
-  "Industrial Textiles",
+// ─── Curated Edits ──────────────────────────────────────────────────────────
+// Editorial, story-led entry points into the catalogue — the way Colorsome
+// wants customers to discover products (by need/occasion), not just a flat
+// category filter. Each edit maps to one real category so "Explore Edit"
+// genuinely filters the grid below to matching, in-stock products.
+const CURATED_EDITS = [
+  {
+    title: "The Monsoon Shield Edit",
+    story: "Terraces, parapets and basements — sealed and stress-tested before the first storm hits.",
+    category: "Waterproofing",
+    // image: "https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&w=900&q=80",
+    image: "/Monsoon.png",
+    focus: "center 30%",
+  },
+  {
+    title: "The Architect's Palette",
+    story: "Lime-based finishes and heritage textures for spaces designed to be looked at twice.",
+    category: "Wall Finishes",
+    // image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=900&q=80",
+    image: "/ArchPalette.png",
+    focus: "center 15%",
+  },
+  {
+    title: "The First Home Edit",
+    story: "Everything a fresh interior needs — smooth, washable, low-VOC finishes for rooms you'll live in.",
+    category: "Interior Paints",
+    // image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=900&q=80",
+    image: "/FirstHome.png",
+    focus: "center 10%",
+  },
+  {
+    title: "The Industrial Grade Edit",
+    story: "Chemical, UV and corrosion resistance for plants, pipelines and heavy machinery.",
+    category: "Protective Coatings",
+    // image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80",
+    image: "/Industrial.png",
+    focus: "center 20%",
+  },
 ];
 
-export default function ProductsPage() {
+// Pills shown in the sticky filter bar: "All" plus the 5 mega-menu columns
+// (replaces the old 13-raw-category row now that discovery-by-category lives
+// in the header mega-menu — this bar is just for refining, not full browsing).
+const FILTER_PILLS = [
+  { slug: "All", label: "All" },
+  ...CATEGORY_TAXONOMY.map((c) => ({ slug: c.slug, label: c.title })),
+];
+
+const INITIAL_VISIBLE = 16;
+const LOAD_MORE_STEP = 16;
+const CURATED_SECTION_CAP = 8;
+
+// Resolves a URL `?category=` value (which may be a taxonomy column slug, a
+// taxonomy subcategory slug, or a legacy raw category string like the ones
+// CURATED_EDITS and Footer links already use) into a readable label and the
+// list of raw `product.category` values it should match.
+function resolveCategory(value: string): { label: string; rawCategories: string[] | null } {
+  if (value === "All") return { label: "All", rawCategories: null };
+  const column = CATEGORY_TAXONOMY.find((c) => c.slug === value);
+  if (column) return { label: column.title, rawCategories: SLUG_TO_CATEGORIES[value] };
+  for (const c of CATEGORY_TAXONOMY) {
+    const sub = c.subcategories.find((s) => s.slug === value);
+    if (sub) return { label: sub.label, rawCategories: sub.categories };
+  }
+  // Legacy: a literal raw category string (CURATED_EDITS, old Footer links)
+  return { label: value, rawCategories: [value] };
+}
+
+function ProductsPageContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const activeCategory = searchParams.get("category") ?? "All";
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+
+  const setCategory = (value: string) => {
+    router.push(value === "All" ? "/products" : `/products?category=${value}`, { scroll: false });
+  };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // behavior: 'instant' overrides globals.css's `scroll-behavior: smooth`
+    // on <html> so this jumps to the top instead of visibly animating up
+    // from wherever the previous page was scrolled to.
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
+  // Dev-time integrity check — if a new category is ever added to data.ts
+  // without a taxonomy home, warn loudly instead of silently hiding products
+  // the way the old hardcoded 13-category list used to.
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      const allRawCategories = [...new Set(products.map((p) => p.category))];
+      const { missing, duplicated } = checkTaxonomyCoverage(allRawCategories);
+      if (missing.length) console.warn("[categoryTaxonomy] categories missing from taxonomy:", missing);
+      if (duplicated.length) console.warn("[categoryTaxonomy] categories listed in more than one subcategory:", duplicated);
+    }
+  }, []);
+
+  // Reset pagination whenever the active filter changes so "Load More" always
+  // starts from a fresh, predictable window instead of carrying over state.
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE);
+  }, [activeCategory, search]);
+
+  const { label: activeCategoryLabel, rawCategories: activeRawCategories } = resolveCategory(activeCategory);
+
   const filtered = products.filter((p) => {
-    const matchCat = activeCategory === "All" || p.category === activeCategory;
+    const matchCat = activeCategory === "All" || (activeRawCategories?.includes(p.category) ?? false);
     const matchSearch =
       !search ||
       p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -1050,14 +1133,20 @@ export default function ProductsPage() {
     return matchCat && matchSearch;
   });
 
-  const grouped = ALL_CATEGORIES.slice(1).reduce<Record<string, Product[]>>(
-    (acc, cat) => {
-      const items = filtered.filter((p) => p.category === cat);
-      if (items.length) acc[cat] = items;
-      return acc;
-    },
-    {},
-  );
+  const visibleFiltered = filtered.slice(0, visibleCount);
+
+  // Default "All" browse view: grouped by the 5 real taxonomy columns, which
+  // together cover every raw category in data.ts (unlike the old hardcoded
+  // 13-item list, which silently dropped ~40 products in categories it
+  // didn't know about).
+  const grouped = useMemo(() => {
+    const acc: Record<string, { title: string; slug: string; items: Product[] }> = {};
+    for (const column of CATEGORY_TAXONOMY) {
+      const items = products.filter((p) => SLUG_TO_CATEGORIES[column.slug].includes(p.category));
+      if (items.length) acc[column.slug] = { title: column.title, slug: column.slug, items };
+    }
+    return acc;
+  }, []);
 
   return (
     <div className="bg-[#FAF8F5] min-h-screen pt-[72px]">
@@ -1091,15 +1180,15 @@ export default function ProductsPage() {
               className="max-w-2xl"
             >
               <div className="flex items-center gap-2.5 mb-4 font-inter">
-                <Sparkles className="w-3.5 h-3.5 text-orange-500" />
-                <p className="text-[10px] uppercase tracking-[0.25em] text-orange-500 font-black">
+                <Sparkles className="w-3.5 h-3.5 text-[#C4704B]" />
+                <p className="text-[10px] uppercase tracking-[0.25em] text-[#C4704B] font-black">
                   Our Catalog
                 </p>
               </div>
               <h1 className="font-serif text-5xl md:text-6xl lg:text-[4.25rem] font-bold text-charcoal mb-6 leading-none tracking-tight">
                 Premium Surface
                 <br />
-                <span className="bg-gradient-to-r from-pink-600 to-orange-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#8C6478] to-[#C4704B] bg-clip-text text-transparent">
                   Solutions
                 </span>
               </h1>
@@ -1139,10 +1228,78 @@ export default function ProductsPage() {
         </div>
       </section>
 
+      {/* ── CURATED EDITS ── */}
+      <section className="py-16 md:py-20 bg-white border-b border-[#EDE6DA]">
+        <div className="max-w-[1280px] mx-auto px-6">
+          <div className="flex items-end justify-between mb-8 gap-6 flex-wrap">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] font-bold text-gold mb-2" style={{ fontFamily: "var(--font-inter)" }}>
+                Curated by Colorsome
+              </p>
+              <h2 className="font-serif text-2xl md:text-3xl font-semibold text-charcoal tracking-tight" style={{ fontFamily: "var(--font-display), serif" }}>
+                Shop the Edits
+              </h2>
+            </div>
+            <p className="text-sm text-charcoal-muted max-w-sm leading-relaxed">
+              Hand-picked entry points for the moments that matter — a monsoon coming, a first home, a job site. Not just a catalogue, a starting point.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {CURATED_EDITS.map((edit) => {
+              const count = products.filter((p) => p.category === edit.category).length;
+              return (
+                <button
+                  key={edit.title}
+                  onClick={() => {
+                    setCategory(edit.category);
+                    setSearch("");
+                    document.getElementById("product-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                  className="group relative text-left rounded-[1.5rem] overflow-hidden h-80 shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:shadow-[0_24px_50px_rgba(0,0,0,0.2)] hover:-translate-y-1 transition-all duration-400"
+                >
+                  <Image
+                    src={edit.image}
+                    alt={edit.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    style={{ objectPosition: edit.focus }}
+                  />
+                  {/* Solid dark base + gradient — legible over any photo, not just a light wash */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/45 to-black/10" />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400" style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.55), transparent 60%)" }} />
+
+                  <span
+                    className="absolute top-4 left-4 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider text-white shadow-sm"
+                    style={{ background: "var(--gold)" }}
+                  >
+                    {count} Products
+                  </span>
+
+                  {/* Frosted caption panel — stays readable regardless of the photo underneath */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 pt-8 bg-gradient-to-t from-black/60 to-transparent backdrop-blur-[2px]">
+                    <h3 className="text-xl font-bold text-white mb-1.5 leading-tight" style={{ fontFamily: "var(--font-display), serif" }}>
+                      {edit.title}
+                    </h3>
+                    <p className="text-xs text-white/75 leading-relaxed mb-3">{edit.story}</p>
+                    <span className="inline-flex items-center gap-1.5 text-[11px] font-black uppercase tracking-wider" style={{ color: "var(--gold-light)" }}>
+                      Explore Edit
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                    <div className="h-[2px] w-6 group-hover:w-full transition-all duration-500 rounded-full mt-3" style={{ background: "var(--gold)" }} />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Sticky filter bar */}
       <section className="bg-charcoal sticky top-[72px] z-40 py-3.5 shadow-md">
         <div className="max-w-[1280px] mx-auto px-6">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* Search */}
             <div className="relative flex-shrink-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
@@ -1151,23 +1308,26 @@ export default function ProductsPage() {
                 placeholder="Search products..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-9 pr-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm text-white placeholder-white/40 focus:outline-none focus:border-gold/60 w-52 transition-colors focus:bg-white/15"
+                className="pl-9 pr-3 sm:pr-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm text-white placeholder-white/40 focus:outline-none focus:border-gold/60 w-28 sm:w-40 md:w-52 transition-colors focus:bg-white/15"
               />
             </div>
 
-            {/* Category pills */}
-            <div className="flex items-center overflow-x-auto gap-2 scrollbar-hide flex-1">
-              {ALL_CATEGORIES.map((cat) => (
+            {/* Category pills — "All" + the 5 mega-menu columns. Full
+                category/subcategory browsing now lives in the header
+                mega-menu, so this bar stays a lightweight refinement tool
+                rather than repeating the same 13+ raw categories twice. */}
+            <div className="flex items-center overflow-x-auto gap-2 scrollbar-hide flex-1 pr-4">
+              {FILTER_PILLS.map((pill) => (
                 <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-md text-xs font-medium tracking-wide whitespace-nowrap transition-all duration-200 ${
-                    activeCategory === cat
-                      ? "bg-gold text-white shadow-sm"
+                  key={pill.slug}
+                  onClick={() => setCategory(pill.slug)}
+                  className={`px-4 py-2.5 md:py-2 rounded-xl text-xs font-medium tracking-wide whitespace-nowrap transition-all duration-200 shrink-0 ${
+                    activeCategory === pill.slug
+                      ? "bg-gold text-white shadow-sm scale-[1.02]"
                       : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white"
                   }`}
                 >
-                  {cat}
+                  {pill.label}
                 </button>
               ))}
             </div>
@@ -1176,7 +1336,7 @@ export default function ProductsPage() {
       </section>
 
       {/* Product count indicator strip */}
-      <div className="max-w-[1280px] mx-auto px-6 py-6">
+      <div id="product-grid" className="max-w-[1280px] mx-auto px-6 py-6 scroll-mt-[140px]">
         <div className="relative overflow-hidden bg-white border border-[#EDE6DA] rounded-[1.5rem] px-5 sm:px-6 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.03)]">
           <div
             className="absolute inset-0 pointer-events-none opacity-[0.05] rounded-[1.5rem]"
@@ -1200,7 +1360,7 @@ export default function ProductsPage() {
               >
                 Displaying {filtered.length} product
                 {filtered.length !== 1 ? "s" : ""}
-                {activeCategory !== "All" ? ` in ${activeCategory}` : ""}
+                {activeCategory !== "All" ? ` in ${activeCategoryLabel}` : ""}
               </h2>
             </div>
 
@@ -1213,7 +1373,7 @@ export default function ProductsPage() {
                   fontFamily: "var(--font-inter)",
                 }}
               >
-                {activeCategory}
+                {activeCategoryLabel}
               </span>
 
               {search && (
@@ -1231,39 +1391,60 @@ export default function ProductsPage() {
             </div>
           </div>
         </div>
+        <p
+          className="text-[10px] text-[#B0A898] mt-3 px-1 leading-relaxed"
+          style={{ fontFamily: "var(--font-inter)" }}
+        >
+          Product images are for representation purposes only. Actual colour, shade, and finish may vary depending on screen display, surface, and application.
+        </p>
       </div>
 
       {/* Products Matrix layout */}
       {activeCategory === "All" && !search ? (
-        Object.entries(grouped).map(([category, items]) => (
-          <section
-            key={category}
-            className="max-w-[1280px] mx-auto px-6 pb-16 pt-6"
-          >
-            <div className="flex items-end justify-between mb-6">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-3 h-[1.5px] bg-gold" />
-                  <p className="text-[11px] uppercase tracking-widest text-gold font-bold">
-                    Collection Range ({items.length})
-                  </p>
+        Object.values(grouped).map(({ title, slug, items }) => {
+          const shown = items.slice(0, CURATED_SECTION_CAP);
+          return (
+            <section
+              key={slug}
+              className="max-w-[1280px] mx-auto px-6 pb-16 pt-6"
+            >
+              <div className="flex items-end justify-between mb-6 gap-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-3 h-[1.5px] bg-gold" />
+                    <p className="text-[11px] uppercase tracking-widest text-gold font-bold">
+                      Collection Range ({items.length})
+                    </p>
+                  </div>
+                  <h2
+                    className="font-serif text-2xl md:text-3xl font-medium text-charcoal tracking-tight"
+                    style={{ fontFamily: "var(--font-cormorant)" }}
+                  >
+                    {title}
+                  </h2>
                 </div>
-                <h2
-                  className="font-serif text-2xl md:text-3xl font-medium text-charcoal tracking-tight"
-                  style={{ fontFamily: "var(--font-cormorant)" }}
-                >
-                  {category}
-                </h2>
+                {items.length > CURATED_SECTION_CAP && (
+                  <button
+                    onClick={() => {
+                      setCategory(slug);
+                      document.getElementById("product-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }}
+                    className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gold hover:text-charcoal transition-colors whitespace-nowrap"
+                  >
+                    View All {items.length}
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
-            </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {items.map((product, index) => (
-                <ProductCard key={product.id} product={product} index={index} />
-              ))}
-            </div>
-          </section>
-        ))
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {shown.map((product, index) => (
+                  <ProductCard key={product.id} product={product} index={index} />
+                ))}
+              </div>
+            </section>
+          );
+        })
       ) : (
         <section className="max-w-[1280px] mx-auto px-6 pb-16">
           {filtered.length === 0 ? (
@@ -1276,47 +1457,96 @@ export default function ProductsPage() {
               </p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-4">
-              {filtered.map((product, index) => (
-                <ProductCard key={product.id} product={product} index={index} />
-              ))}
-            </div>
+            <>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-4">
+                {visibleFiltered.map((product, index) => (
+                  <ProductCard key={product.id} product={product} index={index} />
+                ))}
+              </div>
+              {visibleCount < filtered.length && (
+                <div className="flex justify-center pt-10">
+                  <button
+                    onClick={() => setVisibleCount((v) => v + LOAD_MORE_STEP)}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest border border-[#EDE6DA] text-charcoal bg-white hover:bg-[#FAF8F5] hover:border-gold/40 transition-all duration-200"
+                  >
+                    Load More ({filtered.length - visibleCount} remaining)
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </section>
       )}
 
       {/* CTA INTERACTIVE BLUEPRINT PANEL */}
-      <motion.section
-        className="py-16 bg-[#FAF8F5] border-t border-[#EDE6DA]"
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="max-w-[900px] mx-auto px-6 text-center bg-[#2D2D2D] rounded-3xl p-12 md:p-16 shadow-xl relative overflow-hidden">
-          <p className="text-xs uppercase tracking-widest text-gold font-bold mb-3">
-            Color Architecture Assistance
+      <section className="py-12 max-w-[1280px] mx-auto px-6">
+        <motion.div
+          className="max-w-[1000px] mx-auto text-center rounded-3xl p-8 sm:p-12 md:p-16 shadow-2xl relative overflow-hidden group"
+          style={{ background: `linear-gradient(165deg, #241D16 0%, #1A1A1A 55%, #150F0B 100%)` }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Grain texture, consistent with the site's other dark sections */}
+          <div
+            className="absolute inset-0 opacity-[0.06] pointer-events-none"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'repeat',
+              backgroundSize: '128px 128px',
+            }}
+          />
+          {/* Embedded accent glows, gently breathing */}
+          <motion.div
+            className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full blur-[90px] pointer-events-none"
+            style={{ background: '#C9A858' }}
+            animate={{ opacity: [0.15, 0.28, 0.15] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute -bottom-[20%] -right-[10%] w-[50%] h-[50%] rounded-full blur-[90px] pointer-events-none"
+            style={{ background: '#C4704B' }}
+            animate={{ opacity: [0.18, 0.3, 0.18] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          />
+          {/* Thin gold ring frame */}
+          <div className="absolute inset-3 sm:inset-4 rounded-2xl border border-[#C9A858]/15 pointer-events-none" />
+
+          <div className="inline-flex items-center gap-2 mb-3 relative z-10">
+            <span className="w-3 h-[1.5px]" style={{ background: '#C4704B' }} />
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[#C4704B] font-black font-inter">Color Architecture Assistance</p>
+            <span className="w-3 h-[1.5px]" style={{ background: '#C4704B' }} />
+          </div>
+          <h2 className="font-serif text-4xl md:text-5xl font-bold text-white mb-4 leading-none max-w-2xl mx-auto relative z-10">Can't Decide on Tone Swatches?</h2>
+          <p className="text-base text-gray-300 max-w-xl mx-auto mb-10 leading-relaxed font-inter font-normal tracking-wide relative z-10">
+            Skip guessing layouts. Our design masters can overlay high-performance physical coat swatches directly onto your properties under exact lighting frameworks.
           </p>
-          <h2 className="font-serif text-4xl font-medium text-white mb-4 leading-tight">
-            Can't Decide on Tone Swatches?
-          </h2>
-          <p className="text-sm md:text-base text-gray-300 max-w-xl mx-auto mb-8 font-light leading-relaxed">
-            Skip guessing layouts. Our design masters can overlay
-            high-performance physical coat swatches directly onto your
-            properties under exact lighting frameworks.
-          </p>
-          <Link
-            href="/assistance"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#F3E7C9] text-[#2D2D2D] rounded-xl font-semibold transition-all hover:scale-[1.02] shadow-md text-sm group"
-          >
-            Book Free Color Art Consultation{" "}
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </Link>
-        </div>
-      </motion.section>
+
+          <div className="relative z-10 max-w-md mx-auto font-inter">
+            <Link href="/assistance" className="group/btn relative overflow-hidden w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#F3E7C9] text-[#2D2D2D] rounded-xl text-xs uppercase tracking-widest font-black transition-all shadow-md hover:shadow-xl hover:bg-[#ebdcb4]">
+              <span className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-out" style={{ background: 'linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%)' }} />
+              <span className="relative">Book Free Color Art Consultation</span>
+              <ArrowRight className="w-4 h-4 relative group-hover/btn:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
+        </motion.div>
+      </section>
 
       <Footer />
     </div>
+  );
+}
+
+// useSearchParams() requires a Suspense boundary in the App Router — the
+// filter state (search term aside) now lives entirely in the URL so
+// category deep-links from the mega-menu/mobile accordion/Footer/curated
+// edits all work with refresh and browser back/forward.
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={null}>
+      <ProductsPageContent />
+    </Suspense>
   );
 }
 
@@ -1327,7 +1557,8 @@ function ProductCard({
   product: Product;
   index?: number;
 }) {
-  const accents = ["#E91E8C", "#2196F3", "#4CAF50", "#FF5722", "#FFC107"];
+  // Restrained luxury palette — see src/lib/palette.ts for the shared source.
+  const accents = ["#C9A858", "#C4704B", "#8B9E7E", "#2C3E50", "#8C6478"];
   const accent = accents[index % accents.length];
   const isTallPack =
     product.name.toLowerCase().includes("plaster") ||
@@ -1335,9 +1566,15 @@ function ProductCard({
     product.name.toLowerCase().includes("ready-mix");
 
   return (
+    <motion.div
+      initial={{ opacity: 0, y: 36, scale: 0.94 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: (index % 4) * 0.08 }}
+    >
     <Link
       href={`/products/${product.slug}`}
-      className="group block rounded-[1.5rem] bg-white border border-[#ece7df] shadow-[0_12px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.09)] transition-all duration-500 relative h-[480px] overflow-hidden"
+      className="group block rounded-[1.5rem] bg-white border border-[#ece7df] shadow-[0_12px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.09)] transition-all duration-500 relative h-auto lg:h-[480px] overflow-hidden"
     >
       {/* Top Accent Color Strip */}
       <div
@@ -1353,22 +1590,31 @@ function ProductCard({
         }}
       />
 
-      {/* ── IMAGE SECTION (Animates upwards and scales down on hover) ── */}
+      {/* ── IMAGE SECTION (Floats gently, animates upwards and scales down on hover) ── */}
       <motion.div
-        className="absolute inset-x-0 top-0 flex items-center justify-center px-4 z-10 origin-center"
+        className="static lg:absolute lg:inset-x-0 lg:top-0 flex items-center justify-center px-4 z-10 origin-center"
         initial={{ y: 25, scale: 1 }}
-        animate={{ y: 25, scale: 1 }}
+        animate={{ y: [25, 17, 25] }}
         whileHover={{ y: -20, scale: 0.85 }}
         style={{ height: "250px" }}
-        transition={{ type: "spring", damping: 25, stiffness: 140 }}
+        transition={{
+          y: { duration: 3.2, repeat: Infinity, ease: "easeInOut" },
+          scale: { type: "spring", damping: 25, stiffness: 140 },
+        }}
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.015),transparent_60%)] pointer-events-none" />
+        <motion.div
+          className="absolute rounded-full pointer-events-none"
+          style={{ width: 140, height: 140, background: `radial-gradient(circle, ${accent}22 0%, transparent 70%)` }}
+          animate={{ scale: [1, 1.25, 1], opacity: [0.5, 0.9, 0.5] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+        />
         <Image
           src={product.image}
           alt={product.name}
           width={320}
           height={320}
-          className={`w-auto max-w-full object-contain drop-shadow-[0_14px_24px_rgba(0,0,0,0.08)] transition-transform duration-500 ${
+          className={`relative w-auto max-w-full object-contain drop-shadow-[0_14px_24px_rgba(0,0,0,0.08)] transition-transform duration-500 group-hover:scale-[1.04] ${
             isTallPack
               ? "max-h-[185px] sm:max-h-[200px]"
               : "max-h-[205px] sm:max-h-[220px]"
@@ -1378,15 +1624,23 @@ function ProductCard({
 
       {/* ── CONTENT PANEL ── */}
       {/* Container wraps both structural state displays cleanly via CSS and translate transforms */}
-      <div className="absolute inset-x-0 bottom-0 px-6 pb-6 pt-4 flex flex-col justify-end bg-white z-20 transition-transform duration-500 transform translate-y-[115px] group-hover:translate-y-0">
-        {/* Category Pill Tag */}
-        <div className="mb-2">
+      <div className="static lg:absolute lg:inset-x-0 lg:bottom-0 px-6 pb-6 pt-4 flex flex-col justify-end bg-white z-20 transition-transform duration-500 transform translate-y-0 lg:translate-y-[115px] lg:group-hover:translate-y-0">
+        {/* Category Pill Tag + one always-visible feature badge */}
+        <div className="mb-2 flex flex-wrap items-center gap-1.5">
           <span
             className="inline-flex items-center text-[9px] font-bold font-inter uppercase tracking-[0.18em] px-2.5 py-1 rounded-full text-white"
             style={{ background: accent }}
           >
             {product.category?.split(" ")[0] ?? "Paint"}
           </span>
+          {product.features[0] && (
+            <span
+              className="text-[9px] font-semibold uppercase tracking-[0.14em] px-2.5 py-1 rounded-full"
+              style={{ background: `${accent}12`, color: accent }}
+            >
+              {product.features[0]}
+            </span>
+          )}
         </div>
 
         {/* Product Title Headline */}
@@ -1399,11 +1653,11 @@ function ProductCard({
           {product.description}
         </p>
 
-        {/* ── HIDDEN PANEL (Slides smoothly into view during hover phase) ── */}
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-          {/* Performance Feature Badges */}
+        {/* ── HIDDEN PANEL (always visible on mobile; slides smoothly into view on hover from lg upward) ── */}
+        <div className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 lg:delay-100">
+          {/* Remaining Performance Feature Badges */}
           <div className="flex flex-wrap gap-1.5 mb-5">
-            {product.features.slice(0, 3).map((f) => (
+            {product.features.slice(1, 3).map((f) => (
               <span
                 key={f}
                 className="text-[9px] font-semibold uppercase tracking-[0.14em] px-2.5 py-1 rounded-full"
@@ -1425,5 +1679,6 @@ function ProductCard({
         </div>
       </div>
     </Link>
+    </motion.div>
   );
 }

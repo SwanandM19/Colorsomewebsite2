@@ -22,7 +22,7 @@ export function ChatBot() {
     {
       role: 'assistant',
       content:
-        "Hi! I'm **Chroma** 🎨\n\nYour Colorsome paint consultant. Ask me anything about shades, products, or room ideas — I'm here to help you find the perfect colour.",
+        "Hi! I'm **Chroma** 🎨\n\nYour Colorsome paint consultant. Ask me anything about shades, products, or room ideas - I'm here to help you find the perfect colour.",
     },
   ]);
   const [input, setInput] = useState('');

@@ -602,9 +602,9 @@ const staggerContainer = {
 };
 
 const contactInfo = [
-  { icon: Phone, label: 'Phone Desk', value: '+91-75020-00079', sub: 'Mon — Sat, 9 AM — 7 PM', href: 'tel:+917502000079', color: '#C4704B' },
+  { icon: Phone, label: 'Phone Desk', value: '+91-75020-00079', sub: 'Mon - Sat, 9 AM - 7 PM', href: 'tel:+917502000079', color: '#C4704B' },
   { icon: Mail, label: 'Email Channels', value: 'info@colorsomepaints.com', sub: 'Response within 12 hours', href: 'mailto:info@colorsomepaints.com', color: '#2C3E50' },
-  { icon: Clock, label: 'Headquarters Hours', value: '09:00 AM — 07:00 PM', sub: 'Sunday: Closed desk', href: null, color: '#C9A858' },
+  { icon: Clock, label: 'Headquarters Hours', value: '09:00 AM - 07:00 PM', sub: 'Sunday: Closed desk', href: null, color: '#C9A858' },
 ];
 
 const offices = [
@@ -831,7 +831,7 @@ export default function ContactPage() {
                   {/* The visual photo segment */}
                   <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden">
                     <Image
-                      src="/aboutpage.png"
+                      src="/aboutpage.webp"
                       alt="Colorsome HQ Office Building"
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"

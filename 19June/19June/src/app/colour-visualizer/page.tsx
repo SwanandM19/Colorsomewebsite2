@@ -60,7 +60,7 @@ export default function ColourVisualizerPage() {
 
   const productsHref = room ? `/products?category=${room.surfaceType === "interior" ? "interior-paints" : "exterior-paints-textures"}` : "/products";
   const assistanceHref = room
-    ? `/assistance?source=colour-visualizer&product=${encodeURIComponent(`${currentShade.name} (${currentShade.hex_code}) — ${room.name} wall`)}&surface=${room.surfaceType}`
+    ? `/assistance?source=colour-visualizer&product=${encodeURIComponent(`${currentShade.name} (${currentShade.hex_code}) - ${room.name} wall`)}&surface=${room.surfaceType}`
     : "/assistance";
 
   function setCurrentWallShade(shade: Shade) {
@@ -121,7 +121,7 @@ export default function ColourVisualizerPage() {
               See A Shade On A Real Wall
             </h1>
             <p className="text-[14.5px] sm:text-[16px] text-charcoal-muted max-w-xl leading-relaxed">
-              Pick a room, choose any Colorsome shade, and preview it applied to the wall — with the room&apos;s
+              Pick a room, choose any Colorsome shade, and preview it applied to the wall - with the room&apos;s
               own light and shadow kept intact.
             </p>
           </motion.div>
@@ -144,7 +144,7 @@ export default function ColourVisualizerPage() {
                     />
                     <Image
                       src={room.image}
-                      alt={`${room.name} — original`}
+                      alt={`${room.name} - original`}
                       fill
                       sizes="(max-width: 1024px) 100vw, 70vw"
                       className="object-cover"

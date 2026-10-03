@@ -632,7 +632,7 @@ const faqs = [
 
 const propertyTypes = ['Apartment', 'Independent House', 'Villa', 'Commercial Space', 'Office', 'Other'];
 const areaSizes = ['Below 500 sq ft', '500 - 1000 sq ft', '1000 - 2000 sq ft', '2000 - 3000 sq ft', 'Above 3000 sq ft'];
-const finishPreferences = ['Matte', 'Silk / Satin', 'Gloss', 'Textured', 'Not sure — need guidance'];
+const finishPreferences = ['Matte', 'Silk / Satin', 'Gloss', 'Textured', 'Not sure - need guidance'];
 const timelines = ['Within 1 week', '1-2 weeks', '2-4 weeks', 'Within a month', 'Just exploring'];
 
 function AssistancePageContent() {
@@ -643,6 +643,7 @@ function AssistancePageContent() {
   const [formData, setFormData] = useState({
     name: '', phone: '', email: '', city: '', property_type: '',
     interior_exterior: '', area_size: '', preferred_finish: '', timeline: '', notes: '',
+    website: '', // honeypot — hidden from people, bots fill it; see submit-consultation route
   });
 
   // Prefill from a calculator handoff (e.g. /assistance?area=1200&product=Interior%20Emulsion&source=paint-quantity-calculator)
@@ -786,6 +787,11 @@ function AssistancePageContent() {
       });
 
       const result = await res.json();
+      if (res.status === 429) {
+        // Rate-limited or duplicate: the server's message is customer-friendly.
+        setError(result?.error || 'Too many requests. Please try again later.');
+        return;
+      }
       if (!res.ok) {
         throw new Error(result?.error || 'Failed to submit.');
       }
@@ -805,7 +811,7 @@ function AssistancePageContent() {
     const nextSteps = [
       { icon: Phone, title: "We'll call you", desc: 'Within 24 hours, at the number you shared, to understand your project.' },
       { icon: Palette, title: 'Site visit & shade consult', desc: 'Our expert visits, checks surfaces, and helps you finalize colours and finishes.' },
-      { icon: FileText, title: 'Personalized quote', desc: 'A transparent, itemized estimate — no pressure, no hidden costs.' },
+      { icon: FileText, title: 'Personalized quote', desc: 'A transparent, itemized estimate - no pressure, no hidden costs.' },
     ];
 
     return (
@@ -980,7 +986,7 @@ function AssistancePageContent() {
               >
                 <Image
                   // src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800"
-                  src="/Assistance.png"
+                  src="/Assistance.webp"
                   alt="Expert consultation"
                   fill
                   className="object-cover transition-transform duration-700 hover:scale-105"
@@ -1073,6 +1079,12 @@ function AssistancePageContent() {
               )}
 
               <form onSubmit={handleSubmit} noValidate className="space-y-6 font-inter">
+                {/* Honeypot: off-screen, unfocusable, ignored by autofill. */}
+                <input
+                  type="text" name="website" value={formData.website} onChange={handleChange}
+                  tabIndex={-1} autoComplete="off" aria-hidden="true"
+                  className="absolute -left-[9999px] h-0 w-0 opacity-0"
+                />
                 <p className="text-[10px] uppercase tracking-[0.2em] font-black flex items-center gap-2" style={{ color: BRAND.orange }}>
                   <span className="w-3 h-[1.5px]" style={{ background: BRAND.orange }} /> Your Details
                 </p>
@@ -1241,7 +1253,7 @@ function AssistancePageContent() {
 
             <div className="relative rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.08)] overflow-hidden border border-[#EDE6DA]/50">
               <img
-                src="/Assistance2.png"
+                src="/Assistance2.webp"
                 alt="Beautifully painted space"
                 className="w-full h-auto block transition-transform duration-700 hover:scale-[1.02]"
               />

@@ -84,6 +84,18 @@ const cormorant = Playfair_Display({
 // inside the component) so it isn't recreated every render.
 const MotionImage = motion.create(Image);
 
+// Mobile hero card sources. Order must match SHOWCASE in the hero render.
+const HERO_SHOWCASE_SRCS = [
+  "/AxisWeatherC.png",
+  "/AraWeather.png",
+  "/DuraGuard_Exterior.png",
+  "/Glossmate_Enamel_Paint.png",
+  "/Uniprime.png",
+  "/Tough_Tex.png",
+];
+// 600px WebP copy (~20KB vs 150-450KB PNG) — the PNG stays as <picture> fallback.
+const heroWebp = (src: string) => src.replace(/^\/([^/]+)\.png$/, "/hero/$1.webp");
+
 // Restrained, paint-inspired luxury palette (chosen direction — see
 // src/lib/palette.ts for the shared accent source of truth). Keys are
 // kept as "pink/blue/green/orange/yellow" so every existing call site
@@ -640,7 +652,7 @@ const transformations = [
     // shot brief already discussed: same framing, after the repaint.
     after:
       "https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=1200&q=80",
-    product: "Zodiac Emulsion — Warm Ivory",
+    product: "Zodiac Emulsion - Warm Ivory",
     color: BRAND.pink,
   },
 ];
@@ -713,6 +725,22 @@ export default function HomePage() {
   const [showcaseResetKey, setShowcaseResetKey] = useState(0);
   const prefersReducedMotionHero = useReducedMotionPreference();
 
+  // Which showcase images are already in the browser cache. The mobile card
+  // only advances to a slide whose image is ready, so a slow connection never
+  // shows an empty card (images used to be fetched only when their turn came).
+  const showcaseReadyRef = useRef<Set<string>>(new Set());
+  const touchStartXRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    HERO_SHOWCASE_SRCS.forEach((src) => {
+      const mark = () => showcaseReadyRef.current.add(src);
+      const probe = new window.Image();
+      probe.onload = mark;
+      probe.onerror = mark; // a failed image must never stall the carousel
+      probe.src = heroWebp(src);
+    });
+  }, []);
+
   useEffect(() => {
     if (isShowcasePaused || prefersReducedMotionHero) return;
     // Sequential, not random — random selection let the same-feeling jump
@@ -720,7 +748,11 @@ export default function HomePage() {
     // fought against the dot navigation below. showcaseResetKey lets a
     // manual dot click restart the 5s window instead of cutting it short.
     const loopInterval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % HERO_SHOWCASE_LENGTH);
+      if (document.hidden) return;
+      setCurrentImageIndex((prev) => {
+        const next = (prev + 1) % HERO_SHOWCASE_LENGTH;
+        return showcaseReadyRef.current.has(HERO_SHOWCASE_SRCS[next]) ? next : prev;
+      });
     }, 5000);
     return () => clearInterval(loopInterval);
   }, [isShowcasePaused, prefersReducedMotionHero, showcaseResetKey]);
@@ -797,12 +829,38 @@ export default function HomePage() {
   }, [activeTransform]);
 
   useEffect(() => {
+    // Show at most once per browser session, and only once the visitor has
+    // engaged — scrolled well down the page or stayed 20s — never as a
+    // full-screen interruption 3s after landing, and never again after a
+    // reload or a return to Home within the same session.
+    const SEEN_KEY = "cs_consult_popup_seen";
     if (hasShownConsultationPopup) return;
-    const timer = setTimeout(() => {
+    try {
+      if (sessionStorage.getItem(SEEN_KEY)) return;
+    } catch {
+      // Storage blocked (private mode / in-app browsers): fall through, the
+      // in-memory flag below still limits it to once per page view.
+    }
+
+    const show = () => {
+      cleanup();
       setShowConsultationPopup(true);
       setHasShownConsultationPopup(true);
-    }, 3000);
-    return () => clearTimeout(timer);
+      try {
+        sessionStorage.setItem(SEEN_KEY, "1");
+      } catch {}
+    };
+    const onScroll = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollable > 0 && window.scrollY / scrollable > 0.6) show();
+    };
+    const timer = setTimeout(show, 20000);
+    const cleanup = () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return cleanup;
   }, [hasShownConsultationPopup]);
 
   if (isLoading)
@@ -1008,8 +1066,26 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  onTouchStart={() => setIsShowcasePaused(true)}
-                  onTouchEnd={() => setIsShowcasePaused(false)}
+                  onTouchStart={(e) => {
+                    touchStartXRef.current = e.touches[0].clientX;
+                    setIsShowcasePaused(true);
+                  }}
+                  onTouchEnd={(e) => {
+                    setIsShowcasePaused(false);
+                    const startX = touchStartXRef.current;
+                    touchStartXRef.current = null;
+                    if (startX === null) return;
+                    // Horizontal swipe = previous/next product; small drags and
+                    // vertical page scrolls are ignored.
+                    const dx = e.changedTouches[0].clientX - startX;
+                    if (Math.abs(dx) > 45) {
+                      selectShowcase((idx + (dx < 0 ? 1 : HERO_SHOWCASE_LENGTH - 1)) % HERO_SHOWCASE_LENGTH);
+                    }
+                  }}
+                  onTouchCancel={() => {
+                    touchStartXRef.current = null;
+                    setIsShowcasePaused(false);
+                  }}
                 >
                   <div className="absolute top-0 left-0 right-0 z-30 h-[3px] bg-black/10">
                     <div
@@ -1059,18 +1135,32 @@ export default function HomePage() {
                         child in every browser). Absolute + margin:auto makes
                         them stack on top of each other instead. */}
                     <AnimatePresence>
-                      <motion.img
+                      {/* Opacity + scale only — animating a CSS blur/drop-shadow
+                          filter on a mobile image leaves it blank or glitchy in
+                          Safari and in-app browsers (WhatsApp, Instagram). The
+                          shadow is static on the <img> instead. */}
+                      <motion.div
                         key={`mobile-img-${idx}`}
-                        src={active.src}
-                        alt={active.name}
-                        className="absolute inset-0 m-auto object-contain w-auto h-[60%] sm:h-[65%]"
-                        // See the desktop card's img for why drop-shadow is folded
-                        // into the animated filter string instead of left as a class.
-                        initial={{ opacity: 0, scale: 1.05, filter: "blur(10px) drop-shadow(0 25px 25px rgba(0,0,0,0.15))" }}
-                        animate={{ opacity: 1, scale: 1, filter: "blur(0px) drop-shadow(0 25px 25px rgba(0,0,0,0.15))" }}
-                        exit={{ opacity: 0, scale: 0.96, filter: "blur(8px) drop-shadow(0 25px 25px rgba(0,0,0,0.15))" }}
-                        transition={{ duration: 0.75, ease: EASE_DISSOLVE }}
-                      />
+                        className="absolute inset-0"
+                        initial={{ opacity: 0, scale: 1.05 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.96 }}
+                        transition={{ duration: 0.6, ease: EASE_DISSOLVE }}
+                      >
+                        <picture>
+                          <source srcSet={heroWebp(active.src)} type="image/webp" />
+                          <img
+                            src={active.src}
+                            alt={active.name}
+                            width={600}
+                            height={600}
+                            decoding="async"
+                            loading={idx === 0 ? "eager" : undefined}
+                            fetchPriority={idx === 0 ? "high" : undefined}
+                            className="absolute inset-0 m-auto object-contain w-auto h-[60%] sm:h-[65%] drop-shadow-[0_25px_25px_rgba(0,0,0,0.15)]"
+                          />
+                        </picture>
+                      </motion.div>
                     </AnimatePresence>
                   </div>
                   <div
@@ -1084,12 +1174,17 @@ export default function HomePage() {
                           type="button"
                           aria-label={`Show ${item.name}`}
                           onClick={() => selectShowcase(i)}
-                          className="h-1.5 rounded-full transition-all duration-300"
-                          style={{
-                            width: i === idx ? 18 : 6,
-                            background: i === idx ? active.accent : "rgba(45,45,45,0.18)",
-                          }}
-                        />
+                          // Padded so the tap target is ~24px, not the 6px dot.
+                          className="py-2.5 px-0.5 -my-2.5"
+                        >
+                          <span
+                            className="block h-1.5 rounded-full transition-all duration-300"
+                            style={{
+                              width: i === idx ? 18 : 6,
+                              background: i === idx ? active.accent : "rgba(45,45,45,0.18)",
+                            }}
+                          />
+                        </button>
                       ))}
                     </div>
                     <AnimatePresence mode="wait">
@@ -1482,7 +1577,7 @@ export default function HomePage() {
               <h2 className="section-title mb-4">Premium Product Categories</h2>
               <p className="section-subtitle mx-auto">
                 From luxurious interior finishes to weather-resistant exterior
-                coatings — discover the perfect solution for every surface
+                coatings - discover the perfect solution for every surface
               </p>
             </motion.div>
           </Section>
@@ -1748,7 +1843,7 @@ export default function HomePage() {
               <p className="section-label">By Finish</p>
               <h2 className="section-title mb-4">Find Your Perfect Finish</h2>
               <p className="section-subtitle mx-auto">
-                From velvety matte to brilliant gloss — each finish creates a
+                From velvety matte to brilliant gloss - each finish creates a
                 distinct character
               </p>
             </motion.div>
@@ -2089,7 +2184,7 @@ export default function HomePage() {
                 <p className="section-label">Project Planning Tools</p>
                 <h2 className="section-title mb-4">Not Sure How Much Paint You Need?</h2>
                 <p className="section-subtitle mx-auto mb-8">
-                  Four quick tools that turn your room dimensions into a real, itemised estimate &mdash; in under a minute.
+                  Four quick tools that turn your room dimensions into a real, itemised estimate - in under a minute.
                 </p>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 text-left">
@@ -2359,7 +2454,7 @@ export default function HomePage() {
                   avatar: "KD",
                   avatarBg: "#7D6B5D",
                   rating: 5,
-                  text: "Excellent exterior painting job for our villa in Hyderabad. The waterproofing coat they applied first made all the difference — no seepage issues since. Thorough surface preparation and clean execution.",
+                  text: "Excellent exterior painting job for our villa in Hyderabad. The waterproofing coat they applied first made all the difference - no seepage issues since. Thorough surface preparation and clean execution.",
                 },
                 {
                   name: "Anita Sharma",

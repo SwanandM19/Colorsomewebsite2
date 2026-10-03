@@ -1026,7 +1026,7 @@ import { CATEGORY_TAXONOMY, SLUG_TO_CATEGORIES, checkTaxonomyCoverage } from "./
 const CURATED_EDITS = [
   {
     title: "The Monsoon Shield Edit",
-    story: "Terraces, parapets and basements — sealed and stress-tested before the first storm hits.",
+    story: "Terraces, parapets and basements - sealed and stress-tested before the first storm hits.",
     category: "Waterproofing",
     // image: "https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&w=900&q=80",
     image: "/Monsoon.png",
@@ -1042,7 +1042,7 @@ const CURATED_EDITS = [
   },
   {
     title: "The First Home Edit",
-    story: "Everything a fresh interior needs — smooth, washable, low-VOC finishes for rooms you'll live in.",
+    story: "Everything a fresh interior needs - smooth, washable, low-VOC finishes for rooms you'll live in.",
     category: "Interior Paints",
     // image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=900&q=80",
     image: "/FirstHome.png",
@@ -1241,7 +1241,7 @@ function ProductsPageContent() {
               </h2>
             </div>
             <p className="text-sm text-charcoal-muted max-w-sm leading-relaxed">
-              Hand-picked entry points for the moments that matter — a monsoon coming, a first home, a job site. Not just a catalogue, a starting point.
+              Hand-picked entry points for the moments that matter - a monsoon coming, a first home, a job site. Not just a catalogue, a starting point.
             </p>
           </div>
 

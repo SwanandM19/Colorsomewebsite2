@@ -43,7 +43,7 @@ const FAQ = [
   },
   {
     q: "What's the difference between Quick Estimate and Custom Sizes?",
-    a: "Quick Estimate uses standard reference sizes for a door and a window and multiplies by how many you have — fine for a fast figure. Custom Sizes lets you enter the actual width, height and count of each, which matters if you have large sliding windows, French doors or an unusual layout.",
+    a: "Quick Estimate uses standard reference sizes for a door and a window and multiplies by how many you have - fine for a fast figure. Custom Sizes lets you enter the actual width, height and count of each, which matters if you have large sliding windows, French doors or an unusual layout.",
   },
   {
     q: "How many coats should I choose?",
@@ -51,7 +51,7 @@ const FAQ = [
   },
   {
     q: "Why is the recommended purchase more than the quantity required?",
-    a: "Paint is sold in fixed pack sizes. The tool finds the combination of real pack sizes that covers your requirement with the least leftover — so the purchase figure is always the same as, or slightly above, what you strictly need.",
+    a: "Paint is sold in fixed pack sizes. The tool finds the combination of real pack sizes that covers your requirement with the least leftover - so the purchase figure is always the same as, or slightly above, what you strictly need.",
   },
 ];
 
@@ -127,7 +127,7 @@ export default function PaintQuantityCalculatorPage() {
     if (netAreaSqft <= 0) {
       setError(
         calc.openingsExceed
-          ? "Doors and windows cover the entire wall area — check your opening dimensions/counts."
+          ? "Doors and windows cover the entire wall area - check your opening dimensions/counts."
           : method === "area"
           ? "Enter a valid paintable area greater than 0."
           : "Enter valid length, width and height (all greater than 0)."
@@ -162,7 +162,7 @@ export default function PaintQuantityCalculatorPage() {
         <StepSection
           step={1}
           title="How would you like to measure?"
-          hint="Use room dimensions if you know length, width and height — or enter a paintable area directly."
+          hint="Use room dimensions if you know length, width and height - or enter a paintable area directly."
           accent={ACCENT}
           action={
             method === "dimensions" ? (

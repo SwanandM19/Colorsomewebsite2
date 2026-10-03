@@ -52,11 +52,11 @@ const FAQ = [
   },
   {
     q: "Do I need putty on a repaint?",
-    a: "Usually not. If the existing surface is sound and even, you can go straight to spot-priming and the topcoat — which is why the repaint system here starts with surface preparation instead of a full putty layer.",
+    a: "Usually not. If the existing surface is sound and even, you can go straight to spot-priming and the topcoat - which is why the repaint system here starts with surface preparation instead of a full putty layer.",
   },
   {
     q: "Does this include labour?",
-    a: "No — this is a material-only estimate for the full system. If you want labour factored in, use the Painting Cost calculator, which has a labour toggle.",
+    a: "No - this is a material-only estimate for the full system. If you want labour factored in, use the Painting Cost calculator, which has a labour toggle.",
   },
   {
     q: "Why does the primer quantity differ from the topcoat quantity?",
@@ -121,7 +121,7 @@ export default function ProductRequirementCalculatorPage() {
     <CalculatorShell
       eyebrow="Product Requirement Calculator"
       title="Your Complete Painting System"
-      subtitle="A guided, layer-by-layer estimate — from surface preparation through to topcoat — sized to your actual area."
+      subtitle="A guided, layer-by-layer estimate - from surface preparation through to topcoat - sized to your actual area."
       accent={ACCENT}
       icon={ClipboardList}
     >
@@ -264,7 +264,7 @@ export default function ProductRequirementCalculatorPage() {
               <TotalPanel
                 label="Estimated Material Cost"
                 value={formatINR(system.total)}
-                note="Materials only — labour is not included in this system estimate."
+                note="Materials only - labour is not included in this system estimate."
               />
 
               <HowCalculated

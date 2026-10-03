@@ -68,7 +68,7 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
     },
     {
       q: "Do I need to prime the wall first?",
-      a: "Yes — a wall primer seals the surface, evens out porosity, and helps the emulsion colour develop true and consistent. Skipping it usually means patchier coverage and more paint used.",
+      a: "Yes - a wall primer seals the surface, evens out porosity, and helps the emulsion colour develop true and consistent. Skipping it usually means patchier coverage and more paint used.",
     },
     {
       q: ts.dryingTime
@@ -76,12 +76,12 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
         : "How long should I wait between coats?",
       a: ts.dryingTime
         ? `${ts.dryingTime}. Keep the room ventilated and avoid direct sun or damp conditions during drying.`
-        : "Allow the first coat to dry fully — typically a few hours under normal indoor conditions — before applying the second coat.",
+        : "Allow the first coat to dry fully - typically a few hours under normal indoor conditions - before applying the second coat.",
     },
     {
       q: "Is this paint washable?",
       a: p.features?.some((f) => /wash|scrub|stain/i.test(f))
-        ? "Yes — this finish is formulated to be wipeable, so everyday marks can be cleaned with a damp cloth and mild detergent without dulling the sheen."
+        ? "Yes - this finish is formulated to be wipeable, so everyday marks can be cleaned with a damp cloth and mild detergent without dulling the sheen."
         : "Most interior emulsions can be gently wiped once fully cured (usually after 7 days); avoid abrasive scrubbing on lower-sheen finishes.",
     },
     {
@@ -95,7 +95,7 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
   "exterior-emulsion": (p, ts) => [
     {
       q: "Does this paint need a primer coat?",
-      a: "Yes — an exterior primer improves adhesion and blocks alkali salts from the masonry bleeding through into your topcoat, which is essential for long-term colour retention outdoors.",
+      a: "Yes - an exterior primer improves adhesion and blocks alkali salts from the masonry bleeding through into your topcoat, which is essential for long-term colour retention outdoors.",
     },
     {
       q: ts.coverage
@@ -103,17 +103,17 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
         : "How much area will one coat cover?",
       a: ts.coverage
         ? `${ts.coverage} under normal application on a properly primed surface.`
-        : "Coverage varies with surface porosity and texture — a professional applicator can confirm exact quantity for your wall area.",
+        : "Coverage varies with surface porosity and texture - a professional applicator can confirm exact quantity for your wall area.",
     },
     {
       q: "How does it hold up against monsoon and heat?",
       a: p.features?.some((f) => /weather|water|algae|fungal|uv|fade/i.test(f))
-        ? "It's formulated for year-round outdoor exposure — built to resist rain, humidity, algal growth, and UV fading through repeated weather cycles."
+        ? "It's formulated for year-round outdoor exposure - built to resist rain, humidity, algal growth, and UV fading through repeated weather cycles."
         : "Exterior emulsions are designed for outdoor exposure, but performance in extreme climates is improved further with a matching exterior primer and correct number of coats.",
     },
     {
       q: "Can it be applied over an old, existing coat of paint?",
-      a: "Yes, provided the existing surface is sound — free of flaking, chalking, or fungal growth. Loose material should be scraped and washed off before repainting.",
+      a: "Yes, provided the existing surface is sound - free of flaking, chalking, or fungal growth. Loose material should be scraped and washed off before repainting.",
     },
     {
       q: "Will the colour fade over time?",
@@ -159,11 +159,11 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
       q: "Do I need to dilute this primer before applying it?",
       a: ts.dilution
         ? `${ts.dilution}.`
-        : "Most primers are diluted slightly with clean water or solvent as per the technical data sheet — check the container label for the exact ratio for your surface.",
+        : "Most primers are diluted slightly with clean water or solvent as per the technical data sheet - check the container label for the exact ratio for your surface.",
     },
     {
       q: "How many coats of primer are needed?",
-      a: "A single, even coat is usually enough to seal the surface and even out porosity before topcoating — heavily porous or repaired walls may need a second coat.",
+      a: "A single, even coat is usually enough to seal the surface and even out porosity before topcoating - heavily porous or repaired walls may need a second coat.",
     },
     {
       q: ts.dryingTime ? "How long before I can paint over this primer?" : "How long should the primer dry before topcoating?",
@@ -175,7 +175,7 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
       q: "Can this primer be used on both interior and exterior walls?",
       a: p.applications?.length
         ? `It's intended for ${p.applications.join(", ").toLowerCase()}.`
-        : "Check the applications list above — some primers are formulated specifically for one or the other, not interchangeably.",
+        : "Check the applications list above - some primers are formulated specifically for one or the other, not interchangeably.",
     },
     {
       q: "Why can't I just skip the primer and paint directly?",
@@ -186,18 +186,18 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
   "wall-putty": (p, ts) => [
     {
       q: "How many coats of putty are typically required?",
-      a: "Two thin coats generally give the smoothest, most even base — applying it too thick in one pass increases the chance of cracking as it dries.",
+      a: "Two thin coats generally give the smoothest, most even base - applying it too thick in one pass increases the chance of cracking as it dries.",
     },
     {
       q: "How long does the putty need to dry before sanding?",
       a: ts.dryingTime
         ? `${ts.dryingTime}.`
-        : "Allow it to dry fully — usually the better part of a day depending on coat thickness and humidity — before sanding smooth.",
+        : "Allow it to dry fully - usually the better part of a day depending on coat thickness and humidity - before sanding smooth.",
     },
     {
       q: "Can it be applied on both interior and exterior walls?",
       a: p.applications?.length
-        ? `Yes — it's suited for ${p.applications.join(", ").toLowerCase()}.`
+        ? `Yes - it's suited for ${p.applications.join(", ").toLowerCase()}.`
         : "Check the applications list above; some putty formulations are interior-only while others are rated for exterior exposure.",
     },
     {
@@ -207,8 +207,8 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
     {
       q: "What pack size do I need for one room?",
       a: p.packSizes?.length
-        ? `It's available in ${p.packSizes.join(", ")} — a professional applicator or our team can help estimate quantity from your wall area.`
-        : "Quantity depends on wall area and surface condition — our team can help estimate this for your project.",
+        ? `It's available in ${p.packSizes.join(", ")} - a professional applicator or our team can help estimate quantity from your wall area.`
+        : "Quantity depends on wall area and surface condition - our team can help estimate this for your project.",
     },
   ],
 
@@ -219,22 +219,22 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
     },
     {
       q: "Does it need a base coat or primer first?",
-      a: "Yes — a compatible exterior primer or base coat is recommended so the textured layer bonds properly and doesn't crack away from the wall over time.",
+      a: "Yes - a compatible exterior primer or base coat is recommended so the textured layer bonds properly and doesn't crack away from the wall over time.",
     },
     {
       q: "How long does the textured finish take to fully cure?",
       a: ts.dryingTime
         ? `${ts.dryingTime}.`
-        : "Full cure typically takes longer than a standard flat paint due to the thickness of the applied texture — allow it to dry undisturbed for at least a full day, longer in humid weather.",
+        : "Full cure typically takes longer than a standard flat paint due to the thickness of the applied texture - allow it to dry undisturbed for at least a full day, longer in humid weather.",
     },
     {
       q: "Is professional application recommended?",
-      a: "Yes — achieving a consistent texture pattern across a whole facade takes practice, so we recommend an experienced applicator rather than a first-time DIY attempt.",
+      a: "Yes - achieving a consistent texture pattern across a whole facade takes practice, so we recommend an experienced applicator rather than a first-time DIY attempt.",
     },
     {
       q: "How does it perform in monsoon and direct sun?",
       a: p.features?.some((f) => /weather|water|crack|uv|algae/i.test(f))
-        ? "It's built for continuous outdoor exposure — engineered to resist cracking, algal growth, and UV fade across weather cycles."
+        ? "It's built for continuous outdoor exposure - engineered to resist cracking, algal growth, and UV fade across weather cycles."
         : "Exterior texture finishes are designed for outdoor exposure, and their thicker film generally resists hairline cracking better than flat paint.",
     },
   ],
@@ -248,7 +248,7 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
       q: "Does this need to be diluted before the first coat?",
       a: ts.dilution
         ? `${ts.dilution}.`
-        : "Many waterproofing compounds are diluted with water for the first coat to act as a deep-penetrating primer, then applied undiluted for subsequent coats — check the product label for the exact ratio.",
+        : "Many waterproofing compounds are diluted with water for the first coat to act as a deep-penetrating primer, then applied undiluted for subsequent coats - check the product label for the exact ratio.",
     },
     {
       q: ts.dryingTime ? "How long before the surface is fully waterproof?" : "How long does it take to cure fully?",
@@ -258,7 +258,7 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
     },
     {
       q: "Can it be used on an active leak or must the area be dry first?",
-      a: "The surface should be dry and structurally sound — cracks should be opened, cleaned, and sealed before applying, since the coating waterproofs the surface rather than stopping an active structural leak.",
+      a: "The surface should be dry and structurally sound - cracks should be opened, cleaned, and sealed before applying, since the coating waterproofs the surface rather than stopping an active structural leak.",
     },
     {
       q: "Where can this be applied?",
@@ -271,13 +271,13 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
   "industrial-coating": (p, ts) => [
     {
       q: "Does this coating need surface preparation before application?",
-      a: "Yes — for metal substrates this typically means removing rust, scale, and grease down to a clean, sound surface so the coating can properly anchor and protect.",
+      a: "Yes - for metal substrates this typically means removing rust, scale, and grease down to a clean, sound surface so the coating can properly anchor and protect.",
     },
     {
       q: "Is this a single-component or multi-component system?",
       a: /epoxy/i.test(p.category) || p.features?.some((f) => /two-component|dual/i.test(f))
-        ? "This is a multi-component system — the base and hardener must be mixed in the specified ratio just before application, within the stated pot life."
-        : "Check the product label for mixing instructions — some industrial coatings are ready-to-use, others require on-site mixing.",
+        ? "This is a multi-component system - the base and hardener must be mixed in the specified ratio just before application, within the stated pot life."
+        : "Check the product label for mixing instructions - some industrial coatings are ready-to-use, others require on-site mixing.",
     },
     {
       q: ts.application ? "How is this coating typically applied?" : "What application methods work best?",
@@ -289,13 +289,13 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
       q: "How long before the coated surface can be put back into service?",
       a: ts.dryingTime
         ? `${ts.dryingTime}.`
-        : "Allow full cure time — often 24–72 hours depending on conditions — before subjecting the surface to mechanical load or moisture.",
+        : "Allow full cure time - often 24–72 hours depending on conditions - before subjecting the surface to mechanical load or moisture.",
     },
     {
       q: "What environments is it designed to withstand?",
       a: p.applications?.length
         ? `It's intended for ${p.applications.join(", ").toLowerCase()}.`
-        : "Designed for demanding industrial, marine, or high-traffic environments — check the applications list above for specifics.",
+        : "Designed for demanding industrial, marine, or high-traffic environments - check the applications list above for specifics.",
     },
   ],
 
@@ -308,17 +308,17 @@ const TEMPLATES: Record<string, (p: Product, ts: TechSpecs) => FaqItem[]> = {
       q: "How long is the open/working time once mixed?",
       a: ts.dryingTime
         ? `${ts.dryingTime}.`
-        : "Working time is normally around 20–30 minutes after mixing — only mix as much as you can tile within that window.",
+        : "Working time is normally around 20–30 minutes after mixing - only mix as much as you can tile within that window.",
     },
     {
       q: "Is it suitable for both floor and wall tiling?",
       a: p.applications?.length
-        ? `Yes — it's intended for ${p.applications.join(", ").toLowerCase()}.`
-        : "Check the applications list above — some adhesives are floor-rated only, while others handle both floor and wall tiling.",
+        ? `Yes - it's intended for ${p.applications.join(", ").toLowerCase()}.`
+        : "Check the applications list above - some adhesives are floor-rated only, while others handle both floor and wall tiling.",
     },
     {
       q: "How long before grouting after tiles are laid?",
-      a: "Allow the adhesive to set fully first — typically 24 hours — before grouting, so the tiles aren't disturbed while the bond is still curing.",
+      a: "Allow the adhesive to set fully first - typically 24 hours - before grouting, so the tiles aren't disturbed while the bond is still curing.",
     },
     {
       q: "What tile types does it work with?",

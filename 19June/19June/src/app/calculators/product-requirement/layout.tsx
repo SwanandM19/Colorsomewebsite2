@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   // rather than left to the root title.template.
   title: "Product Requirement Calculator | Colorsome Paints",
   description:
-    "A guided, layer-by-layer estimate — from surface preparation through to topcoat — sized to your actual area.",
+    "A guided, layer-by-layer estimate - from surface preparation through to topcoat - sized to your actual area.",
 };
 
 export default function ProductRequirementLayout({ children }: { children: React.ReactNode }) {

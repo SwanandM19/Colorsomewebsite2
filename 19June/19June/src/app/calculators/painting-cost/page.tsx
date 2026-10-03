@@ -122,7 +122,7 @@ export default function PaintingCostCalculatorPage() {
     <CalculatorShell
       eyebrow="Painting Cost Calculator"
       title="A Real Material + Labour Estimate"
-      subtitle="Tell us about your project and we'll break the estimate down by paint, primer, putty and labour — not one opaque number."
+      subtitle="Tell us about your project and we'll break the estimate down by paint, primer, putty and labour - not one opaque number."
       accent={ACCENT}
       icon={Wallet}
     >

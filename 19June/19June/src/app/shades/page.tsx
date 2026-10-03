@@ -35,33 +35,33 @@ const browseBySpace = [
     space: 'Living Room',
     desc: 'Warm neutrals and soft blues for inviting spaces',
     shades: ['#D4B896', '#D1C7BD', '#6B8FA3', '#FFFFF0'],
-    image: '/LivingRoom.png',
+    image: '/LivingRoom.webp',
   },
   {
     space: 'Bedroom',
     desc: 'Calming pastels and muted tones for peaceful retreat',
     shades: ['#E6E6FA', '#9DC183', '#EBF2F2', '#D1C7BD'],
-    image: '/Bedrooom.png',
+    image: '/Bedrooom.webp',
   },
   {
     space: 'Kitchen',
     desc: 'Fresh whites and subtle colours for any style',
     shades: ['#FFFFFF', '#EBF2F2', '#FFDB58', '#D4B896'],
-    image: '/Kitchen.png',
+    image: '/Kitchen.webp',
   },
   {
     space: 'Exterior',
     desc: 'Weather-resistant shades for lasting curb appeal',
     shades: ['#FFFFF0', '#36454F', '#E2725B', '#228B22'],
-    image: '/Exterior.png',
+    image: '/Exterior.webp',
   },
 ];
 
 const inspirationGallery = [
-  { image: '/modernmini.png', label: 'Modern Minimalist' },
-  { image: '/warmcontempoary.png', label: 'Warm Contemporary' },
-  { image: '/serenebedroom.png', label: 'Serene Bedroom' },
-  { image: '/classicinterior.png', label: 'Classic Interior' },
+  { image: '/modernmini.webp', label: 'Modern Minimalist' },
+  { image: '/warmcontempoary.webp', label: 'Warm Contemporary' },
+  { image: '/serenebedroom.webp', label: 'Serene Bedroom' },
+  { image: '/classicinterior.webp', label: 'Classic Interior' },
 ];
 
 function ShadesPageContent() {
@@ -209,7 +209,7 @@ function ShadesPageContent() {
 
               <div className="relative rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-[#EDE6DA] overflow-hidden aspect-square w-full max-w-[440px] bg-white group">
                 <Image
-                  src="/shadesImg.png"
+                  src="/shadesImg.webp"
                   alt="Colorsome premium paint can lineup showcase"
                   fill
                   priority
@@ -256,7 +256,7 @@ function ShadesPageContent() {
                   See Any Shade On A Real Wall
                 </h2>
                 <p className="text-white/85 text-sm sm:text-base max-w-lg mb-6" style={{ fontFamily: 'var(--font-inter)' }}>
-                  Pick a room, apply any shade from this page, and preview it with the room's own light and shadow kept intact — before a single can is opened.
+                  Pick a room, apply any shade from this page, and preview it with the room's own light and shadow kept intact - before a single can is opened.
                 </p>
                 <Link
                   href="/colour-visualizer"

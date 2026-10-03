@@ -89,7 +89,7 @@ export const VISUALIZER_ROOMS: VisualizerRoom[] = [
     thumbnail: "/visualizer/rooms/kitchen-thumb.webp",
     walls: [],
     status: "comingSoon",
-    note: "Visible wall area is a thin strip above the cabinets — too small for a convincing preview. Needs replacement photography.",
+    note: "Visible wall area is a thin strip above the cabinets - too small for a convincing preview. Needs replacement photography.",
     surfaceType: "interior",
   },
 ];

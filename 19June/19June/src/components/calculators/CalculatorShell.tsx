@@ -21,7 +21,7 @@ export const CALCULATOR_TOOLS = [
     icon: Ruler,
     title: "Paint Quantity",
     tagline: "How much paint you need",
-    desc: "Work out how much paint your room or project actually needs — by dimensions or by known area.",
+    desc: "Work out how much paint your room or project actually needs - by dimensions or by known area.",
     accent: "#C9A858",
   },
   {
@@ -29,7 +29,7 @@ export const CALCULATOR_TOOLS = [
     icon: Wallet,
     title: "Painting Cost",
     tagline: "Material + labour estimate",
-    desc: "A full cost estimate split across paint, primer, putty and labour — not one opaque number.",
+    desc: "A full cost estimate split across paint, primer, putty and labour - not one opaque number.",
     accent: "#C4704B",
   },
   {
@@ -45,7 +45,7 @@ export const CALCULATOR_TOOLS = [
     icon: ClipboardList,
     title: "Product Requirement",
     tagline: "Your full painting system",
-    desc: "A guided, layer-by-layer estimate — putty, primer and topcoat, sized to your actual area.",
+    desc: "A guided, layer-by-layer estimate - putty, primer and topcoat, sized to your actual area.",
     accent: "#8C6478",
   },
 ] as const;
@@ -440,7 +440,7 @@ export function PackPanel({
         <p className="text-[13px] text-charcoal-muted mt-4 pt-4 border-t border-[#F0EAE0]">
           Approximate leftover: <span className="font-bold text-charcoal">{leftover} {unit}</span>
           <span className="block text-[11.5px] mt-1 text-[#A89C8C]">
-            A small surplus is normal — it covers touch-ups and future repairs.
+            A small surplus is normal - it covers touch-ups and future repairs.
           </span>
         </p>
       )}

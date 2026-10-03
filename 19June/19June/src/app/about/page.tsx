@@ -1243,7 +1243,7 @@ export default function AboutPage() {
             viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <Image
               src="/About3.png"
-              alt="The Colorsome team — chemists, colour experts, and service professionals"
+              alt="The Colorsome team - chemists, colour experts, and service professionals"
               width={1628}
               height={966}
               sizes="(max-width: 1280px) 100vw, 1200px"

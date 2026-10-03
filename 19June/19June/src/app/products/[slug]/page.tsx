@@ -1774,18 +1774,18 @@ const DEFAULT_ICON = <Layers className="w-5 h-5" />
 // ─── Feature Descriptions ─────────────────────────────────────────
 const FEATURE_DESCRIPTIONS: Record<string, string> = {
   'UV Resistant': 'Blocks harsh sunlight exposure to preserve colour strength and surface life over years of outdoor exposure.',
-  'Weather Proof': 'Shields against rain, humidity, and seasonal shifts — keeping the coating intact through all conditions.',
+  'Weather Proof': 'Shields against rain, humidity, and seasonal shifts - keeping the coating intact through all conditions.',
   'Chemical Resistant': 'Withstands contact with industrial chemicals and frequent cleaning agents without surface degradation.',
   'Long-lasting Durability': 'Engineered for extended performance cycles so the finish remains dependable for years, not months.',
   'Anti-corrosion': 'Forms a molecular barrier that actively resists rust initiation and metal surface deterioration.',
   'Self-healing Properties': 'Micro-recovery technology that helps minor surface marks close over time for a consistently clean look.',
   'Temperature Resistant': 'Retains its full coating integrity from sub-zero cold to peak summer heat without cracking or peeling.',
-  'Flexible Application': 'Compatible with brush, roller, and spray — adapting seamlessly to any job site requirement.',
-  'Eco-friendly': 'Formulated with a responsible approach — safer for applicators, occupants, and the surrounding environment.',
+  'Flexible Application': 'Compatible with brush, roller, and spray - adapting seamlessly to any job site requirement.',
+  'Eco-friendly': 'Formulated with a responsible approach - safer for applicators, occupants, and the surrounding environment.',
   'Waterproof': 'Creates a hydrophobic surface layer that actively stops water penetration and protects the substrate below.',
   'Smooth Finish': 'Levels uniformly across all surface types, resulting in a refined, even texture that elevates appearance.',
   'Excellent Adhesion': 'Bonds with exceptional grip to the surface substrate for reliable, long-lasting topcoat performance.',
-  'Quick Drying': 'Touch-dry within 30 minutes. Re-coatable in 4–6 hours — significantly reducing project turnaround time.',
+  'Quick Drying': 'Touch-dry within 30 minutes. Re-coatable in 4–6 hours - significantly reducing project turnaround time.',
   'Low VOC': 'Drastically reduced solvent emissions for improved indoor air quality during and after application.',
   'Superior Adhesion': 'Multi-surface grip formula ensures the coating system holds firm across diverse surface conditions.',
   'High Gloss Finish': 'Mirror-bright reflective surface that adds depth, premium visual richness, and easy-clean properties.',
@@ -1795,21 +1795,21 @@ const FEATURE_DESCRIPTIONS: Record<string, string> = {
   'Color Retention': 'Advanced pigment stabilisers keep the shade vibrant and true-to-swatch for extended periods.',
   'Anti-fungal': 'Active biostatic agents that suppress fungal colonisation in high-moisture, poorly-ventilated spaces.',
   'Elastic Properties': 'Flexible film structure absorbs surface micro-movement without cracking, ideal for masonry surfaces.',
-  'Crack Bridging': 'Film elasticity spans hairline fractures up to 0.3 mm — preventing water ingress through minor cracks.',
+  'Crack Bridging': 'Film elasticity spans hairline fractures up to 0.3 mm - preventing water ingress through minor cracks.',
   'Fade Resistance': 'UV-stable pigment matrix fights colour degradation so the surface retains its original tone longer.',
   'Breathable Coating': 'Open micro-pore structure allows trapped moisture vapour to escape, preventing blistering and peel.',
   'Mildew Resistance': 'Active mould-inhibitor system limits mildew growth in bathrooms, basements, and coastal environments.',
   'Consistent Quality': 'Batch-to-batch stability ensures every tin delivers the same finish, colour, and application performance.',
   'Time Saving': 'Fast surface coverage and reduced drying windows compress project timelines without compromising quality.',
-  'Reduced Waste': 'High coverage rate means less product per square metre — optimising material spend on every project.',
+  'Reduced Waste': 'High coverage rate means less product per square metre - optimising material spend on every project.',
   'Superior Bonding': 'Dual-component adhesion formula creates a near-permanent surface bond on challenging substrates.',
   'High Coverage': 'Covers up to 130–180 sq ft per litre for consistent, gap-free surface coverage in fewer coats.',
-  'Enhanced Longevity': 'Coating lifespan significantly extended versus standard formulations — reducing maintenance frequency.',
+  'Enhanced Longevity': 'Coating lifespan significantly extended versus standard formulations - reducing maintenance frequency.',
   'Moisture Resistance': 'Moisture-barrier chemistry locks out dampness while allowing the substrate to breathe naturally.',
-  'Dust Resistance': 'Anti-static surface treatment repels airborne dust particles — keeping walls cleaner between washes.',
+  'Dust Resistance': 'Anti-static surface treatment repels airborne dust particles - keeping walls cleaner between washes.',
   'Easy Maintenance': 'Smooth, sealed surface requires only a damp cloth to restore its original clean, uniform appearance.',
   'Premium Finish': 'Luxury-grade surface texture that imparts a refined, professionally applied look to every surface.',
-  'Fast Curing': 'Accelerated cross-linking chemistry reaches full hardness faster — minimising downtime on active sites.',
+  'Fast Curing': 'Accelerated cross-linking chemistry reaches full hardness faster - minimising downtime on active sites.',
   'Strong Coverage': 'Dense pigment load delivers opaque, uniform coverage even over darker existing shades.',
   'Application Ease': 'Low-drag, flow-optimised viscosity for smoother spreading, fewer roller marks, and easier brush control.',
   'Surface Protection': 'Multi-layer defensive chemistry guards against abrasion, UV, moisture, and chemical attack simultaneously.',
@@ -2726,7 +2726,7 @@ const productIndex = products.findIndex(p => cleanStr(p.slug) === cleanStr(slug)
             >
               {product.features.map((f: string, i: number) => {
                 const icon = FEATURE_ICON_MAP[f] ?? DEFAULT_ICON
-                const desc = FEATURE_DESCRIPTIONS[f] ?? `${f} — engineered as part of ${product.name}'s core formulation for consistent, dependable results.`
+                const desc = FEATURE_DESCRIPTIONS[f] ?? `${f} - engineered as part of ${product.name}'s core formulation for consistent, dependable results.`
                 return (
                   <motion.div
                     key={i}

@@ -176,13 +176,15 @@ export function Footer() {
             <div className="flex flex-col gap-4">
               <Link
                 href="/assistance"
-                className="inline-flex items-center justify-center w-full min-h-[56px] rounded-xl px-6 py-3.5 text-sm font-semibold border transition-all duration-300 hover:text-white"
-                style={{ borderColor: accent, color: accent }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = accent)}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                // Colours come from a CSS variable so the hover classes can override
+                // them — an inline `color` always beat hover:text-*, which left
+                // gold text on a gold fill (an empty-looking button). Dark text on
+                // the gold fill keeps it readable.
+                className="group/cta inline-flex items-center justify-center w-full min-h-[56px] rounded-xl px-6 py-3.5 text-sm font-semibold border border-[var(--cta)] text-[var(--cta)] bg-transparent transition-all duration-300 hover:bg-[var(--cta)] hover:text-[#141414] hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-8px_var(--cta)] focus-visible:bg-[var(--cta)] focus-visible:text-[#141414] focus-visible:outline-none"
+                style={{ '--cta': accent } as React.CSSProperties}
               >
                 Book Consultation
-                <ArrowRight className="w-4 h-4 ml-2 shrink-0" />
+                <ArrowRight className="w-4 h-4 ml-2 shrink-0 transition-transform duration-300 group-hover/cta:translate-x-1" />
               </Link>
 
               <Link

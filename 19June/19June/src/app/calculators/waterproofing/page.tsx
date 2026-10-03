@@ -46,11 +46,11 @@ const SURFACE_ICONS: Record<string, React.ElementType> = {
 const FAQ = [
   {
     q: "Does this include labour?",
-    a: "No — this calculator estimates waterproofing material only. For an estimate that includes application labour, use the Painting Cost calculator or request a quote for your specific site.",
+    a: "No - this calculator estimates waterproofing material only. For an estimate that includes application labour, use the Painting Cost calculator or request a quote for your specific site.",
   },
   {
     q: "Why does a repair job need more material?",
-    a: "Existing damage — cracks, blistering, previously failed coatings — absorbs more material and usually needs extra sealing before the main system goes on. A standard allowance is added on top of the base consumption for repair and renovation work.",
+    a: "Existing damage - cracks, blistering, previously failed coatings - absorbs more material and usually needs extra sealing before the main system goes on. A standard allowance is added on top of the base consumption for repair and renovation work.",
   },
   {
     q: "Which surface should I pick?",
@@ -58,7 +58,7 @@ const FAQ = [
   },
   {
     q: "How do I measure a terrace or roof?",
-    a: "Measure the flat surface area you intend to coat (length × width). If you're also treating the parapet or upstand around the edges, add that wall area too — those junctions are where leaks most commonly start.",
+    a: "Measure the flat surface area you intend to coat (length × width). If you're also treating the parapet or upstand around the edges, add that wall area too - those junctions are where leaks most commonly start.",
   },
 ];
 
@@ -107,7 +107,7 @@ export default function WaterproofingCalculatorPage() {
         <StepSection
           step={1}
           title="What are you waterproofing?"
-          hint="Consumption varies by surface — a terrace needs more material per sq.ft than an interior wall."
+          hint="Consumption varies by surface - a terrace needs more material per sq.ft than an interior wall."
           accent={ACCENT}
         >
           <ChoiceGrid cols={5}>

@@ -1,12 +1,12 @@
 // Shared math/formatting helpers used across every /calculators page.
 
 export function formatINR(n: number): string {
-  if (!Number.isFinite(n)) return "—";
+  if (!Number.isFinite(n)) return "-";
   return `₹${Math.round(n).toLocaleString("en-IN")}`;
 }
 
 export function formatINRCompact(n: number): string {
-  if (!Number.isFinite(n)) return "—";
+  if (!Number.isFinite(n)) return "-";
   if (n >= 100000) return `₹${(n / 100000).toFixed(1)}L`;
   if (n >= 1000) return `₹${(n / 1000).toFixed(0)}K`;
   return `₹${Math.round(n)}`;

@@ -11,7 +11,7 @@ const HOW_IT_WORKS = [
   {
     icon: MousePointerClick,
     title: "Tell us about the space",
-    desc: "Pick your surface and project type, then enter dimensions or a known area — in feet or metres.",
+    desc: "Pick your surface and project type, then enter dimensions or a known area - in feet or metres.",
   },
   {
     icon: Sigma,
@@ -21,22 +21,22 @@ const HOW_IT_WORKS = [
   {
     icon: ClipboardCheck,
     title: "See a clear breakdown",
-    desc: "Every estimate shows exactly which figures went into it — no hidden assumptions.",
+    desc: "Every estimate shows exactly which figures went into it - no hidden assumptions.",
   },
 ];
 
 const FAQ = [
   {
     q: "How accurate are these estimates?",
-    a: "They're indicative planning figures, not a quotation. Real consumption varies with surface porosity, texture, application method, the number of coats actually needed and site conditions. Use these to budget and plan — then confirm exact quantities with our team before you buy.",
+    a: "They're indicative planning figures, not a quotation. Real consumption varies with surface porosity, texture, application method, the number of coats actually needed and site conditions. Use these to budget and plan - then confirm exact quantities with our team before you buy.",
   },
   {
     q: "Where do the coverage and rate figures come from?",
-    a: "They are generic, industry-standard reference values used as sensible defaults. They are not confirmed Colorsome technical or pricing data — anywhere an estimate rests on one of these figures, we label it 'indicative' in the 'How was this calculated?' breakdown.",
+    a: "They are generic, industry-standard reference values used as sensible defaults. They are not confirmed Colorsome technical or pricing data - anywhere an estimate rests on one of these figures, we label it 'indicative' in the 'How was this calculated?' breakdown.",
   },
   {
     q: "Why does the calculator suggest more paint than I need?",
-    a: "Two reasons. A 10% wastage buffer is added, which is standard trade practice to cover roller absorption, spills and touch-ups. Then quantities are rounded up to real purchasable pack sizes — you can't buy 17.4 litres, so the tool finds the combination that gets you there with the least leftover.",
+    a: "Two reasons. A 10% wastage buffer is added, which is standard trade practice to cover roller absorption, spills and touch-ups. Then quantities are rounded up to real purchasable pack sizes - you can't buy 17.4 litres, so the tool finds the combination that gets you there with the least leftover.",
   },
   {
     q: "Do the cost estimates include labour?",
@@ -44,7 +44,7 @@ const FAQ = [
   },
   {
     q: "Can I use metric units?",
-    a: "Yes. Every calculator has a unit toggle — dimensions in feet or metres, areas in square feet or square metres. Conversion happens automatically and the underlying maths is unaffected.",
+    a: "Yes. Every calculator has a unit toggle - dimensions in feet or metres, areas in square feet or square metres. Conversion happens automatically and the underlying maths is unaffected.",
   },
 ];
 
@@ -88,7 +88,7 @@ export default function CalculatorsHubPage() {
               With Confidence.
             </h1>
             <p className="text-[15px] sm:text-[17px] text-charcoal-muted max-w-2xl mx-auto leading-relaxed">
-              Four focused tools to estimate quantity, cost and materials before you buy — built
+              Four focused tools to estimate quantity, cost and materials before you buy - built
               around your actual project details, not guesswork.
             </p>
           </motion.div>
